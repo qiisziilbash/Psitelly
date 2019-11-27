@@ -1,0 +1,114 @@
+{% extends "Base.html" %}
+
+
+{% block content%}
+    <div class="content">
+        <h1>Video Finder</h1>
+        <form method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <div class="filterForm-base">
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Title:</span>
+                    <textarea rows="4" spellcheck="true" placeholder="Title " name="title"></textarea>
+                    <br><br>
+                </span>
+
+                <span>
+                    <br>
+                </span>
+
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Author:</span>
+                    <input type="text" name="author" class="form-control" placeholder="e.g. Afraz">
+                    <br><br>
+                </span>
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Year:</span><br>
+                    <input type="number" name="yearFrom" class="form-control" placeholder="From" style="width: 49%">
+                    <input type="number" name="yearTo" class="form-control" placeholder="To" style="width: 49%">
+                    <br><br>
+                </span>
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Journal:</span>
+                    <input type="text" name="journal" class="form-control" placeholder="e.g. Nature" list="journals">
+                    <datalist id="journals">
+                        {% for journal in journals %}
+                          <option value="{{ journal.name }}" label="{{ journal.name }} ({{ journal.frequency}})">
+                        {% endfor %}
+                    </datalist>
+                    <br><br>
+                </span>
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Topic:</span>
+                    <input type="text" name="topic" class="form-control" list="topics" placeholder="e.g. neuroscience">
+                    <datalist id="topics">
+                        {% for topic in topics %}
+                          <option value="{{ topic.text }}" label="{{ topic.text }} ({{ topic.frequency}})">
+                        {% endfor %}
+                    </datalist>
+                    <br><br>
+                </span>
+
+                <span class="filterForm">
+                    <span style="font-weight: bolder"> Focus:</span>
+                    <input type="text" name="focus" list="focuses" class="form-control" placeholder="e.g. method">
+                    <datalist id="focuses">
+                        {% for focus in focuses %}
+                          <option value="{{ focus.text }}" label="{{ focus.text }} ({{ focus.frequency}})">
+                        {% endfor %}
+                    </datalist>
+                    <br><br>
+                </span >
+
+
+                <span>
+                    <br>
+                    <input type="radio" id="andSearch" name="searchType" value="and" checked>
+                    <label for="andSearch">"And" Search </label>
+                    <input type="radio" id="orSearch" name="searchType" value="or">
+                    <label for="orSearch">"Or" Search</label>
+                    <br>
+                    <input type="checkbox" name="PisA"> Publisher is the same as author
+
+
+                    <span class="filterForm">
+                        <button type="submit" id="filterBtn">Search</button>
+                    </span>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    <div class="rightbar">
+        <h3>Search Instructions</h3>
+        <p class="textContent">
+            <span style="font-weight: bold">
+                "And" vs "Or" search:<br>
+            </span>
+            If you check "And" search, only videos that have all the specified criteria will be in the results; however, if you check "Or" search, all the videos which have at least one of the specified criteria will be in the results.
+        </p>
+
+        <p class="textContent">
+            <span style="font-weight: bold">
+                "Publisher is the same as author"(coming soon):<br>
+            </span>
+            If you check this option, only videos that made by the original author of the paper will be in the results.
+        </p>
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+
+
+{% endblock %}
+
+
+
+
+

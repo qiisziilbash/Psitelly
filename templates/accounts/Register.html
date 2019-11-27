@@ -1,0 +1,208 @@
+
+{% extends "Base.html" %}
+
+
+
+{% block content%}
+    <div class="content">
+        {% if user.is_authenticated %}
+            <li style="font-weight: bold">You are already registered.</li>
+        {% else %}
+
+            <h1>Registration</h1>
+
+            <form id="registrationForm">
+                {% csrf_token %}
+
+                <div class="textContent">
+                    <p id="formContent">
+                        <label for="usernameText">Username:</label>
+                        <br>
+                        <input type="text" id="usernameText" name="username" placeholder="4 Characters at least" required pattern=".{4,100}">
+                        <br><br>
+
+
+                        <label for="emailText"> Email:</label>
+                        <br>
+                        <input type="email" id="emailText" name="email" class="form-control" pattern=".{,100}" required>
+                        <br><br>
+
+                        <label for="secQuestionText"> Security Question:</label>
+                        <br>
+                        <input type="text" id="secQuestionText" name="secQuestion" class="form-control"
+                                placeholder="If you type your own question you have to remember the question as well"  pattern=".{,100}" required list="questions">
+                        <datalist id="questions">
+                            <option value="Who is your secret crush?">
+                            <option value="Who was your first kiss?">
+                            <option value="Who do you want to go on date with him or her?">
+                        </datalist>
+                        <br><br>
+
+                        <label for="secAnswerText"> Your Answer:</label>
+                        <br>
+                        <input type="text" id="secAnswerText" name="secAnswer" class="form-control" pattern=".{,100}" required>
+                        <br><br>
+
+
+
+                        <label for="passwordText">Password:</label>
+                        <br>
+                        <input type="password" id="passwordText" name="password" class="form-control"
+                               placeholder="4 Characters at least" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                        <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p>
+                        <br><br>
+                    </p>
+
+                    <button type="submit" name="preRegister" id="registerBtn">Register</button>
+                    <br><br>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+    <div class="rightbar">
+        <span style="font-weight: bold">Related Links:</span>
+        <div class="textContent">
+            <li>
+                <a href="{% url 'login' %}">Log in</a>
+                <br>
+            </li>
+            <li>
+                <a href="{% url 'register' %}">Not a member yet?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'forgot' %}">Forgot your password?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'contact' %}">Do you have any technical problem?</a>
+                <br>
+            </li>
+        </div>
+
+        <span style="font-weight: bold">Warnings:</span>
+        <div class="textContent">
+            <li>
+                Verification code will expire in 5 minutes
+            </li>
+            <li>
+                Username is case-sensitive
+            </li>
+
+            <li>
+                Username should be at least 4 characters
+            </li>
+
+            <li>
+                Password should be at least 4 characters
+            </li>
+
+            <li>
+                Password should have at least 1 uppercase
+            </li>
+
+            <li>
+                Password should have at least 1 lowercase
+            </li>
+
+            <li>
+                Password should have at least 1 number
+            </li>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<!------------------------------------------------------------------------------------->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if ($('#registerBtn').attr('name') === 'preRegister'){
+
+                $('#registerBtn').attr('disabled', true);
+                $('#registerBtn').html( 'Sending Verification Code...');
+
+                $.ajax({
+                    type: "POST",
+                    url: '/ajax/preRegister/',
+                    data: {
+                         username: $('#usernameText').val(),
+                         password: $('#passwordText').val(),
+                         email: $('#emailText').val(),
+                         secQuestion: $('#secQuestionText').val(),
+                         secAnswer: $('#secAnswerText').val(),
+                         csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+                        if(data.msg == 'Success'){
+                            $('#formContent').append("<h1> Verify your email</h1>"+
+                                "<p> We sent a verification code to your email. Please verify your email using that code to complete your registration.</p>"+
+                                "<label> Verisfication Code:</label>" +
+                                "<br>" +
+                                "<input type=\"text\"  id=\"verificationCode\" required>"
+                            );
+
+                            $('#registerBtn').attr('name', 'register');
+                            $('#registerBtn').html( 'Verify');
+                            $('#registerBtn').attr('disabled', false);
+
+                            $('#usernameText').attr('disabled',true);
+                            $('#emailText').attr('disabled',true);
+                            $('#passwordText').attr('disabled',true);
+                            $('#secAnswerText').attr('disabled', true);
+                            $('#secQuestionText').attr('disabled', true);
+
+                        }else{
+                            $('#registerBtn').html( 'Register');
+                            $('#registerBtn').attr('disabled', false);
+                            alert(data.msg);
+                        }
+
+                    }
+                });
+            }else {
+                $.ajax({
+                    type: "POST",
+                    url: '/ajax/postRegister/',
+                    data: {
+                         username: $('#usernameText').val(),
+                         password: $('#passwordText').val(),
+                         email: $('#emailText').val(),
+                         code: $('#verificationCode').val(),
+                         secQuestion: $('#secQuestionText').val(),
+                         secAnswer: $('#secAnswerText').val(),
+                         csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+                        if(data.msg == 'Success'){
+                            window.location = '/'
+                        }else{
+                             alert(data.msg)
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
+
+
+

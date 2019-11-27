@@ -1,0 +1,148 @@
+{% extends "Base.html" %}
+
+{% block content%}
+    <div class="content">
+        {% if user.is_authenticated %}
+            <li style="font-weight: bold">You are already Logged in.</li>
+        {% else %}
+        <form id="verificationForm">
+            {% csrf_token %}
+
+            <h1> Verify your account</h1>
+
+            <div class="textContent">
+                <label for="emailText"> Email:</label>
+                <br>
+                <input id="emailText" type="text" name="email" class="form-control">
+                <br><br>
+
+                <label for="secQuestionText"> Security Question:</label>
+                <br>
+                <input type="text" id="secQuestionText" name="secQuestion" class="form-control"
+                       pattern=".{,100}" required list="questions">
+                <datalist id="questions">
+                    <option value="Who is your secret crush?">
+                    <option value="Who was your first kiss?">
+                    <option value="Who do you want to go on date with him or her?">
+                </datalist>
+                <br><br>
+
+                <label for="secAnswerText"> Your Answer:</label>
+                <br>
+                <input type="text" id="secAnswerText" name="secAnswer" class="form-control" pattern=".{,100}" required>
+                <br><br>
+
+                <p id="verificationContent">
+
+                </p>
+
+                <button id="verifyBtn" type="submit" style="background-color: white" name="sendCode">Send Code</button>
+                <br> <br>
+            </div>
+        </form>
+    {% endif %}
+    </div>
+
+    <div class="rightbar">
+        <span style="font-weight: bold">Related Links:</span>
+        <div class="textContent">
+            <li>
+                <a href="{% url 'login' %}">Log in</a>
+                <br>
+            </li>
+            <li>
+                <a href="{% url 'register' %}">Not a member yet?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'forgot' %}">Forgot your password?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'contact' %}">Do you have any technical problem?</a>
+                <br>
+            </li>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<!------------------------------------------------------------------------------------->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        document.getElementById('verificationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if ($('#verifyBtn').attr('name') == 'sendCode'){
+                $('#verifyBtn').attr("disabled", true);
+                $('#verifyBtn').html('Sending ...');
+                $.ajax({
+                  type: "POST",
+                  url:  '/ajax/sendVerificationCode/',
+                  data: {
+                      email:  $('#emailText').val(),
+                      secQuestion: $('#secQuestionText').val(),
+                      secAnswer: $('#secAnswerText').val(),
+                      csrfmiddlewaretoken: '{{ csrf_token }}',
+                  },
+                  dataType: 'json',
+
+                  success: function (data) {
+                      $('#verifyBtn').attr('disabled', false);
+
+                      if(data.msg == "Success"){
+                          $('#verifyBtn').attr('name','verify');
+                          $('#verifyBtn').html('Verify');
+                          $('#emailText').attr('disabled',true);
+                          $('#verificationContent').append(
+                              "<label> Verification Code:</label> <br>" +
+                              "<input id=\"codeText\" type=\"text\" name=\"code\" class=\"form-control\"  placeholder=\"Verification Code\">" +
+                              "<br/>  <br/>");
+                      }else{
+                          $('#verifyBtn').html('Send Code');
+                          alert(data.msg)
+                      }
+                  }
+                });
+
+            }else{
+                $('#verifyBtn').attr("disabled", true);
+                $('#verifyBtn').html('Verifying ...');
+
+                $.ajax({
+                  type: "POST",
+                  url:  '/ajax/verifyCode/',
+                  data: {
+                      email:  $('#emailText').val(),
+                      code: $('#codeText').val(),
+                      csrfmiddlewaretoken: '{{ csrf_token }}',
+                  },
+                  dataType: 'json',
+
+                  success: function (data) {
+                      if(data.msg == "Success"){
+                          alert('Your email is verified.')
+                          window.location = '/accounts/login';
+                      }else{
+                          $('#verifyBtn').attr("disabled", false);
+                          $('#verifyBtn').html('Verify');
+                          alert(data.msg)
+                      }
+                  }
+                });
+            }
+
+        });
+    </script>
+{% endblock %}
+
+
+

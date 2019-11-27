@@ -1,0 +1,404 @@
+{% extends "Base.html" %}
+
+{% block content%}
+    <div class="content">
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+
+        {% if msgs %}
+            {% for msg in msgs %}
+                <li style="font-weight: bold">{{ msg }}</li>
+            {% endfor %}
+        {% endif %}
+
+        {% if customUser %}
+            <div class="profile-info">
+                <span>
+                    <input type="image" alt="" src={{ customUser.profile.picture}}>
+                </span>
+
+
+                {% if customUser.username != user.username %}
+                    <span>
+                        {% if following == 1 %}
+                            <img alt="unFollow" src="/static/images/Following.png"
+                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')">
+                        {% elif following == 0 %}
+                            <img alt="follow" src="/static/images/Following_.png"
+                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')">
+                        {% endif %}
+                    </span>
+                {% endif %}
+
+                <span>
+                    <br><br>
+                    <span style="font-weight: bold">Username:</span> {{ customUser.username }}<br>
+                    <span style="font-weight: bold">Member since: </span> {{ customUser.profile.joinDateTime|date:'d M Y' }}<br>
+                    <span style="font-weight: bold">Videos:</span> {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }} upvotes)<br>
+                    <span style="font-weight: bold">comments:</span> {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }} upvotes)<br>
+
+
+                    <span style="font-weight: bold">Followers:</span> {{ customUser.profile.nFollowers }}<br>
+                    <span style="font-weight: bold">Followees:</span> {{ customUser.profile.nFollowees }}<br>
+                </span>
+
+            </div>
+
+            <br>
+        {% endif %}
+
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+
+        {% if customCategory %}
+            <div class="profile-info">
+                <span>
+                    {% if categoryType == "Focus" %}
+                        <input type="image" src="/static/images/Focus_.png" alt="">
+                    {% elif categoryType == "Topic" %}
+                        <input type="image" src="/static/images/Topic_.png" alt="">
+                    {% elif categoryType == "Journal" %}
+                        <input type="image"  src="/static/images/Journal_.png" alt="">
+                    {% elif categoryType == "Author" %}
+                        <input type="image"  src="/static/images/Author.png" alt="">
+                    {% endif %}
+                </span>
+
+
+                <span style="float: right">
+                    {% if following == 1 %}
+                        <img alt="unFollow" src="/static/images/Following.png"
+                            onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')">
+                    {% elif following == 0 %}
+                        <img alt="follow" src="/static/images/Following_.png"
+                             onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')">
+                    {% endif %}
+                </span>
+
+                <span>
+                    <br><br>
+                    <span style="font-weight: bold">Title: </span> {{ customCategoryTitle }}<br>
+                    <span style="font-weight: bold">Videos:</span> {{ customCategory.nVideos }}<br>
+                    <span style="font-weight: bold">Followers:</span> {{ customCategory.nFollowers }}<br>
+                </span>
+            </div>
+            <br>
+
+        {% endif %}
+
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+
+        {% if profiles %}
+            <h1>{{ profilesTitle }}</h1>
+                <div class="profile-gallery">
+                    {% for profile in profiles %}
+                        <div class="profile-item">
+                            <a href="?customUser={{ profile.user.username }}">
+                                <img alt="" src="{{ profile.picture }}">
+                                <br>
+                                <label data-toggle="tooltip" data-placement="right" title="{{ profile.user.username }}">
+                                    {{ profile.user.username }}
+                                </label>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            <br>
+        {% endif %}
+
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+
+        {% if categories %}
+            <h1>{{ categoryTitles }}</h1>
+                <div class="profile-gallery">
+                    {% for category in categories %}
+                        <div class="profile-item">
+                            <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">
+                                {% if category.0  == "Focus" %}
+                                    <img alt="" src="/static/images/Focus_.png">
+                                {% elif category.0 == "Topic" %}
+                                    <img alt="" src="/static/images/Topic_.png">
+                                {% elif category.0 == "Journal" %}
+                                    <img alt="" src="/static/images/Journal_.png">
+                                {% elif category.0 == "Author" %}
+                                    <img alt="" src="/static/images/Author.png">
+                                {% endif %}
+                                <br>
+                                <label data-toggle="tooltip" data-placement="right" title="{{category.1}}">
+                                    {{category.1}}
+                                </label>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            <br>
+        {% endif %}
+
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+
+        {% if videosList %}
+            {% for videos in videosList %}
+
+                <h1>{{ videos.0 }}</h1>
+
+                <div class="video-gallery">
+                    {% for video in videos.1 %}
+                        <div class="video-item" id="{{ video.0.pk }}">
+                            <div class="imageBox">
+                                <input type="image" src='{{ video.0.thumbnail }}' class="thumbnailImage">
+
+                                <div class="hoverImg">
+                                    <a href="?customCategory={{ video.0.journal.title }}&type=Journal" >
+                                        <img src="/static/images/Journal.png">
+                                        {{ video.0.journal.title }}
+                                    </a><br>
+
+
+                                    <a href="?customCategory={{ video.0.topic.title }}&type=Topic" >
+                                        <img src="/static/images/Topic.png">
+                                        {{ video.0.topic.title }}
+                                    </a><br>
+
+
+                                    <a href="?customCategory={{ video.0.focus.title }}&type=Focus" >
+                                        <img src="/static/images/Focus.png">
+                                        {{ video.0.focus.title }}
+                                    </a><br>
+
+                                    <br>
+                                </div>
+                                <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
+                                    <input type="image" src="/static/images/Play.png" class="hitPlayImage">
+                                </a>
+                            </div>
+
+
+                            <div class="video-item-info">
+                                <span style="float: left;">
+                                    <img src="/static/images/Timer.png">
+                                    {{ video.0.formatted_duration}}
+                                </span>
+
+                                <span style="float: right;">
+                                    {% if user.is_authenticated and videos.0 == "Watch History"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return deleteWatchHistory({{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "Liked Videos"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return unLike({{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "Watch Later"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return unWatchLater({{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "My Videos"%}
+                                        <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
+                                            <img type="image" src="/static/images/Edit.png">
+                                        </a>
+                                    {% endif %}
+                                </span>
+
+                                <span style="float: right;">
+                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
+                                        {% if video.1 %}
+                                            <img alt="unWatchLater"
+                                                   src="/static/images/WatchLater.png"
+                                                   onclick="return watchLater(this, {{ video.0.pk }})">
+                                        {% else %}
+                                            <img alt="watchLater"
+                                                   src="/static/images/WatchLater_.png"
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" >
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+
+
+
+                                <span style="float: right;">{{ video.0.likes }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Like_.png">
+                                </span>
+
+                                <span style="float: right;">{{ video.0.comments }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Comment_.png">
+                                </span>
+
+                                <span style="float: right;">{{ video.0.views }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/View_.png">
+                                </span>
+
+
+                                <br>
+                                <label data-toggle="tooltip" data-placement="right" title="{{ video.0.title }}">
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">{{ video.0.title }}</a>
+                                </label>
+
+
+                                <span style="float: left">
+                                    <a href="?customCategory={{ video.0.author.title }}&type=Author">
+                                        <img src="/static/images/Author.png">
+                                        {{ video.0.author.lastName }} ({{ video.0.year }})
+                                    </a>
+
+                                    <br>
+
+                                    {% if videos.0 != "My Videos" %}
+                                        <a href="?customUser={{ video.0.user.username }}">
+                                            <img alt="" src="{{ video.0.user.profile.picture }}">
+                                            {{ video.0.user.username }}
+                                        </a>
+                                        at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                    {% else %}
+                                        Uploaded at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<!------------------------------------------------------------------------------------->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function unLike(videoPK)
+        {
+            document.getElementById(videoPK).remove();
+
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/unlike',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function watchLater(element, videoPK)
+        {
+            $(element).removeAttr('onclick');
+
+            if($(element).attr('alt') =='watchLater'){
+                $(element).attr('alt','unWatchLater');
+                $(element).attr('src','/static/images/WatchLater.png')
+            }else{
+                $(element).attr('alt','watchLater');
+                $(element).attr('src','/static/images/WatchLater_.png')
+            }
+
+            $.ajax({
+              type: "GET",
+              url: ($(element).attr('alt')=='watchLater')? '/ajax/unWatchLater' : '/ajax/watchLater',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+                  $(element).attr("onclick","watchLater(this,"+videoPK+")");
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function deleteWatchHistory(videoPK)
+        {
+            document.getElementById(videoPK).remove();
+
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/deleteHistory',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function unWatchLater(videoPK)
+        {
+            document.getElementById(videoPK).remove();
+
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/unWatchLater',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function follow(element, followType, customCategory, username)
+        {
+            $(element).removeAttr('onclick');
+
+            if($(element).attr('alt') === 'unFollow'){
+                $(element).attr("src", "/static/images/Following_.png");
+                $(element).attr("alt", "follow");
+            }else{
+                $(element).attr("src", "/static/images/Following.png");
+                $(element).attr("alt", "unFollow");
+            }
+
+            $.ajax({
+              type: "GET",
+              url: ($(element).attr('alt') === 'follow')? '/ajax/unFollow' : '/ajax/follow',
+              data: {
+                  'followType': followType,
+                  'username': username,
+                  'customCategory': customCategory},
+              dataType: 'json',
+
+              success: function (data) {
+                  if(followType === 'user'){
+                      $(element).attr("onclick","return follow(this,\"user\",\"-\",\""+username+"\")");
+                  }else{
+                      $(element).attr("onclick","return follow(this,"+followType+","+customCategory+",\"-\")");
+                  }
+
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+{% endblock %}
+
+
+

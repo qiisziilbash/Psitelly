@@ -1,0 +1,543 @@
+
+{% extends "Base.html" %}
+
+
+{% block content%}
+    <div class="content">
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+
+        <video id="player" controls crossorigin playsinline>
+            {% if video.videoFile720 == '' %}
+                <source src="{{ video.videoFile }}" type="video/mp4" />
+            {% else %}
+                <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
+                <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
+                <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
+            {% endif %}
+
+        </video>
+
+    <!------------------------- ------------------------------------------------------------>
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+        <br>
+        <div class="video-info">
+            <label style="width: 40%">
+
+                <a href="{% url 'index' %}?customUser={{ video.user.username }}">
+                    <img src={{ video.user.profile.picture }}>
+                    {{ video.user.username }}
+                </a>
+                at {{ video.publishDate|time:'H:i'}} - {{ video.publishDate|date:'d M Y'}}
+            </label>
+
+            <label style="width: 59%">
+                {% if user.is_authenticated %}
+                    <span style=" float: right;">
+                        {% if watchLater %}
+                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
+                                 onclick="return watchLater(this, {{ video.pk }})">
+                        {% else %}
+                            <img alt="watchLater" src="/static/images/WatchLater_.png"
+                                 onclick="return watchLater(this, {{ video.pk }})">
+                        {% endif %}
+                    </span>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <span style=" float: right;">
+                        <span style="float: right;">{{ video.likes }}</span>
+
+                        {% if liked %}
+                            <img alt="unLike" src="/static/images/Like.png"
+                                   onclick="return likeVideo(this)">
+                        {% else %}
+                            <img  alt="like" src="/static/images/Like_.png"
+                                   onclick="return likeVideo(this)">
+                        {% endif %}
+                    </span>
+
+                {% else %}
+                    <span style="float: right;">{{ video.likes }}</span>
+                    <span style=" float: right;">
+                        <img  src="/static/images/Like_.png" onclick="return aLike()">
+                    </span>
+                {% endif %}
+
+
+                <span style="float:right;" id="numberOfComments">{{ video.comments }}</span>
+                <span style="float: right">
+                    <img type="image" src="/static/images/Comment_.png">
+                </span>
+
+
+                <span style="float: right;">{{ video.views }}</span>
+                <span style="float:right;">
+                    <img src="/static/images/View_.png">
+                </span>
+
+            </label>
+        </div>
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+        <br>
+
+        <div class="video-info">
+
+            <span style="text-align:left; font-weight: bolder"><u>Title</u></span>
+            {{ video.title|linebreaks }}
+
+
+
+            <span style="text-align:left; font-weight: bolder"><u>Description</u></span>
+            {{ video.description|linebreaks }}
+
+
+
+            <label>
+                <a href="{% url 'index' %}?customCategory={{ video.author.title }}&type=Author">
+                    <img src="/static/images/Author.png">
+                    {{ video.author.lastName }} ({{ video.year }})
+                </a>
+            </label>
+
+            <label>
+                <a href="{% url 'index' %}?customCategory={{ video.journal.title }}&type=Journal" >
+                    <img src="/static/images/Journal_.png">
+                    {{ video.journal.title }}
+                </a>
+            </label>
+
+            <br>
+
+            <label>
+                <a href="{% url 'index' %}?customCategory={{ video.topic.title }}&type=Topic" >
+                    <img src="/static/images/Topic_.png">
+                    {{ video.topic.title }}
+                </a>
+            </label>
+
+
+            <label>
+                <a href="{% url 'index' %}?customCategory={{ video.focus.title }}&type=Focus" >
+                    <img src="/static/images/Focus_.png">
+                    {{ video.focus.title }}
+                </a>
+            </label>
+        </div>
+
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+        <h1>Comments</h1>
+
+        <div class="comments">
+            {%  if user.is_authenticated %}
+                <textarea rows="4" spellcheck="true"placeholder="What do you think ... " id="commentText"></textarea>
+                <br><br>
+                <button name="submit" onclick="return postComment(this,{{ video.pk }})">Submit</button>
+            {% else %}
+                <textarea rows="4" spellcheck="true" placeholder="Please log in to comment." id="commentText" disabled></textarea>
+                <br>
+                <button name="aSubmit" disabled onclick="return postComment(this,'')">Submit</button>
+            {% endif %}
+        </div>
+
+
+        <br>
+
+        <div id="userComments">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div id="{{ comment.0.pk }}" class="comment-options">
+
+                        <a href="{% url 'index' %}?customUser={{ comment.0.user.username }}">
+                            <img class="bottom" src="{{ comment.0.user.profile.picture }}" alt="">
+                            {{ comment.0.user.username }}
+                        </a>
+                        at {{ comment.0.time }}
+
+
+                        {% if user.is_authenticated %}
+                            {% if comment.1 %}
+                                <span style="float: right;">
+                                    {{ comment.0.likes }}</span>
+                                <input type="image" name="unLike" src="/static/images/Like.png"
+                                       onclick="return likeComment(this, {{ comment.0.pk }}, {{ comment.0.likes }}, 1 )">
+                            {% else %}
+                                <span style="float: right;">{{ comment.0.likes }}</span>
+                                <input type="image" name="like" src="/static/images/Like_.png"
+                                       onclick="return likeComment(this, {{ comment.0.pk }}, {{ comment.0.likes }}, 0)">
+                            {% endif %}
+
+                            {% if user == comment.0.user %}
+                                <input type="image" src="/static/images/Delete.png" onclick="return deleteComment({{ comment.0.pk }})">
+                            {% endif %}
+                        {% else %}
+                            <span style="float: right;">{{ comment.0.likes }}</span>
+                            <input type="image" src="/static/images/Like_.png"
+                                       onclick="return aLike()">
+                        {% endif %}
+
+
+                        <br><br>
+
+                        <div class="indentedComments">
+                            {{ comment.0.text| linebreaks }}
+                        </div>
+
+                        <br>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    </div>
+
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+
+    <div class="rightbar">
+        {% if videosList %}
+            {% for videos in videosList %}
+
+                <h1>{{ videos.0 }}</h1>
+
+                <div class="video-gallery">
+                    {% for video in videos.1 %}
+                        <div class="video-item" id="{{ video.0.pk }}">
+                            <div class="imageBox">
+                                <input type="image" src='{{ video.0.thumbnail }}' class="thumbnailImage">
+
+                                <div class="hoverImg">
+
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal">
+                                        <img src="/static/images/Journal.png">
+                                        {{ video.0.journal.title }}
+                                    </a><br>
+                                    
+
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic">
+                                        <img src="/static/images/Topic.png">
+                                        {{ video.0.topic.title }}
+                                    </a><br>
+
+
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus">
+                                        <img src="/static/images/Focus.png">
+                                        {{ video.0.focus.title }}
+                                    </a><br>
+
+                                    <br>
+                                </div>
+                                <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
+                                    <input type="image" src="/static/images/Play.png" class="hitPlayImage">
+                                </a>
+                            </div>
+
+
+                            <div class="video-item-info">
+                                <span style="float: left;">
+                                    <img src="/static/images/Timer.png">
+                                    {{ video.0.formatted_duration}}
+                                </span>
+
+                                <span style="float: right;">
+                                    {% if user.is_authenticated and videos.0 == "Watch History"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return deleteWatchHistory(this, {{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "Liked Videos"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return unLike({{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "Watch Later"%}
+                                        <img alt="unWatchLater"
+                                                   src="/static/images/Delete.png"
+                                                   onclick="return unWatchLater(this, {{ video.0.pk }})">
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and videos.0 == "My Videos"%}
+                                        <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
+                                            <img type="image" src="/static/images/Edit.png">
+                                        </a>
+                                    {% endif %}
+                                </span>
+
+                                <span style="float: right;">
+                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
+                                        {% if video.1 %}
+                                            <img alt="unWatchLater"
+                                                   src="/static/images/WatchLater.png"
+                                                   onclick="return watchLater(this, {{ video.0.pk }})">
+                                        {% else %}
+                                            <img alt="watchLater"
+                                                   src="/static/images/WatchLater_.png"
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" >
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+
+
+
+                                <span style="float: right;">{{ video.0.likes }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Like_.png">
+                                </span>
+
+                                <span style="float: right;">{{ video.0.comments }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Comment_.png">
+                                </span>
+
+                                <span style="float: right;">{{ video.0.views }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/View_.png">
+                                </span>
+
+
+                                <br>
+                                <label data-toggle="tooltip" data-placement="right" title="{{ video.0.title }}">
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">{{ video.0.title }}</a>
+                                </label>
+
+
+                                <span style="float: left">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
+                                        <img src="/static/images/Author.png">
+                                        {{ video.0.author.lastName }} ({{ video.0.year }})
+                                    </a>
+
+                                    <br>
+
+                                    {% if videos.0 != "My Videos" %}
+                                        <a href="?customUser={{ video.0.user.username }}">
+                                            <img alt="" src="{{ video.0.user.profile.picture }}" class="bottom">
+                                            {{ video.0.user.username }}
+                                        </a>
+                                        at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                    {% else %}
+                                        {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+    <!------------------------------------------------------------------------------------->
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<!------------------------------------------------------------------------------------->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <script>
+        function aLike()
+        {
+            alert("Please log in order to like!");
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function likeVideo(element)
+        {
+            $(element).removeAttr('onclick');
+
+            if($(element).attr('alt') == 'like'){
+
+                $(element).attr('alt','unLike');
+                $(element).attr('src','/static/images/Like.png');
+
+                if({{ liked }}){
+                    $(element).prev().html({{ video.likes }});
+                }else{
+                    $(element).prev().html({{ video.likes }}+1);
+                }
+            }else{
+                $(element).attr('alt','like');
+                $(element).attr('src','/static/images/Like_.png');
+
+                if({{ liked }}){
+                    $(element).prev().html({{ video.likes }}-1);
+                }else{
+                    $(element).prev().html({{ video.likes }});
+                }
+            }
+
+            $.ajax({
+              type: "GET",
+              url: ($(element).attr('alt')=='like')? '/ajax/unlike' : '/ajax/like',
+              data: {'videoPK': {{ video.pk }} },
+              dataType: 'json',
+
+              success: function (data) {
+                $(element).attr("onclick","likeVideo(this);");
+              }
+            });
+
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function postComment(element, videoPK)
+        {
+            if($(element).attr('name')=='aSubmit'){
+                alert("You have to log in order to comment.");
+            }else{
+                if($('#commentText').val() == ''){
+                    alert("Please write something.");
+                }else{
+
+                    $(element).removeAttr('onclick');
+
+                    $.ajax({
+                    type: "GET",
+                    url: '/ajax/comment',
+                    data: {
+                        'videoPK': videoPK,
+                        'text': $('#commentText').val()
+                    },
+                    dataType: 'json',
+
+                        success: function (data)
+                        {
+                            $('#userComments').prepend(
+                                "<div id=\""+ data.pk +"\" class=\"comment-options\">"+
+                                "\n<a href=\"{% url 'index' %}?customUser={{ user.username }}\">"+
+                                "<img src={{ user.profile.picture }}> " +
+                                "{{ user.username }}</a> just now" +
+
+                                "<span style=\"float: right;\">0</span>\n" +
+                                "<input type=\"image\" name=\"like\" src=\"/static/images/Like_.png\""+
+                                "onclick=\"return likeComment(this," + data.pk +", 0, 0)\">\n" +
+                                "<input type=\"image\" src=\"/static/images/Delete.png\""+
+                                "onclick=\"return deleteComment("+ data.pk +")\">\n"+
+
+                                "<br><br>"+
+
+                                "<div class=\"indentedComments\">" +
+                                "<br>"+$('#commentText').val()+ "<br><br>"+
+                                "</div>" + "<br> "
+                            );
+                            $('#commentText').val('');
+                            $('#numberOfComments').html(data.comments);
+                            $(element).attr("onclick","postComment(this,"+ videoPK +");");
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function watchLater(element, videoPK)
+        {
+            $(element).removeAttr('onclick');
+
+            if($(element).attr('alt') =='watchLater'){
+                $(element).attr('alt','unWatchLater');
+                $(element).attr('src','/static/images/WatchLater.png')
+            }else{
+                $(element).attr('alt','watchLater');
+                $(element).attr('src','/static/images/WatchLater_.png')
+            }
+
+            $.ajax({
+              type: "GET",
+              url: ($(element).attr('alt')=='watchLater')? '/ajax/unWatchLater' : '/ajax/watchLater',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+                  $(element).attr("onclick","watchLater(this,{{ video.pk }})");
+              }
+
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function deleteComment(commentPK)
+        {
+            document.getElementById(commentPK).remove();
+
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/deleteComment',
+              data: {'commentPK': commentPK },
+              dataType: 'json',
+
+              success: function (data) {
+                  $('#numberOfComments').html(data.comments);
+              }
+            });
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+    <script>
+        function likeComment(element, commentPK, likes, liked)
+        {
+            $(element).attr("disabled", true);
+
+            if($(element).attr('name')=='like'){
+                $(element).attr('name','unLike');
+                $(element).attr('src','/static/images/Like.png')
+
+                if(liked){
+                    $(element).prev().html(likes);
+                }else{
+                    $(element).prev().html(likes+1);
+                }
+            }else{
+                $(element).attr('name','like');
+                $(element).attr('src','/static/images/Like_.png')
+
+                if(liked){
+                    $(element).prev().html(likes-1);
+                }else{
+                    $(element).prev().html(likes);
+                }
+            }
+
+            $.ajax({
+              type: "GET",
+              url: ($(element).attr('name')=='like')? '/ajax/unlikeComment' : '/ajax/likeComment',
+              data: {'commentPK': commentPK },
+              dataType: 'json',
+
+              success: function (data) {
+
+                  $(element).attr("disabled", false);
+              }
+            });
+
+        }
+    </script>
+<!------------------------------------------------------------------------------------->
+<script>
+    const player = new Plyr('#player');
+</script>
+{% endblock %}
+
+
+
+

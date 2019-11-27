@@ -1,0 +1,94 @@
+{% extends "Base.html" %}
+
+{% block content%}
+
+    <div class="content">
+        <h1>
+            Donate FFFwejjs
+        </h1>
+
+        <h2>Why?</h2>
+
+        <div class="textContent">
+            <p>
+                Psitelly aims to reimagine the way we share research, to streamline literature review, and to make the science universally accessible. It is a hopeful project, but it needs wings to get off the ground. Anything helps! Here’s how:
+            </p>
+        </div>
+
+        <h2>How?</h2>
+
+        <div class="textContent">
+            <p>
+                <h3> <u> Be with us</u></h3>
+                We always need support and feedback
+                <ul>
+                    <li> <a href="{% url 'register' %}">Become a member</a> </li>
+                    <li> <a href="{% url 'upload' %}">Upload a video</a></li>
+                    <li> Tell a friend about Psitelly</li>
+                    <li> <a href="{% url 'contact' %}">Tell us your ideas to improve the Psitelly</a></li>
+                    <li> <a href="{% url 'contact' %}">Report a problem</a> </li>
+                </ul>
+            </p>
+
+            
+
+            <h3> <u>Love</u> </h3>
+            We need emotional support
+            <ul>
+                <li>
+                    <a href="{% url 'contact' %}"> Send us love letters </a>
+                </li>
+            </ul>
+
+
+            <h3> <u>Money</u> </h3>
+            We need money to market and maintain the Psitelly
+            <ul>
+                <li>Paypal: <a href="https://www.paypal.me/psitelly" target="_blank">paypal.me/psitelly</a></li>
+                <li>Venmo: <a href="https://venmo.com/psitelly" target="_blank">@psitelly</a></li>
+                <li>Cash: <a href="https://cash.app/$psitelly" target="_blank">$psitelly</a></li>
+            </ul>
+        </div>
+
+
+        <h2> Special thanks to</h2>
+        <div class="textContent">
+            <ul>
+                <li> Mehran Torki, who helped to resolve technical issues</li>
+                <li> <a href="https://psychology.usu.edu/people/department-faculty/renee_galliher" target="_blank">Dr Renee Galliher,</a>
+                    who kindly accepted to help me with this project</li>
+                <li> <a href="http://www.usu.edu/" target="_blank">Utah State University,</a>
+                    who kindly offered their server to host Psitelly </li>
+                <li> All who supported me to start and continue this project </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="rightbar">
+        <h3>Powered by</h3>
+        <div class="textContent">
+            <li>Mahdi Shafiei</li>
+            <li>Django</li>
+        </div>
+
+
+
+        <h3>My power is powered by</h3>
+
+        <div class="textContent">
+            <li>Ruth Campos</li>
+        </div>
+
+        <h3>Our Donors</h3>
+        <div class="textContent">
+            <li>
+                Utah State University
+            </li>
+            <li>
+                Nate Hardy
+            </li>
+        </div>
+    </div>
+
+
+{% endblock %}

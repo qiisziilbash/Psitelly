@@ -1,0 +1,148 @@
+{% extends "Base.html" %}
+
+{% block content%}
+
+    <div class="content">
+
+
+        {% if user.is_authenticated %}
+
+            <div class="profile-info">
+                <a href="{% url 'profile' %}">
+                    <input type="image" src={{ user.profile.picture }}>
+                     {{ user.username }}
+                </a>
+            </div>
+
+            <br>
+            {% if msgs %}
+                {% for msg in msgs %}
+                    <li style="font-weight: bold">{{ msg }}</li>
+                {% endfor %}
+                <br><br>
+            {% endif %}
+
+             <br><br>
+            {% if notificaations %}
+                {% for notification in notificaations %}
+                    {% if not notification.seen %}
+                        <span id="{{ notification.pk }}">
+                            <input type="image" src="/static/images/Delete.png"
+                                   onclick="return deleteNotification({{ notification.pk }})"
+                                   style="float: right" width="25" height="25">
+
+                            <u><b>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</b></u>
+                            <p class="textContentHighlighted">
+                                {{ notification.text }}
+                            </p>
+                            <br>
+                        </span>
+
+                    {% else %}
+                        <span id="{{ notification.pk }}">
+                            <input type="image" src="/static/images/Delete.png"
+                                   onclick="return deleteNotification({{ notification.pk }})"
+                                   style="float: right" width="25" height="25">
+
+                            <u>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</u>
+                            <p class="textContent">
+                                {{ notification.text }}
+                            </p>
+                            <br>
+                        </span>
+
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+        {% else %}
+            <span style="font-weight: bold">You are not logged in yet. Please <a href="{% url 'login' %}"> Log in </a> first.</span>
+        {% endif %}
+    </div>
+
+    <div class="rightbar">
+        {% if user.is_authenticated %}
+            <span style="font-weight: bold">User Statistics:</span>
+            <div class="textContent">
+                <span style="font-weight: bold">Member since:</span><span style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</span><br>
+
+                <span style="font-weight: bold">Uploaded videos:</span> <span style="float: right">{{ user.profile.nVideos }}</span><br>
+                <span style="font-weight: bold">Made Comments:</span> <span style="float: right">{{ user.profile.nComments }}</span><br>
+
+                <span style="font-weight: bold">Video upvotes received:</span> <span style="float: right">{{ user.profile.nVideoUpVotesReceived }}</span> <br>
+                <span style="font-weight: bold">Comment upvotes received:</span><span style="float: right">{{ user.profile.nCommentUpVotesReceived }}</span> <br>
+
+                <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
+
+                <span style="font-weight: bold">Followers:</span><span style="float: right">{{ user.profile.nFollowers }}</span> <br>
+                <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
+            </div>
+        {% else %}
+            <span style="font-weight: bold">Related Links:</span>
+            <div class="textContent">
+                <li>
+                    <a href="{% url 'register' %}">Not a member yet?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'forgot' %}">Forgot your password?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'contact' %}">Do you have any technical problem?</a>
+                    <br>
+                </li>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url:  '/ajax/clearNotifications/',
+                data: {},
+                dataType: 'json',
+
+                success: function (data) {
+                  if(data.msg === "Success"){
+
+                  }else{
+                      alert(data.msg)
+                  }
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        function deleteNotification(notificationPK)
+        {
+
+            document.getElementById(notificationPK).remove();
+
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/deleteNotification',
+              data: {'notificationPK': notificationPK },
+              dataType: 'json',
+
+              success: function (data) {}
+            });
+        }
+    </script>
+
+{% endblock %}

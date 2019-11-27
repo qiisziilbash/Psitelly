@@ -1,0 +1,148 @@
+{% extends "Base.html" %}
+
+
+{% block content%}
+    <div class="content">
+        {% if user.is_authenticated %}
+            <h1>Video Uploader</h1>
+            <form method="post" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
+                <div class="uploadForm">
+                    <span>
+                        <span style="font-weight: bolder"> Title:</span>
+                        <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
+                        <br><br>
+                    </span>
+
+
+                    <span>
+                        <span style="font-weight: bolder"> Description:</span>
+                        <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
+                        <br><br>
+                    </span>
+
+
+
+                    <span>
+                        <span style="font-weight: bolder">Author:</span>
+                        <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez"
+                               list="authors" required>
+                        <datalist id="authors">
+                            {% for author in authors %}
+                              <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Year:</span>
+                        <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 2000" value="2000" required>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Journal:</span>
+                        <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
+                        <datalist id="journals">
+                            {% for journal in journals %}
+                              <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Topic:</span>
+                        <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
+                        <datalist id="topics">
+                            {% for topic in topics %}
+                              <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Focus:</span>
+                        <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                        <datalist id="focuses">
+                            {% for focus in focuses %}
+                              <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+
+                    <span>
+                        <span style="font-weight: bolder"> Select a Video:</span>
+                        <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white" required> <br>
+                        <br>
+                    </span>
+
+                    <br>
+
+                    <span>
+                        <button type="submit" id="uploadBtn">Upload</button>
+                    </span>
+
+                </div>
+            </form>
+
+        {% else %}
+            <p> You need to <a href="{% url 'login' %}">log in</a> (or <a href="{% url 'register' %}">sign up</a>, if you haven't yet)in order to upload a video</p>
+        {% endif %}
+    </div>
+
+    <div class="rightbar">
+        <h3>Upload Instructions</h3>
+
+        <p class="textContent">
+            <span style="font-weight: bold">
+                Author:<br>
+            </span>
+            Please provide only full name of the first author in the article. For example,
+            if there are more than one author and the first author is "Gabriel García Márquez", type only "Gabriel García Márquez".
+        </p>
+
+        <p class="textContent">
+            <span style="font-weight: bold">
+                Journal, Topic, and Focus:<br>
+            </span>
+            When you filling these items please pay attention to the statistics suggested in the dropdown panel.
+            The number inside of the parenthesis is the number of videos uploaded with this specification.
+            Thus pick one that you believe is spelled correctly and has more videos.
+            If you think it is not spelled correctly, or you can not find the one that you are looking for, type and create your own.
+        </p>
+
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script>
+        function upload(element)
+        {
+            if($('#titleID').val() !== "" &&
+               $('#authorLastNameID').val() !== "" &&
+               $('#journalID').val() !== "" &&
+               $('#topicID').val() !== "" &&
+               $('#focusID').val() !== "" &&
+               $('#videoID').get(0).files.length > 0
+            ){
+                $(element).attr('disabled', true);
+                $(element).html('Uploading ...');
+            }
+        }
+    </script>
+
+{% endblock %}
+
+
+
+
+
+

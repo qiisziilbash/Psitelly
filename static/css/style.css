@@ -1,0 +1,551 @@
+:root{
+    --optionsIconWidth: 60px;
+    --optionsIconHeight: 60px;
+    --backgroundColor1: gray;
+    --backgroundColor2: #b8c3cd;
+    --backgroundColor3: white;
+    --backgroundColor4: #00a651;
+    --font1: "noto-serif";
+}
+
+@font-face {
+  font-family: 'noto-serif';
+  src: url('/static/fonts/NotoSerif-Light.ttf')  format("truetype"),
+       local('noto-serif');
+}
+
+*{
+    box-sizing: border-box;
+	outline: none;
+    font-family: var(--font1);
+}
+body::-webkit-scrollbar { width: 0 !important }
+
+
+a{text-decoration: none;}
+
+body{background: black;}
+
+button::-moz-focus-inner {border: 0;}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    text-decoration: none;
+    color: initial;
+}
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.search-box {
+    grid-area: header;
+    background-color: var(--backgroundColor1);
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.search-box input[type=text]{
+    border-radius: 10px;
+    background-color: var(--backgroundColor2);
+    border: none;
+    font-size: 24px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+
+.logo{
+    grid-area: logo;
+}
+
+.logo img{
+    width: 100px;
+    height: 60px;
+}
+
+.donate{
+    grid-area: donate;
+}
+
+.upload{
+    grid-area: upload;
+}
+
+.profile{
+    grid-area: profile;
+}
+
+.filter{
+    grid-area: filter;
+}
+
+.filter, .profile, .upload, .donate, .logo{
+    background-color: var(--backgroundColor1);
+    text-align: center;
+}
+
+.filter img, .profile img, .upload img, .donate img{
+    width: var(--optionsIconWidth);
+    height: var(--optionsIconHeight);
+    border-radius: 50%  ;
+}
+
+.footer{
+    grid-area: footer;
+    background-color: var(--backgroundColor1);
+}
+
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.sidebar {
+    grid-area: sidebar;
+    background-color: var(--backgroundColor1);
+    overflow: auto;
+}
+.sidebar::-webkit-scrollbar { width: 0 !important }
+
+.sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar input {
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: var(--backgroundColor2);
+    border: none;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-align: left;
+}
+
+.sidebar p, .rightbar p{
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: var(--backgroundColor2);
+    color: #000000;
+    border: black;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-align: left;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 14px;
+}
+
+.sidebar input:hover {
+  background-color: green;
+}
+
+.rightbar{
+    grid-area: rightbar;
+    background-color: var(--backgroundColor1);
+}
+
+.content {
+    grid-area: content;
+    background-color: var(--backgroundColor1);
+    object-fit: fill;
+}
+
+.textContent{
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: var(--backgroundColor2);
+    color: #000000;
+    border: black;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-align: left;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 14px;
+}
+
+.textContentHighlighted{
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: var(--backgroundColor4);
+    color: #000000;
+    border: black;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-align: left;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 14px;
+}
+
+.textContent input, .textContent textarea {
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px;
+}
+
+.textContent button {
+    background-color: white;
+    border-radius: 7px;
+    font-size: 14px;
+    float: right;
+}
+
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.profile-gallery {
+    background-color: var(--backgroundColor2);
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill,minmax(85px,1fr));
+    grid-template-rows: repeat(auto-fill,minmax(100px,1fr));
+    text-align: center;
+}
+
+.profile-item{
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.profile-item img {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+}
+
+.profile-item > a > label {
+    cursor: pointer;
+}
+
+.profile-info{
+    background-color: var(--backgroundColor2);
+    border-radius: 5px;
+}
+
+.profile-info img{
+    width: 50px;
+    height: 50px;
+    float:right;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.profile-info input{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    vertical-align: middle;
+    cursor: auto;
+}
+
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.video-gallery {
+    background-color: var(--backgroundColor2);
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.video-gallery::-webkit-scrollbar { width: 0 !important }
+
+.video-item-info img{
+    height: 27px;
+    width: 27px;
+    padding: 2px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.video-item-info label {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-weight: bold
+}
+
+.video-item{
+    position: relative;
+}
+
+.thumbnailImage {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.hitPlayImage {
+    position: absolute;
+    top: 70%;
+    left:  80%;
+    width: 10%;
+    height: 15%;
+}
+
+
+
+.imageBox{
+    position: relative;
+}
+
+
+.hoverImg img{
+    height: 27px;
+    width: 27px;
+    vertical-align: middle;
+    padding: 1px;
+}
+
+.hoverImg a{
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    width: 80%;
+}
+
+.hoverImg a {
+    text-shadow: 0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3),
+    0px 0px 10px var(--backgroundColor3);
+}
+
+.imageBox .hoverImg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.imageBox:hover .hoverImg {
+    display: block;
+}
+
+.imageBox:hover .thumbnailImage {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.imageBox:hover .hitPlayImage {
+    top: 65%;
+    left:  75%;
+    width: 15%;
+    height: 20%;
+}
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.playing-video-wrapper {
+    background-color: black;
+}
+
+.video-info{
+    background-color: var(--backgroundColor2);
+    border-radius: 5px;
+        text-align: justify;
+    text-justify: inter-word;
+}
+
+.video-info input{
+    width: 50px;
+    height: 50px;
+    float:right;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.video-info label{
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    width: 49%;
+}
+
+.video-info img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.comment-options img{
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+    border-radius: 50%;
+
+}
+
+.comment-options input{
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+    padding: 5px;
+    float: right;
+}
+
+.comments textarea{
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px;
+}
+
+.comments button{
+    background-color: white;
+    border-radius: 5px;
+    float: right;
+}
+
+.indentedComments{
+    background-color: var(--backgroundColor2);
+    margin-left: 10px;
+}
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.uploadForm{
+    display: grid;
+    background-color: var(--backgroundColor2);
+    grid-template-columns: repeat(2,minmax(auto, 1fr));
+    column-gap: 10px;
+}
+
+.contactForm{
+    display: grid;
+    background-color: var(--backgroundColor2);
+    grid-template-columns: repeat(1,minmax(240px, 1fr));
+    column-gap: 10px;
+}
+
+.filterForm-base{
+    display: grid;
+    background-color: var(--backgroundColor2);
+    grid-template-columns: repeat(2,minmax(240px, 1fr));
+    column-gap: 10px;
+}
+
+.uploadForm input:not([type="checkbox"]), .uploadForm textarea, .filterForm input, .filterForm textarea, .contactForm input, .contactForm textarea {
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px;
+}
+
+
+.uploadForm button, .filterForm button, .contactForm  button{
+    background-color: white;
+    border-radius: 7px;
+    font-size: 14px;
+    float: right;
+}
+
+.profilePic{
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.main-wrapper div, .basic-wrapper div {
+    border-radius: 10px;
+    padding:10px;
+}
+
+.main-wrapper {
+    background-color: black;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 4fr 16fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto minmax(700px,1fr) auto;
+    grid-template-areas:
+        "logo header filter upload donate   profile"
+        "sidebar content content content content content"
+        "footer footer footer footer footer footer";
+}
+
+.basic-wrapper{
+    background-color: black;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 4fr 16fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto minmax(750px,1fr) auto;
+    grid-template-areas:
+        "logo header filter upload donate   profile"
+        "sidebar content rightbar rightbar rightbar rightbar"
+        "footer footer footer footer footer footer";
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+    .main-wrapper {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-areas:
+            "logo logo logo logo"
+            "filter upload donate   profile"
+            "header header header header"
+            "sidebar sidebar sidebar sidebar"
+            "content content content content"
+            "footer footer footer footer"
+    }
+}
+
+@media only screen and (max-width: 1000px){
+        .basic-wrapper{
+    background-color: black;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-areas:
+            "logo logo logo logo"
+            "filter upload donate profile"
+            "header header header header"
+            "sidebar sidebar sidebar sidebar"
+            "content content content content"
+            "rightbar rightbar rightbar rightbar"
+            "footer footer footer footer"
+    }
+
+}
+
+
+
+

@@ -1,0 +1,74 @@
+{% extends "Base.html" %}
+
+{% block content%}
+    <div class="content">
+        {% if msgs %}
+            {% for msg in msgs %}
+                <li style="font-weight: bold">{{ msg }}</li>
+            {% endfor %}
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <li style="font-weight: bold">You are already Logged in.</li>
+        {% else %}
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                <h1> Log in</h1>
+
+                <div class="textContent">
+                    <label> Username:</label>
+                    <br>
+                    <input type="text" name="username" class="form-control" placeholder="Username ">
+                    <br/>  <br/>
+
+                    <label> Password:</label>
+                    <br>
+                    <input type="password" name="password" class="form-control"  placeholder="Password">
+                    <br/>  <br/>
+                    <button type="submit" style="background-color: white">Log in</button>
+                    <br> <br>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+    <div class="rightbar">
+        <span style="font-weight: bold">Related Links:</span>
+        <div class="textContent">
+            <li>
+                <a href="{% url 'login' %}">Log in</a>
+                <br>
+            </li>
+            <li>
+                <a href="{% url 'register' %}">Not a member yet?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'forgot' %}">Forgot your password?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
+                <br>
+            </li>
+
+            <li>
+                <a href="{% url 'contact' %}">Do you have any technical problem?</a>
+                <br>
+            </li>
+        </div>
+
+        <span style="font-weight: bold">Warnings:</span>
+        <div class="textContent">
+            <li>
+                Username is case-sensitive
+            </li>
+        </div>
+    </div>
+{% endblock %}
+
+
+

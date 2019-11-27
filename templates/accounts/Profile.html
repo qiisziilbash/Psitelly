@@ -1,0 +1,197 @@
+{% extends "Base.html" %}
+
+{% block content%}
+    <div class="content">
+        {% if msgs %}
+            {% for msg in msgs %}
+                <li style="font-weight: bold">{{ msg }}</li>
+            {% endfor %}
+            <br><br>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <form method="GET" action="{% url 'profile' %}">
+                {% csrf_token %}
+
+
+
+                <img class="profilePic" src={{ user.profile.picture }}>
+                <span class="profile-item" style="float:right;">
+                    {% if user.profile.hasNotifications %}
+                        <a href="{% url 'showNotifications' %}">
+                            <img class="profilePic" src="/static/images/Notification.png" alt="">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'showNotifications' %}">
+                            <img class="profilePic" src="/static/images/Notification_.png" alt="">
+                        </a>
+                    {% endif %}
+                </span>
+                <br><br>
+
+                <div class="uploadForm">
+                    <span>
+                        <b>Username:</b>
+                        <br>
+                        {{ user.username }}
+
+                        <br> <br>
+                    </span>
+
+                    <span>
+                        <b>Email:</b>
+                        <br>
+                        {{ user.email }}
+
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <b>Security question:</b>
+                        <br>
+                        {{ user.profile.secQuestion }}
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <b>Security answer:</b>
+                        <br>
+                        {{ user.profile.secAnswer }}
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <h3><u>Notifications:</u></h3>
+                    </span>
+
+                    <br>
+
+
+                    <span>
+                        <b>When my followees upload a video:</b>
+                        <br>
+                        {% if user.profile.notifyUploads and user.profile.emailUploads %}
+                            Notify me here and through email
+                        {% elif user.profile.notifyUploads %}
+                            Notify me here
+                        {% elif user.profile.emailUploads %}
+                            Notify me through email
+                        {% else %}
+                            Don't notify me
+                        {% endif %}
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <b>When someone comment on my videos:</b>
+                        <br>
+                        {% if user.profile.notifyComments and user.profile.emailComments %}
+                            Notify me here and through email
+                        {% elif user.profile.notifyComments %}
+                            Notify me here
+                        {% elif user.profile.emailComments %}
+                            Notify me through email
+                        {% else %}
+                            Don't notify me
+                        {% endif %}
+                        <br><br>
+                    </span>
+
+
+
+                    <span>
+                        <b>When someone starts to follow me:</b>
+                        <br>
+                        {% if user.profile.notifyFollows and user.profile.emailFollows %}
+                            Notify me here and through email
+                        {% elif user.profile.notifyFollows %}
+                            Notify me here
+                        {% elif user.profile.emailFollows %}
+                            Notify me through email
+                        {% else %}
+                            Don't notify me
+                        {% endif %}
+                        <br><br>
+                    </span>
+
+
+                    <span>
+                        <b>When someone mentions me on a post or comment:</b>
+                        <br>
+                        {% if user.profile.notifyMentions and user.profile.emailMentions %}
+                            Notify me here and through email
+                        {% elif user.profile.notifyMentions %}
+                            Notify me here
+                        {% elif user.profile.emailMentions %}
+                            Notify me through email
+                        {% else %}
+                            Don't notify me
+                        {% endif %}
+                        <br><br>
+                    </span>
+
+                    <br>
+
+                    <span>
+                        <br>
+                        <button type="submit" name="logout">Log out</button>
+                        <button type="submit" name="edit">Edit Profile</button>
+                        <br> <br>
+                    </span>
+
+                </div>
+            </form>
+        {% else %}
+            <span style="font-weight: bold">You are not logged in yet. Please <a href="{% url 'login' %}"> Log in </a> first.</span>
+        {% endif %}
+    </div>
+
+    <div class="rightbar">
+        {% if user.is_authenticated %}
+            <span style="font-weight: bold">User Statistics:</span>
+            <div class="textContent">
+                <span style="font-weight: bold">Member since:</span><span style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</span><br>
+
+                <span style="font-weight: bold">Uploaded videos:</span> <span style="float: right">{{ user.profile.nVideos }}</span><br>
+                <span style="font-weight: bold">Made Comments:</span> <span style="float: right">{{ user.profile.nComments }}</span><br>
+
+                <span style="font-weight: bold">Video upvotes received:</span> <span style="float: right">{{ user.profile.nVideoUpVotesReceived }}</span> <br>
+                <span style="font-weight: bold">Comment upvotes received:</span><span style="float: right">{{ user.profile.nCommentUpVotesReceived }}</span> <br>
+
+                <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
+
+                <span style="font-weight: bold">Followers:</span><span style="float: right">{{ user.profile.nFollowers }}</span> <br>
+                <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
+            </div>
+        {% else %}
+            <span style="font-weight: bold">Related Links:</span>
+            <div class="textContent">
+                <li>
+                    <a href="{% url 'register' %}">Not a member yet?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'forgot' %}">Forgot your password?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
+                    <br>
+                </li>
+
+                <li>
+                    <a href="{% url 'contact' %}">Do you have any technical problem?</a>
+                    <br>
+                </li>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}
+
+
+

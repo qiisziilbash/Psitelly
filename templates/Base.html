@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<script>
+    $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});
+</script>
+
+<html>
+    <head>
+        <title>Psitelly</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="icon" href="/static/images/Logo.png">
+
+        <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
+        <script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>
+    </head>
+    <body>
+        {% if isIndex %}
+            <div class="main-wrapper">
+        {% else %}
+            <div class="basic-wrapper">
+        {% endif %}
+                <div class="logo">
+                    <a href="{% url 'index' %}"><img src="/static/images/Logo.png"  alt=""></a>
+                </div>
+
+                <div class="search-box">
+                    <form method="GET" action="{% url 'index'%}">
+                        <input type="text" placeholder="Search ..." name="search"  list="cars">
+                    </form>
+                </div>
+
+                <div class="filter">
+                    <a href="{% url 'filter' %}">
+                        <img src="/static/images/Filter.png" data-toggle="tooltip" data-placement="right" title="Advanced search">
+                    </a>
+                </div>
+
+                <div class="upload">
+                    <a href="{% url 'upload' %}">
+                        <img src="/static/images/Upload.png" data-toggle="tooltip" data-placement="right" title="Upload a video">
+                    </a>
+                </div>
+
+                <div class="donate">
+                    <a href="{%  url 'donate' %}">
+                        <img src="/static/images/Donation.png" data-toggle="tooltip" data-placement="right" title="Donation">
+                    </a>
+                </div>
+
+                <div class="profile">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}">
+                            <img src={{ user.profile.picture }} alt="{{ user.profile.picture }}"
+                            data-toggle="tooltip" data-placement="right" title="Profile">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <img src="/static/images/Profile_.png"
+                            data-toggle="tooltip" data-placement="right" title="Not logged in">
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="sidebar">
+                    {% if user.is_authenticated %}
+                        <ul>
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="My Videos" name="content">
+                            </form>
+
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="Upvoted Videos" name="content">
+                            </form>
+
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="Watch History" name="content">
+                            </form>
+
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="Watch Later" name="content">
+                            </form>
+
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="Followers" name="content">
+                            </form>
+
+                            <form method="GET" action={% url 'index' %}>
+                                <input type="submit" value="Following" name="content">
+                            </form>
+                        </ul>
+                    {% endif %}
+
+                    <h3>Psitelly Links</h3>
+
+                    <div class="textContent">
+                        <a href="{% url 'contact' %}"><li>Contact us</li></a>
+                        <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
+                           target="_blank"><li>Quick guide for Psitelly</li></a>
+                        <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
+                           target="_blank"><li>Quick guide for testers</li></a>
+                    </div>
+
+                    {% if Statistics %}
+                        <h3>Psitelly Statistics</h3>
+                        <p>
+                            <span style="font-weight: bold">Members: </span><span style="float: right">{{ usersCount }}</span><br>
+                            <span style="font-weight: bold;">Videos: </span><span style="float: right">{{ videosCount }}</span>
+                        </p>
+                    {% endif %}
+
+
+                    {% if newses %}
+                        <h3> Recent News</h3>
+                        {% for news in newses %}
+                                <p>
+                                    <span style="font-weight: bold">
+                                        <u>{{ news.title }}</u><br>
+                                    </span>
+                                    {{ news.text }}
+                                    <br>
+                                    <span style="font-weight: bold">
+                                        {{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}
+                                    </span>
+                                </p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!--------------------------------->
+                {% block content %}{% endblock %}
+                <!--------------------------------->
+
+                <div class="footer">
+                    <span style="font-weight: bolder">
+                        Powered by
+                        <a href="https://qiisziilbash.wordpress.com/about-me/" target="_blank">Qiisziilbash</a> and
+                        <a href="https://www.djangoproject.com/" target="_blank">Django</a> (February 2019) and hosted by
+                        <a href="http://usu.edu" target="_blank">Utah State University</a>
+                    </span>
+                </div>
+            </div>
+        <!--------------------------------->
+        {% block scripts %}{% endblock %}
+        <!--------------------------------->
+    </body>
+</html>
+
+
