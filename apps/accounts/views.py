@@ -48,7 +48,7 @@ def edit_profile(request):
             return redirect('profile')
 
         if 'save' in request.POST:
-            msgs =[]
+            msgs = []
 
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
@@ -407,11 +407,8 @@ def change_password(request):
             secAnswer = request.POST.get('secAnswer', None)
 
             if user.profile.secQuestion == secQuestion and user.profile.secAnswer == secAnswer:
-                try:
-                    send_password(user)
-                    return JsonResponse({'msg': 'Success'})
-                except:
-                    return JsonResponse({'msg': 'We could not verify your account since your email is not valid'})
+                send_password(user)
+                return JsonResponse({'msg': 'Success'})
             else:
                 return JsonResponse({'msg': 'Your security question or answer does not match the records'})
 
@@ -515,4 +512,3 @@ def purge_file(directory, pattern):
     for f in os.listdir(directory):
         if re.search(pattern, f):
             os.remove(os.path.join(directory, f))
-
