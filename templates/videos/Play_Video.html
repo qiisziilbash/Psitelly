@@ -1,6 +1,9 @@
 
 {% extends "Base.html" %}
-
+{% block head %}
+        <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
+        <script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>
+{% endblock %}
 
 {% block content%}
     <div class="content">
@@ -536,6 +539,7 @@
 <script>
     const player = new Plyr('#player');
 </script>
+
 {% endblock %}
 
 

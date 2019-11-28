@@ -62,7 +62,8 @@ def upload_video(request):
             if not Author.objects.filter(title=author).exists():
                 Author.objects.create(title=author, lastName=author.split(" ")[-1])
 
-            video = Video.objects.create(user=request.user, videoFile=fs.url(videoName), thumbnail=fs.url(thumbnailName),
+            video = Video.objects.create(user=request.user, videoFile=fs.url(videoName),
+                                         thumbnail=fs.url(thumbnailName),
                                          duration=datetime.timedelta(seconds=round(clip.duration)),
                                          publishDate=datetime.datetime.now(), title=request.POST.get('title', ''),
                                          description=request.POST.get('description', ''),
@@ -110,32 +111,31 @@ def edit_video(request):
                 video = Video.objects.get(pk=videoPK)
 
                 if 'videoFile' in request.FILES:
+                    video = Video.objects.get(pk=videoPK)
+
+                    fs = FileSystemStorage()
+
+                    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+                    fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
+
                     myFile = request.FILES['videoFile']
 
                     fileName = os.path.splitext(myFile.name)[0]
                     videoSuffix = os.path.splitext(myFile.name)[1]
                     randomSuffix = '_' + str(random.randint(1, 1000000))
 
-                    fs = FileSystemStorage()
-                    videoName = fs.save('videos/' + fileName + videoSuffix, myFile)
-
-                    # resize video and create thumbnail image
-                    clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(720, None))
-
-                    videoName = 'videos/' + fileName + randomSuffix + videoSuffix
-                    clip.write_videofile(MEDIA_ROOT + videoName, temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3')
-
+                    videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
                     thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
-                    thumbnailAddress = MEDIA_ROOT + thumbnailName
-                    clip.save_frame(thumbnailAddress, t=0)
 
-                    im = Image.open(os.path.join(MEDIA_ROOT, thumbnailName))
-                    im = im.resize((250, 150), Image.ANTIALIAS)
-                    im.save(os.path.join(MEDIA_ROOT, thumbnailName))
+                    clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(150, 250))
+                    clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
 
-                    Video.objects.filter(pk=videoPK).update(videoFile=fs.url(videoName), thumbnail=fs.url(thumbnailName),
+                    Video.objects.filter(pk=videoPK).update(videoFile=fs.url(videoName),
+                                                            thumbnail=fs.url(thumbnailName),
                                                             duration=datetime.timedelta(seconds=round(clip.duration)),
                                                             publishDate=datetime.datetime.now())
+
+                    create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
 
                 focus = request.POST.get('focus', '')
                 topic = request.POST.get('topic', '')
@@ -343,9 +343,10 @@ def get_watch_later_videos(user, videos):
 
 def start_new_thread(function):
     def decorator(*args, **kwargs):
-        t = Thread(target = function, args=args, kwargs=kwargs)
+        t = Thread(target=function, args=args, kwargs=kwargs)
         t.daemon = True
         t.start()
+
     return decorator
 
 
@@ -372,6 +373,3 @@ def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
     video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + videoSuffix)
 
     video.save()
-
-
-

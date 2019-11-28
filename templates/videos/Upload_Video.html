@@ -1,11 +1,14 @@
 {% extends "Base.html" %}
 
+{% block head %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block content%}
     <div class="content">
         {% if user.is_authenticated %}
             <h1>Video Uploader</h1>
-            <form method="post" enctype="multipart/form-data" autocomplete="off">
+            <form method="post" enctype="multipart/form-data" autocomplete="off" id="uploadForm">
                 {% csrf_token %}
                 <div class="uploadForm">
                     <span>
@@ -83,8 +86,11 @@
 
                     <br>
 
+
                     <span>
-                        <button type="submit" id="uploadBtn">Upload</button>
+                        <button type="submit" id="uploadBtn">
+                            Upload
+                        </button>
                     </span>
 
                 </div>
@@ -124,8 +130,7 @@
 {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
-        function upload(element)
-        {
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
             if($('#titleID').val() !== "" &&
                $('#authorLastNameID').val() !== "" &&
                $('#journalID').val() !== "" &&
@@ -133,10 +138,11 @@
                $('#focusID').val() !== "" &&
                $('#videoID').get(0).files.length > 0
             ){
-                $(element).attr('disabled', true);
-                $(element).html('Uploading ...');
+                $('#uploadBtn').attr('disabled', true);
+                $('#uploadBtn').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
             }
-        }
+    });
+
     </script>
 
 {% endblock %}

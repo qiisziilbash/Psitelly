@@ -1,101 +1,104 @@
 {% extends "Base.html" %}
 
+{% block head %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block content%}
     <div class="content">
         {% if user.is_authenticated %}
-                <h1>Edit Video</h1>
-                <form method="post" enctype="multipart/form-data" autocomplete="off">
-                    {% csrf_token %}
-                    <div class="uploadForm">
-                        <span>
-                            <span style="font-weight: bolder"> Title:</span>
-                            <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required>{{ video.title }}</textarea>
-                            <br><br>
-                        </span>
+            <h1>Edit Video</h1>
+            <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
+                {% csrf_token %}
+                <div class="uploadForm">
+                    <span>
+                        <span style="font-weight: bolder"> Title:</span>
+                        <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required>{{ video.title }}</textarea>
+                        <br><br>
+                    </span>
 
-                        <span>
-                            <span style="font-weight: bolder"> Description:</span>
-                            <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description">{{ video.description }}</textarea>
-                            <br><br>
-                        </span>
-
-
-
-                        <span>
-                            <span style="font-weight: bolder">Author:</span>
-                            <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez"
-                                   list="authors" value="{{ video.author.name }}" required>
-                            <datalist id="authors">
-                                {% for author in authors %}
-                                  <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
-                                {% endfor %}
-                            </datalist>
-                            <br><br>
-                        </span>
-
-                        <span>
-                            <span style="font-weight: bolder"> Year:</span>
-                            <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 1999" value="{{ video.year }}" required>
-                            <br><br>
-                        </span>
-
-
-                        <span>
-                            <span style="font-weight: bolder"> Journal:</span>
-                            <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals"
-                                  value="{{ video.journal.title }}" required>
-                            <datalist id="journals">
-                                {% for journal in journals %}
-                                  <option value="{{ journal.title }}" label="{{ journal.nVideos}} videos">
-                                {% endfor %}
-                            </datalist>
-                            <br><br>
-                        </span>
-
-                        <span>
-                            <span style="font-weight: bolder"> Topic:</span>
-                            <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics"
-                                   value="{{ video.topic.title }}" required>
-                            <datalist id="topics">
-                                {% for topic in topics %}
-                                  <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
-                                {% endfor %}
-                            </datalist>
-                            <br><br>
-                        </span>
-
-                        <span>
-                            <span style="font-weight: bolder"> Focus:</span>
-                            <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses"
-                                   value="{{ video.focus.title }}" required>
-                            <datalist id="focuses">
-                                {% for focus in focuses %}
-                                  <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
-                                {% endfor %}
-                            </datalist>
-                            <br><br>
-                        </span>
+                    <span>
+                        <span style="font-weight: bolder"> Description:</span>
+                        <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description">{{ video.description }}</textarea>
+                        <br><br>
+                    </span>
 
 
 
-                        <span>
-                            <span style="font-weight: bolder"> Select a Different Video:</span>
-                            <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white"> <br>
-                            <br>
-                        </span>
+                    <span>
+                        <span style="font-weight: bolder">Author:</span>
+                        <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez"
+                               list="authors" value="{{ video.author.lastName }}" required>
+                        <datalist id="authors">
+                            {% for author in authors %}
+                              <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Year:</span>
+                        <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 1999" value="{{ video.year }}" required>
+                        <br><br>
+                    </span>
 
 
+                    <span>
+                        <span style="font-weight: bolder"> Journal:</span>
+                        <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals"
+                              value="{{ video.journal.title }}" required>
+                        <datalist id="journals">
+                            {% for journal in journals %}
+                              <option value="{{ journal.title }}" label="{{ journal.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Topic:</span>
+                        <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics"
+                               value="{{ video.topic.title }}" required>
+                        <datalist id="topics">
+                            {% for topic in topics %}
+                              <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Focus:</span>
+                        <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses"
+                               value="{{ video.focus.title }}" required>
+                        <datalist id="focuses">
+                            {% for focus in focuses %}
+                              <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
+                            {% endfor %}
+                        </datalist>
+                        <br><br>
+                    </span>
+
+
+
+                    <span>
+                        <span style="font-weight: bolder"> Select a Different Video:</span>
+                        <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white"> <br>
                         <br>
+                    </span>
 
-                        <span>
-                            <button type="submit" name="save" id="uploadBtn" onclick="upload(this)">Save</button>
-                            <button type="submit" name="delete" formnovalidate style="background-color: red">Delete</button>
-                            <button type="submit" name="cancel" formnovalidate>Cancel</button>
-                        </span>
-                    </div>
 
-                </form>
+                    <br>
+
+                    <span>
+                        <button type="submit" name="save" id="uploadBtn3">Save</button>
+                        <button type="submit" name="delete" formnovalidate style="background-color: red">Delete</button>
+                        <button type="submit" name="cancel" formnovalidate>Cancel</button>
+                    </span>
+                </div>
+
+            </form>
         {% else %}
             <p> You need to <a href="{% url 'login' %}">log in</a> (or <a href="{% url 'register' %}">sign up</a>, if you haven't yet)in order to upload a video</p>
         {% endif %}
@@ -121,27 +124,21 @@
             If you think it is not spelled correctly, or you can not find the one that you are looking for, type and create your own.
         </p>
     </div>
-
-
 {% endblock %}
-
-
 
 
 {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-    <script>
+        <script>
 
-        function change(element)
-        {
+    document.getElementById('editVideoForm').addEventListener('submit', function(event) {
             if($('#videoID').get(0).files.length > 0){
-                $(element).attr('disabled', true);
-                $(element).html('Uploading ...');
+                //$('#uploadBtn3').attr('disabled', true);
+                //$('#uploadBtn3').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
             }
-        }
+    });
 
     </script>
-
 {% endblock %}
 
 

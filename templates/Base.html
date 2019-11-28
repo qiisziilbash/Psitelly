@@ -11,9 +11,7 @@
         <title>Psitelly</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <link rel="icon" href="/static/images/Logo.png">
-
-        <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
-        <script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>
+        {% block head %}{% endblock %}
     </head>
     <body>
         {% if isIndex %}
