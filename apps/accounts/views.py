@@ -368,6 +368,7 @@ def post_register(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
         email = request.POST.get('email', None)
+        password = request.POST.get('password', None)
 
         if User.objects.filter(username=username, email=email).exists():
             user = User.objects.get(username=username, email=email)
@@ -382,7 +383,7 @@ def post_register(request):
                     user.profile.emailVerified = True
                     user.save()
 
-                    user = authenticate(username=user)
+                    user = authenticate(username=user, password=password)
                     login(request, user)
 
                     return JsonResponse({'msg': 'Success'})

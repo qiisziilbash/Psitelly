@@ -102,6 +102,8 @@
                           $('#verifyBtn').attr('name','verify');
                           $('#verifyBtn').html('Verify');
                           $('#emailText').attr('disabled',true);
+                          $('#secAnswerText').attr('disabled',true);
+                          $('#secQuestionText').attr('disabled',true);
                           $('#verificationContent').append(
                               "<label> Verification Code:</label> <br>" +
                               "<input id=\"codeText\" type=\"text\" name=\"code\" class=\"form-control\"  placeholder=\"Verification Code\">" +
@@ -130,7 +132,7 @@
                   success: function (data) {
                       if(data.msg == "Success"){
                           alert('Your email is verified.')
-                          window.location = '/accounts/login';
+                          window.location.href = '/accounts/login';
                       }else{
                           $('#verifyBtn').attr("disabled", false);
                           $('#verifyBtn').html('Verify');
