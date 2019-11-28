@@ -97,6 +97,8 @@ def edit_profile(request):
             if not newPass1 == '':
                 if newPass1 == newPass2:
                     request.user.set_password(newPass1)
+                    user = authenticate(username=username, password=newPass1)
+                    login(request, user)
                     msgs.append('Your password is updated')
                 else:
                     msgs.append('Entered passwords do not match')
@@ -413,7 +415,7 @@ def change_password(request):
                     send_password(user)
                     return JsonResponse({'msg': 'Success'})
                 except:
-                    return JsonResponse({'msg': 'We could not register this account since entered email is not valid'})
+                    return JsonResponse({'msg': 'We could not send password since entered email is not valid'})
             else:
                 return JsonResponse({'msg': 'Your security question or answer does not match the records'})
 
