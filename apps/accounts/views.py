@@ -3,6 +3,8 @@ import random
 import re
 import string
 
+import sys
+
 from pytz import utc
 
 from django.contrib.auth import authenticate, login
@@ -48,7 +50,7 @@ def edit_profile(request):
             return redirect('profile')
 
         if 'save' in request.POST:
-            msgs = []
+            msgs =[]
 
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
@@ -407,8 +409,11 @@ def change_password(request):
             secAnswer = request.POST.get('secAnswer', None)
 
             if user.profile.secQuestion == secQuestion and user.profile.secAnswer == secAnswer:
-                send_password(user)
-                return JsonResponse({'msg': 'Success'})
+                try:
+                    send_password(user)
+                    return JsonResponse({'msg': 'Success'})
+                except:
+                    return JsonResponse({'msg': sys.exc_info()[0]})
             else:
                 return JsonResponse({'msg': 'Your security question or answer does not match the records'})
 
@@ -512,3 +517,4 @@ def purge_file(directory, pattern):
     for f in os.listdir(directory):
         if re.search(pattern, f):
             os.remove(os.path.join(directory, f))
+
