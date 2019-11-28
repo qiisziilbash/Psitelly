@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@gbusud8%-gs(iyid_9)zii&5%n7y09n!fdr*w4na1h&*^5(2x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -127,7 +127,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = "/media/"
 
 
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'psitelly@gmail.com'
