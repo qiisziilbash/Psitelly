@@ -413,7 +413,7 @@ def change_password(request):
                     send_password(user)
                     return JsonResponse({'msg': 'Success'})
                 except:
-                    return JsonResponse({'msg': sys.exc_info()[0]})
+                    return JsonResponse({'msg': 'We could not register this account since entered email is not valid'})
             else:
                 return JsonResponse({'msg': 'Your security question or answer does not match the records'})
 
