@@ -7,7 +7,11 @@
 {% block content%}
     <div class="content">
         {% if user.is_authenticated %}
+            {% if video.isProcessed %}
             <h1>Edit Video</h1>
+            {% else %}
+            <h1>Video file is still being processed</h1>
+            {% endif %}
             <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
                 {% csrf_token %}
                 <div class="uploadForm">
@@ -92,8 +96,11 @@
                     <br>
 
                     <span>
-                        <button type="submit" id="uploadBtn3">Save</button>
-                        <input type="button" formnovalidate style="background-color: red" onclick="return deleteVideo({{ video.pk }})" value="Delete">
+                        {% if video.isProcessed %}
+                            <button type="submit" id="uploadBtn3">Save</button>
+                            <input type="button" formnovalidate style="background-color: red" onclick="return deleteVideo({{ video.pk }})" value="Delete">
+                        {% endif %}
+
                         <input type="button" value="Cancel" onclick="return cancelEdit()">
                     </span>
                 </div>

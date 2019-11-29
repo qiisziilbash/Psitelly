@@ -101,9 +101,7 @@ def edit_video(request):
         if request.method == 'POST':
             video = Video.objects.get(pk=videoPK)
 
-            if 'videoFile' in request.FILES:
-                video = Video.objects.get(pk=videoPK)
-
+            if 'videoFile' in request.FILES and video.isProcessed:
                 fs = FileSystemStorage()
 
                 fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
