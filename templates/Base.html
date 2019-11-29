@@ -20,12 +20,20 @@
             <div class="basic-wrapper">
         {% endif %}
                 <div class="logo">
-                    <a href="{% url 'index' %}"><img src="/static/images/Logo.png"  alt=""></a>
+                    <span style="float: left"><a href="{% url 'index' %}"><img src="/static/images/Logo.png"  alt=""></a></span>
+                    <span style="float: left; text-align: left; font-weight: bolder;font-size: larger; margin-left: 7px">
+                        Psitelly <br>
+                    </span>
+                    <span style="float: left; text-align: left; font-weight: bolder;font-size: small; margin-left: 7px">
+                        A website to understand <br>
+                        the academic articles faster
+                    </span>
+
                 </div>
 
                 <div class="search-box">
                     <form method="GET" action="{% url 'index'%}">
-                        <input type="text" placeholder="Search ..." name="search"  list="cars">
+                        <input type="text" placeholder="Search an author, article, journal, topic, focus, or a username " name="search"  list="cars">
                     </form>
                 </div>
 
@@ -124,8 +132,9 @@
                                     <span style="font-weight: bold">
                                         <u>{{ news.title }}</u><br>
                                     </span>
-                                    {{ news.text }}
                                     <br>
+                                    {{ news.text }}
+                                    <br><br>
                                     <span style="font-weight: bold">
                                         {{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}
                                     </span>

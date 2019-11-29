@@ -102,10 +102,16 @@
                 <span style="font-weight: bold">Uploaded videos:</span> <span style="float: right">{{ user.profile.nVideos }}</span><br>
                 <span style="font-weight: bold">Made Comments:</span> <span style="float: right">{{ user.profile.nComments }}</span><br>
 
+                <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
+
+            </div>
+            <h3>Upvotes</h3>
+            <div class="textContent">
                 <span style="font-weight: bold">Video upvotes received:</span> <span style="float: right">{{ user.profile.nVideoUpVotesReceived }}</span> <br>
                 <span style="font-weight: bold">Comment upvotes received:</span><span style="float: right">{{ user.profile.nCommentUpVotesReceived }}</span> <br>
-
-                <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
+            </div>
+            <h3>Followings</h3>
+            <div class="textContent">
 
                 <span style="font-weight: bold">Followers:</span><span style="float: right">{{ user.profile.nFollowers }}</span> <br>
                 <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
