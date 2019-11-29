@@ -8,11 +8,12 @@
     <div class="content">
         {% if user.is_authenticated %}
             {% if video.isProcessed %}
-            <h1>Edit Video</h1>
+                <h1>Edit Video</h1>
+                <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
             {% else %}
-            <h1>Video file is still being processed</h1>
+                <h1>Video file is still being processed; wait a few minutes before editing.</h1>
+                <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm" disabled>
             {% endif %}
-            <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
                 {% csrf_token %}
                 <div class="uploadForm">
                     <span>

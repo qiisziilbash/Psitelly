@@ -116,6 +116,7 @@ def send_follow_notification(userFollowing):
                                     time=datetime.datetime.now())
         userFollowing.followee.hasNotifications = True
         userFollowing.followee.save()
+    
 
     if userFollowing.followee.emailFollows:
         subject = 'Follow Notification (Psitelly) '

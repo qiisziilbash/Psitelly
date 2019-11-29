@@ -124,7 +124,7 @@ def increase_videos(sender, instance, created, **kwargs):
         instance.focus.nVideos += 1
         instance.topic.nVideos += 1
         instance.journal.nVideos += 1
-        instance.author.nVideos +=1
+        instance.author.nVideos += 1
 
         instance.focus.save()
         instance.topic.save()
@@ -296,7 +296,7 @@ def send_upload_notifications(video):
         for userFollowing in userFollowings:
             if userFollowing.follower.notifyUploads:
                 Notification.objects.create(user=userFollowing.follower.user,
-                                            text='%s just uploaded a new video' % userFollowing.followee.user.usernamae,
+                                            text='%s just uploaded a new video: %s' % userFollowing.followee.user.username,
                                             time=datetime.datetime.now())
                 userFollowing.follower.user.profile.hasNotifications = True
                 userFollowing.follower.user.profile.save()

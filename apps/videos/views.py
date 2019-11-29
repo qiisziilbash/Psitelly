@@ -1,7 +1,6 @@
 import random
 from urllib.parse import urlencode
 
-from PIL import Image
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -126,6 +125,7 @@ def edit_video(request):
                 video.thumbnail = fs.url(thumbnailName)
                 video.duration = datetime.timedelta(seconds=round(clip.duration))
                 video.publishDate = datetime.datetime.now()
+                video.isProcessed = False
 
                 video.save()
 
