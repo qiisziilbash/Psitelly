@@ -100,7 +100,7 @@
             {{ video.description|linebreaks }}
 
             <span style="text-align:left; font-weight: bold">Google Scholar Link:</span>
-            {% if video.gsLink == '' %}
+            {% if video.gsLink == '' or video.gsLink == None %}
                 Link is not Provided
             {% else %}
                 <a href="{{ video.gsLink }}" target="_blank">{{ video.gsLink }}</a>
@@ -108,7 +108,7 @@
             <br>
 
             <span style="text-align:left;  font-weight: bold;" >Article Link:</span>
-            {% if video.pdfLink == '' %}
+            {% if video.pdfLink == '' or video.pdfLink == None %}
                 Link is not Provided
             {% else %}
                 <a href="{{ video.pdfLink }}" target="_blank">{{ video.pdfLink }}</a>
