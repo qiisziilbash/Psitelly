@@ -14,4 +14,5 @@ urlpatterns = [
     path('ajax/unWatchLater/',  views.unwatch_later,        name='unWatchLater'),
 
     path('ajax/deleteHistory/', views.delete_watch_history, name='deleteHistory'),
+    path('ajax/deleteVideo/',   views.delete_video,           name='deleteVideo'),
 ]

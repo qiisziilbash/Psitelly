@@ -257,7 +257,7 @@ a.button {
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
 .video-gallery::-webkit-scrollbar { width: 0 !important }
@@ -470,6 +470,16 @@ a.button {
     background-color: white;
     border-radius: 7px;
     font-size: 14px;
+    height: 30px;
+    float: right;
+}
+
+.uploadForm input[type="button"]{
+    background-color: white;
+    border-radius: 7px;
+    font-size: 14px;
+    width: 100px;
+    height: 30px;
     float: right;
 }
 
@@ -491,7 +501,7 @@ a.button {
     background-color: black;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 4fr 16fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto minmax(700px,1fr) auto;
     grid-template-areas:
         "logo header filter upload donate   profile"
@@ -503,7 +513,7 @@ a.button {
     background-color: black;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 4fr 16fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto minmax(750px,1fr) auto;
     grid-template-areas:
         "logo header filter upload donate   profile"

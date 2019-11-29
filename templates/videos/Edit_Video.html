@@ -92,9 +92,9 @@
                     <br>
 
                     <span>
-                        <button type="submit" name="save" id="uploadBtn3">Save</button>
-                        <button type="submit" name="delete" formnovalidate style="background-color: red">Delete</button>
-                        <button type="submit" name="cancel" formnovalidate>Cancel</button>
+                        <button type="submit" id="uploadBtn3">Save</button>
+                        <input type="button" formnovalidate style="background-color: red" onclick="return deleteVideo({{ video.pk }})" value="Delete">
+                        <input type="button" value="Cancel" onclick="return cancelEdit()">
                     </span>
                 </div>
 
@@ -129,16 +129,44 @@
 
 {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-        <script>
+    <script>
 
     document.getElementById('editVideoForm').addEventListener('submit', function(event) {
             if($('#videoID').get(0).files.length > 0){
-                //$('#uploadBtn3').attr('disabled', true);
-                //$('#uploadBtn3').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
+                $('#uploadBtn3').attr('disabled', true);
+                $('#uploadBtn3').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
             }
     });
-
     </script>
+    <!------------------------------------------------------------------------------------->
+    <script>
+        function deleteVideo(videoPK)
+        {
+            $.ajax({
+              type: "GET",
+              url:  '/ajax/deleteVideo',
+              data: {'videoPK': videoPK },
+              dataType: 'json',
+
+              success: function (data) {
+                  if(data.msg == "Success"){
+                      window.location.href = "/?content=My Videos";
+                  }else{
+                      alert(data.msg)
+                  }
+              }
+            });
+        }
+    </script>
+
+    <script>
+        function cancelEdit()
+        {
+            window.location.href = "/?content=My Videos";
+        }
+    </script>
+
+
 {% endblock %}
 
 

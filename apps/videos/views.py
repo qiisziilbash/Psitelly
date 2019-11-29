@@ -99,126 +99,122 @@ def edit_video(request):
             return render(request, 'videos/Edit_Video.html', context)
 
         if request.method == 'POST':
-            if 'cancel' in request.POST:
-                return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
+            video = Video.objects.get(pk=videoPK)
 
-            if 'delete' in request.POST:
-                if Video.objects.filter(pk=videoPK):
-                    Video.objects.filter(pk=videoPK).delete()
-                return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
-
-            if 'save' in request.POST:
+            if 'videoFile' in request.FILES:
                 video = Video.objects.get(pk=videoPK)
 
-                if 'videoFile' in request.FILES:
-                    video = Video.objects.get(pk=videoPK)
+                fs = FileSystemStorage()
 
-                    fs = FileSystemStorage()
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
 
-                    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
-                    fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
+                myFile = request.FILES['videoFile']
 
-                    myFile = request.FILES['videoFile']
+                fileName = os.path.splitext(myFile.name)[0]
+                videoSuffix = os.path.splitext(myFile.name)[1]
+                randomSuffix = '_' + str(random.randint(1, 1000000))
 
-                    fileName = os.path.splitext(myFile.name)[0]
-                    videoSuffix = os.path.splitext(myFile.name)[1]
-                    randomSuffix = '_' + str(random.randint(1, 1000000))
+                videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
+                thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
 
-                    videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
-                    thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
+                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(150, 250))
+                clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
 
-                    clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(150, 250))
-                    clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
+                video.videoFile = fs.url(videoName)
+                video.thumbnail = fs.url(thumbnailName)
+                video.duration = datetime.timedelta(seconds=round(clip.duration))
+                video.publishDate = datetime.datetime.now()
 
-                    Video.objects.filter(pk=videoPK).update(videoFile=fs.url(videoName),
-                                                            thumbnail=fs.url(thumbnailName),
-                                                            duration=datetime.timedelta(seconds=round(clip.duration)),
-                                                            publishDate=datetime.datetime.now())
+                video.save()
 
-                    create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
+                create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
 
-                focus = request.POST.get('focus', '')
-                topic = request.POST.get('topic', '')
-                journal = request.POST.get('journal', '')
-                author = request.POST.get('author', '')
+            focus = request.POST.get('focus', '')
+            topic = request.POST.get('topic', '')
+            journal = request.POST.get('journal', '')
+            author = request.POST.get('author', '')
 
-                if not video.focus.title == focus:
-                    fObj = Focus.objects.get(title=video.focus.title)
+            if not video.focus.title == focus:
+                fObj = Focus.objects.get(title=video.focus.title)
 
-                    if fObj.nVideos == 1:
-                        Focus.objects.filter(title=video.focus.title).delete()
-                    else:
-                        fObj.nVideos -= 1
-                        fObj.save()
+                if fObj.nVideos == 1:
+                    Focus.objects.filter(title=video.focus.title).delete()
+                else:
+                    fObj.nVideos -= 1
+                    fObj.save()
 
-                    if not Focus.objects.filter(title=focus).exists():
-                        Focus.objects.create(title=focus)
+                if not Focus.objects.filter(title=focus).exists():
+                    Focus.objects.create(title=focus)
 
-                    focusObject = Focus.objects.get(title=focus)
-                    focusObject.nVideos += 1
-                    focusObject.save()
+                focusObject = Focus.objects.get(title=focus)
+                focusObject.nVideos += 1
+                focusObject.save()
 
-                    Video.objects.filter(pk=videoPK).update(focus=focusObject)
+                Video.objects.filter(pk=videoPK).update(focus=focusObject)
 
-                if not video.topic.title == topic:
-                    tObj = Topic.objects.get(title=video.topic.title)
+            if not video.topic.title == topic:
+                tObj = Topic.objects.get(title=video.topic.title)
 
-                    if tObj.nVideos == 1:
-                        Topic.objects.filter(title=video.topic.title).delete()
-                    else:
-                        tObj.nVideos -= 1
-                        tObj.save()
+                if tObj.nVideos == 1:
+                    Topic.objects.filter(title=video.topic.title).delete()
+                else:
+                    tObj.nVideos -= 1
+                    tObj.save()
 
-                    if not Topic.objects.filter(title=topic).exists():
-                        Topic.objects.create(title=topic)
+                if not Topic.objects.filter(title=topic).exists():
+                    Topic.objects.create(title=topic)
 
-                    topicObject = Topic.objects.get(title=topic)
-                    topicObject.nVideos += 1
-                    topicObject.save()
+                topicObject = Topic.objects.get(title=topic)
+                topicObject.nVideos += 1
+                topicObject.save()
 
-                    Video.objects.filter(pk=videoPK).update(topic=topicObject)
+                Video.objects.filter(pk=videoPK).update(topic=topicObject)
 
-                if not video.journal.title == journal:
-                    jObj = Journal.objects.get(title=video.journal.title)
+            if not video.journal.title == journal:
+                jObj = Journal.objects.get(title=video.journal.title)
 
-                    if jObj.nVideos == 1:
-                        Journal.objects.filter(title=video.journal.title).delete()
-                    else:
-                        jObj.nVideos -= 1
-                        jObj.save()
+                if jObj.nVideos == 1:
+                    Journal.objects.filter(title=video.journal.title).delete()
+                else:
+                    jObj.nVideos -= 1
+                    jObj.save()
 
-                    if not Journal.objects.filter(title=journal).exists():
-                        Journal.objects.create(title=journal)
+                if not Journal.objects.filter(title=journal).exists():
+                    Journal.objects.create(title=journal)
 
-                    journalObject = Journal.objects.get(title=journal)
-                    journalObject.nVideos += 1
-                    journalObject.save()
+                journalObject = Journal.objects.get(title=journal)
+                journalObject.nVideos += 1
+                journalObject.save()
 
-                    Video.objects.filter(pk=videoPK).update(journal=journalObject)
+                Video.objects.filter(pk=videoPK).update(journal=journalObject)
 
-                if not video.author.title == author:
-                    aObj = Author.objects.get(title=video.author.title)
+            if not video.author.title == author:
+                aObj = Author.objects.get(title=video.author.title)
 
-                    if aObj.nVideos == 1:
-                        Author.objects.filter(title=video.author.title).delete()
-                    else:
-                        aObj.nVideos -= 1
-                        aObj.save()
+                if aObj.nVideos == 1:
+                    Author.objects.filter(title=video.author.title).delete()
+                else:
+                    aObj.nVideos -= 1
+                    aObj.save()
 
-                    if not Author.objects.filter(title=author).exists():
-                        Author.objects.create(title=author, lastName=author.split(" ")[-1])
+                if not Author.objects.filter(title=author).exists():
+                    Author.objects.create(title=author, lastName=author.split(" ")[-1])
 
-                    authorObject = Author.objects.get(title=author)
-                    authorObject.nVideos += 1
-                    authorObject.save()
+                authorObject = Author.objects.get(title=author)
+                authorObject.nVideos += 1
+                authorObject.save()
 
-                    Video.objects.filter(pk=videoPK).update(author=authorObject)
+                Video.objects.filter(pk=videoPK).update(author=authorObject)
 
-                Video.objects.filter(pk=videoPK).update(title=request.POST.get('title', ''),
-                                                        year=request.POST.get('year', 0),
-                                                        description=request.POST.get('description', ''))
+            Video.objects.filter(pk=videoPK).update(title=request.POST.get('title', ''),
+                                                    year=request.POST.get('year', 0),
+                                                    description=request.POST.get('description', ''))
 
-                return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
+            return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:
         return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
 
@@ -341,6 +337,21 @@ def get_watch_later_videos(user, videos):
         return [False] * len(videos)
 
 
+def delete_video(request):
+    if request.user.is_authenticated:
+        videoPK = request.GET.get('videoPK', None)
+
+        if Video.objects.filter(pk=videoPK, user=request.user):
+            video = Video.objects.get(pk=videoPK)
+            if not video.isProcessed:
+                return JsonResponse({'msg': 'Video is still being processed; waite a few minutes before deleting'})
+            else:
+                Video.objects.filter(pk=videoPK).delete()
+                return JsonResponse({'msg': 'Success'})
+        else:
+            return JsonResponse({'msg': 'Video does not exist or you are not authorized to delete'})
+
+
 def start_new_thread(function):
     def decorator(*args, **kwargs):
         t = Thread(target=function, args=args, kwargs=kwargs)
@@ -371,5 +382,7 @@ def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
                          temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3')
 
     video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + videoSuffix)
+
+    video.isProcessed = True
 
     video.save()
