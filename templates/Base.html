@@ -62,7 +62,9 @@
                 </div>
 
                 <div class="sidebar">
+                    <h3>Dashboard</h3>
                     {% if user.is_authenticated %}
+
                         <ul>
                             <form method="GET" action={% url 'index' %}>
                                 <input type="submit" value="My Videos" name="content">
@@ -86,6 +88,12 @@
 
                             <form method="GET" action={% url 'index' %}>
                                 <input type="submit" value="Following" name="content">
+                            </form>
+                        </ul>
+                    {% else %}
+                        <ul>
+                            <form method="GET" action={% url 'login' %}>
+                                <input type="submit" value="Log in to access your dashboard" name="content">
                             </form>
                         </ul>
                     {% endif %}

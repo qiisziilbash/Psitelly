@@ -17,7 +17,7 @@
 
                 <img class="profilePic" src={{ user.profile.picture }}>
                 <span style="float: right">
-                    <h1><a href="{% url 'showNotifications' %}">Notifications</a></h1>
+                    <h3><a href="{% url 'showNotifications' %}">Notifications</a></h3>
                 </span>
                 <span class="profile-item" style="float:right;">
                     {% if user.profile.hasNotifications %}
@@ -151,7 +151,7 @@
 
     <div class="rightbar">
         {% if user.is_authenticated %}
-            <span style="font-weight: bold">User Statistics:</span>
+            <h3>User Statistics</h3>
             <div class="textContent">
                 <span style="font-weight: bold">Member since:</span><span style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</span><br>
 
@@ -167,7 +167,7 @@
                 <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
             </div>
         {% else %}
-            <span style="font-weight: bold">Related Links:</span>
+            <h3>Related Links</h3>
             <div class="textContent">
                 <li>
                     <a href="{% url 'register' %}">Not a member yet?</a>

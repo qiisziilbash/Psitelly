@@ -45,7 +45,7 @@ def index(request):
                     videos.append(item.video)
 
                 if videos:
-                    context['videosList'] = zip(['Up Voted Videos'],
+                    context['videosList'] = zip(['Upvoted Videos'],
                                                 [zip(videos, get_watch_later_videos(request.user, videos))])
                 else:
                     context['msgs'] = ['You have not upvoted any video yet']

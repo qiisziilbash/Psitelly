@@ -101,7 +101,7 @@
 
             <span style="text-align:left; font-weight: bold">Google Scholar Link:</span>
             {% if video.gsLink == '' or video.gsLink == None %}
-                Link is not Provided
+                Link is not provided
             {% else %}
                 <a href="{{ video.gsLink }}" target="_blank">{{ video.gsLink }}</a>
             {% endif %}
@@ -109,7 +109,7 @@
 
             <span style="text-align:left;  font-weight: bold;" >Article Link:</span>
             {% if video.pdfLink == '' or video.pdfLink == None %}
-                Link is not Provided
+                Link is not provided
             {% else %}
                 <a href="{{ video.pdfLink }}" target="_blank">{{ video.pdfLink }}</a>
             {% endif %}
@@ -165,9 +165,9 @@
                 <br><br>
                 <button name="submit" onclick="return postComment(this,{{ video.pk }})">Submit</button>
             {% else %}
-                <textarea rows="4" spellcheck="true" placeholder="Please log in to comment." id="commentText" disabled></textarea>
-                <br>
-                <button name="aSubmit" disabled onclick="return postComment(this,'')">Submit</button>
+                <textarea rows="4" spellcheck="true" placeholder="Please log in to be able to comment." id="commentText" disabled></textarea>
+                <br><br>
+                <button name="aSubmit" disabled>Submit</button>
             {% endif %}
         </div>
 
@@ -232,7 +232,7 @@
         {% if videosList %}
             {% for videos in videosList %}
 
-                <h1>{{ videos.0 }}</h1>
+                <h3>{{ videos.0 }}</h3>
 
                 <div class="video-gallery">
                     {% for video in videos.1 %}
