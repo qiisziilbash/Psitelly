@@ -14,108 +14,108 @@ from apps.accounts.models import UserFollowing, Notification
 
 
 class Focus(models.Model):
-    title           = models.CharField(max_length=100)
-    nFollowers      = models.IntegerField(default=0, null=True)
-    nVideos         = models.IntegerField(default=0, null=True)
+    title = models.CharField(max_length=100)
+    nFollowers = models.IntegerField(default=0, null=True)
+    nVideos = models.IntegerField(default=0, null=True)
 
 
 class Topic(models.Model):
-    title           = models.CharField(max_length=100)
-    nFollowers      = models.IntegerField(default=0, null=True)
-    nVideos         = models.IntegerField(default=0, null=True)
+    title = models.CharField(max_length=100)
+    nFollowers = models.IntegerField(default=0, null=True)
+    nVideos = models.IntegerField(default=0, null=True)
 
 
 class Journal(models.Model):
-    title           = models.CharField(max_length=100)
-    nFollowers      = models.IntegerField(default=0, null=True)
-    nVideos         = models.IntegerField(default=0, null=True)
+    title = models.CharField(max_length=100)
+    nFollowers = models.IntegerField(default=0, null=True)
+    nVideos = models.IntegerField(default=0, null=True)
 
 
 class Author(models.Model):
-    title           = models.CharField(max_length=100)
-    lastName        = models.CharField(max_length=100)
-    nFollowers      = models.IntegerField(default=0, null=True)
-    nVideos         = models.IntegerField(default=0, null=True)
+    title = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    nFollowers = models.IntegerField(default=0, null=True)
+    nVideos = models.IntegerField(default=0, null=True)
 
 
 class Video(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    title           = models.CharField(max_length=500, null=True)
-    year            = models.IntegerField(default=0)
+    title = models.CharField(max_length=500, null=True)
+    year = models.IntegerField(default=0)
 
-    focus           = models.ForeignKey(Focus, on_delete=models.SET_NULL, null=True)
-    topic           = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
-    journal         = models.ForeignKey(Journal, on_delete=models.SET_NULL, null=True)
-    author          = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    focus = models.ForeignKey(Focus, on_delete=models.SET_NULL, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
+    journal = models.ForeignKey(Journal, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
-    pdfLink         = models.CharField(max_length=200, null=True)
-    gsLink          = models.CharField(max_length=200, null=True)
-    description     = models.CharField(max_length=1000, null=True)
+    pdfLink = models.CharField(max_length=200, null=True)
+    gsLink = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=1000, null=True)
 
-    duration        = models.DurationField(null=True)
-    views           = models.IntegerField(default=0)
-    likes           = models.IntegerField(default=0)
-    comments        = models.IntegerField(default=0)
-    publishDate     = models.DateTimeField(null=True)
+    duration = models.DurationField(null=True)
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
+    comments = models.IntegerField(default=0)
+    publishDate = models.DateTimeField(null=True)
 
-    videoFile       = models.FileField()
-    videoFile720    = models.FileField(null=True)
-    videoFile480    = models.FileField(null=True)
-    videoFile360    = models.FileField(null=True)
+    videoFile = models.FileField()
+    videoFile720 = models.FileField(null=True)
+    videoFile480 = models.FileField(null=True)
+    videoFile360 = models.FileField(null=True)
 
-    thumbnail       = models.ImageField(null=True)
+    thumbnail = models.ImageField(null=True)
 
-    isProcessed     = models.BooleanField(default=False)
+    isProcessed = models.BooleanField(default=False)
 
     def formatted_duration(self):
         secs_t = self.duration.total_seconds()
-        mins = int((secs_t/60) % 60)
+        mins = int((secs_t / 60) % 60)
         secs = secs_t - (60 * mins)
         return '%02d:%02d' % (mins, secs)
 
 
 class VideoLike(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    video           = models.ForeignKey(Video, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 class AuthorFollowing(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    author          = models.ForeignKey(Author, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 class TopicFollowing(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    topic           = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 class JournalFollowing(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    journal         = models.ForeignKey(Journal, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 class FocusFollowing(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    focus           = models.ForeignKey(Focus, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 class WatchHistory(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    video           = models.ForeignKey(Video, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
-    invisible       = models.BooleanField(default=False, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    time = models.DateTimeField()
+    invisible = models.BooleanField(default=False, null=True)
 
 
 class WatchLater(models.Model):
-    user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    video           = models.ForeignKey(Video, on_delete=models.CASCADE)
-    time            = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    time = models.DateTimeField()
 
 
 @receiver(post_save, sender=Video)
@@ -285,6 +285,7 @@ def start_new_thread(function):
         t = Thread(target=function, args=args, kwargs=kwargs)
         t.daemon = True
         t.start()
+
     return decorator
 
 
@@ -296,7 +297,10 @@ def send_upload_notifications(video):
         for userFollowing in userFollowings:
             if userFollowing.follower.notifyUploads:
                 Notification.objects.create(user=userFollowing.follower.user,
-                                            text='%s just uploaded a new video: %s' % userFollowing.followee.user.username,
+                                            publisher=userFollowing.followee.user.username,
+                                            itemID=video.pk,
+                                            text=video.title,
+                                            type="User Video Upload",  # TODO make it enum
                                             time=datetime.datetime.now())
                 userFollowing.follower.user.profile.hasNotifications = True
                 userFollowing.follower.user.profile.save()
@@ -319,7 +323,10 @@ def send_upload_notifications(video):
             if not focusFollowing.user.username == video.user.username:
                 if focusFollowing.user.profile.notifyUploads:
                     Notification.objects.create(user=focusFollowing.user,
-                                                text='A video has been uploaded with %s focus' % focusFollowing.focus.title,
+                                                publisher=focusFollowing.focus.title,
+                                                type="Focus Video Upload",
+                                                itemID=video.pk,
+                                                text=video.title,
                                                 time=datetime.datetime.now())
                     focusFollowing.user.profile.hasNotifications = True
                     focusFollowing.user.profile.save()
@@ -342,7 +349,10 @@ def send_upload_notifications(video):
             if not journalFollowing.user.username == video.user.username:
                 if journalFollowing.user.profile.notifyUploads:
                     Notification.objects.create(user=journalFollowing.user,
-                                                text='A video has been uploaded in %s journal' % journalFollowing.journal.title,
+                                                publisher=journalFollowing.journal.title,
+                                                type="Journal Video Upload",
+                                                itemID=video.pk,
+                                                text=video.title,
                                                 time=datetime.datetime.now())
                     journalFollowing.user.profile.hasNotifications = True
                     journalFollowing.user.profile.save()
@@ -365,7 +375,10 @@ def send_upload_notifications(video):
             if not topicFollowing.user.username == video.user.username:
                 if topicFollowing.user.profile.notifyUploads:
                     Notification.objects.create(user=topicFollowing.user,
-                                                text='A video has been uploaded by %s topic' % topicFollowing.topic.title,
+                                                publisher=topicFollowing.topic.title,
+                                                type="Topic Video Upload",
+                                                itemID=video.pk,
+                                                text=video.title,
                                                 time=datetime.datetime.now())
                     topicFollowing.user.profile.hasNotifications = True
                     topicFollowing.user.profile.save()
@@ -387,8 +400,11 @@ def send_upload_notifications(video):
         for authorFollowing in authorFollowings:
             if not authorFollowing.user.username == video.user.username:
                 if authorFollowing.user.profile.notifyUploads:
-                    Notification.objects.create(user=authorFollowing.user,
-                                                text='A video has been uploaded from %s author' % authorFollowing.author.title,
+                    Notification.objects.create(user=AuthorFollowing.user,
+                                                publisher=AuthorFollowing.author.title,
+                                                type="Author Video Upload",
+                                                itemID=video.pk,
+                                                text=video.title,
                                                 time=datetime.datetime.now())
                     authorFollowing.user.profile.hasNotifications = True
                     authorFollowing.user.profile.save()
@@ -403,7 +419,3 @@ def send_upload_notifications(video):
                                                   authorFollowing.author.title)
 
                     send_mail(subject, msg, 'psitelly@gmail.com', [authorFollowing.user.email], fail_silently=True)
-
-
-
-

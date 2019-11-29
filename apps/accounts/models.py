@@ -61,8 +61,11 @@ class UserFollowing(models.Model):
 
 class Notification(models.Model):
     user        = models.ForeignKey(User, on_delete=models.CASCADE)
-    text        = models.CharField(max_length=500, null=True)
-    seen        = models.BooleanField(default=False, null=True)
+    text        = models.CharField(max_length=100, null=True)
+    publisher   = models.CharField(max_length=50, null=True)
+    itemID      = models.CharField(max_length=50, null=True)
+    type        = models.CharField(max_length=10, null=True)
+    seen        = models.BooleanField(default=False)
     time        = models.DateTimeField()
 
 
@@ -112,11 +115,11 @@ def start_new_thread(function):
 def send_follow_notification(userFollowing):
     if userFollowing.followee.notifyFollows:
         Notification.objects.create(user=userFollowing.followee.user,
-                                    text='%s just started to follow you.' % userFollowing.follower.user.username,
+                                    publisher=userFollowing.follower.user.username,
+                                    type="User Follow",
                                     time=datetime.datetime.now())
         userFollowing.followee.hasNotifications = True
         userFollowing.followee.save()
-    
 
     if userFollowing.followee.emailFollows:
         subject = 'Follow Notification (Psitelly) '

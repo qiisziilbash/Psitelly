@@ -25,33 +25,60 @@
              <br><br>
             {% if notificaations %}
                 {% for notification in notificaations %}
-                    {% if not notification.seen %}
+
                         <span id="{{ notification.pk }}">
                             <input type="image" src="/static/images/Delete.png"
                                    onclick="return deleteNotification({{ notification.pk }})"
                                    style="float: right" width="25" height="25">
 
                             <u><b>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</b></u>
-                            <p class="textContentHighlighted">
-                                {{ notification.text }}
+                         {% if not notification.seen %}
+                             <p class="textContentHighlighted">
+                         {% else %}
+                             <p class="textContent">
+                         {% endif %}
+
+                                {% if notification.type == "User Video Upload" %}
+                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    just uploaded a video:
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
+                                {% if notification.type == "Journal Video Upload" %}
+                                    A video is just uploaded in
+                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    :
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
+                                {% if notification.type == "Focus Video Upload" %}
+                                    A video is just uploaded with focus in
+                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    :
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
+                                {% if notification.type == "Topic Video Upload" %}
+                                    A video is just uploaded with
+                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    topic:
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
+                                {% if notification.type == "Author Video Upload" %}
+                                    A video is just uploaded from
+                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    author:
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
+                                {% if notification.type == "User Follow" %}
+                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    just started to follow you.
+                                {% endif %}
                             </p>
                             <br>
                         </span>
-
-                    {% else %}
-                        <span id="{{ notification.pk }}">
-                            <input type="image" src="/static/images/Delete.png"
-                                   onclick="return deleteNotification({{ notification.pk }})"
-                                   style="float: right" width="25" height="25">
-
-                            <u>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</u>
-                            <p class="textContent">
-                                {{ notification.text }}
-                            </p>
-                            <br>
-                        </span>
-
-                    {% endif %}
                 {% endfor %}
             {% endif %}
 
