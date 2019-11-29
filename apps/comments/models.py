@@ -87,7 +87,10 @@ def send_comment_notification(comment):
     if not comment.user.username == comment.video.user.username:
         if comment.video.user.profile.notifyComments:
             Notification.objects.create(user=comment.video.user,
-                                        text='%s just commented on your video.' % comment.user.username,
+                                        publiser=comment.user.username,
+                                        itemID=comment.video.pk,
+                                        text=comment.video.title,
+                                        type="Comment",
                                         time=datetime.datetime.now())
             comment.video.user.profile.hasNotifications = True
             comment.video.user.profile.save()

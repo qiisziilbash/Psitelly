@@ -300,7 +300,7 @@ def send_upload_notifications(video):
                                             publisher=userFollowing.followee.user.username,
                                             itemID=video.pk,
                                             text=video.title,
-                                            type="User Video Upload",  # TODO make it enum
+                                            type="User Video Upload",
                                             time=datetime.datetime.now())
                 userFollowing.follower.user.profile.hasNotifications = True
                 userFollowing.follower.user.profile.save()

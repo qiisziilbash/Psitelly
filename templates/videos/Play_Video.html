@@ -95,8 +95,30 @@
 
 
 
+
             <span style="text-align:left; font-weight: bolder"><u>Description</u></span>
             {{ video.description|linebreaks }}
+
+            <span style="text-align:left; font-weight: bold">Google Scholar Link:</span>
+            {% if video.gsLink == '' %}
+                Link is not Provided
+            {% else %}
+                <a href="{{ video.gsLink }}" target="_blank">{{ video.gsLink }}</a>
+            {% endif %}
+            <br>
+
+            <span style="text-align:left;  font-weight: bold;" >Article Link:</span>
+            {% if video.pdfLink == '' %}
+                Link is not Provided
+            {% else %}
+                <a href="{{ video.pdfLink }}" target="_blank">{{ video.pdfLink }}</a>
+            {% endif %}
+
+            <br><br>
+
+
+
+
 
 
 

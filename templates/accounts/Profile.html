@@ -16,6 +16,9 @@
 
 
                 <img class="profilePic" src={{ user.profile.picture }}>
+                <span style="float: right">
+                    <h1><a href="{% url 'showNotifications' %}">Notifications</a></h1>
+                </span>
                 <span class="profile-item" style="float:right;">
                     {% if user.profile.hasNotifications %}
                         <a href="{% url 'showNotifications' %}">

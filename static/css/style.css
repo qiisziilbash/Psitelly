@@ -368,7 +368,7 @@ a.button {
 .video-info{
     background-color: var(--backgroundColor2);
     border-radius: 5px;
-        text-align: justify;
+    text-align: justify;
     text-justify: inter-word;
 }
 

@@ -12,22 +12,33 @@
                 {% csrf_token %}
                 <div class="uploadForm">
                     <span>
-                        <span style="font-weight: bolder"> Title:</span>
+                        <span style="font-weight: bolder"> Title*</span>
                         <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
                         <br><br>
                     </span>
 
 
                     <span>
-                        <span style="font-weight: bolder"> Description:</span>
+                        <span style="font-weight: bolder"> Description</span>
                         <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
+                        <br><br>
+                    </span>
+
+                    <span>
+                        <span style="font-weight: bolder"> Google Scholar Link</span>
+                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
+                        <br><br>
+                    </span>
+                    <span>
+                        <span style="font-weight: bolder"> Article Link</span>
+                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
                         <br><br>
                     </span>
 
 
 
                     <span>
-                        <span style="font-weight: bolder">Author:</span>
+                        <span style="font-weight: bolder">Author*</span>
                         <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez"
                                list="authors" required>
                         <datalist id="authors">
@@ -39,13 +50,13 @@
                     </span>
 
                     <span>
-                        <span style="font-weight: bolder"> Year:</span>
+                        <span style="font-weight: bolder"> Year*</span>
                         <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 2000" value="2000" required>
                         <br><br>
                     </span>
 
                     <span>
-                        <span style="font-weight: bolder"> Journal:</span>
+                        <span style="font-weight: bolder"> Journal*</span>
                         <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
                         <datalist id="journals">
                             {% for journal in journals %}
@@ -56,7 +67,7 @@
                     </span>
 
                     <span>
-                        <span style="font-weight: bolder"> Topic:</span>
+                        <span style="font-weight: bolder"> Topic*</span>
                         <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
                         <datalist id="topics">
                             {% for topic in topics %}
@@ -67,7 +78,7 @@
                     </span>
 
                     <span>
-                        <span style="font-weight: bolder"> Focus:</span>
+                        <span style="font-weight: bolder"> Focus*</span>
                         <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
                         <datalist id="focuses">
                             {% for focus in focuses %}
@@ -79,7 +90,7 @@
 
 
                     <span>
-                        <span style="font-weight: bolder"> Select a Video:</span>
+                        <span style="font-weight: bolder"> Select a Video* </span>
                         <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white" required> <br>
                         <br>
                     </span>

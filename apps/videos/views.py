@@ -66,6 +66,8 @@ def upload_video(request):
                                          duration=datetime.timedelta(seconds=round(clip.duration)),
                                          publishDate=datetime.datetime.now(), title=request.POST.get('title', ''),
                                          description=request.POST.get('description', ''),
+                                         gsLink=request.POST.get('gs', ''),
+                                         pdfLink=request.POST.get('link', ''),
                                          author=Author.objects.get(title=author),
                                          year=request.POST.get('year', 0),
                                          journal=Journal.objects.get(title=journal),
@@ -210,7 +212,9 @@ def edit_video(request):
 
             Video.objects.filter(pk=videoPK).update(title=request.POST.get('title', ''),
                                                     year=request.POST.get('year', 0),
-                                                    description=request.POST.get('description', ''))
+                                                    description=request.POST.get('description', ''),
+                                                    gsLink=request.POST.get('gs', ''),
+                                                    pdfLink=request.POST.get('link', ''))
 
             return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:

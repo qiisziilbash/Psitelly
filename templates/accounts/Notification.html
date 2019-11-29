@@ -38,6 +38,12 @@
                              <p class="textContent">
                          {% endif %}
 
+                                {% if notification.type == "Comment" %}
+                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                                    just commented on your video:
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                                {% endif %}
+
                                 {% if notification.type == "User Video Upload" %}
                                     <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
                                     just uploaded a video:
