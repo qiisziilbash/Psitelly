@@ -208,7 +208,7 @@
 
                                     {% if user.is_authenticated and videos.0 == "My Videos"%}
                                         <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
-                                            <img type="image" src="/static/images/Edit.png">
+                                            <img type="image" src="/static/images/Edit.png" data-toggle="tooltip" data-placement="right" title="Edit">
                                         </a>
                                     {% endif %}
                                 </span>
