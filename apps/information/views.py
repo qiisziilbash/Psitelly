@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 
 from apps.information.models import *
-from apps.videos.models import Video
+from apps.videos.models import Video, Journal, Author, Topic, Focus
 
 
 def donate(request):
@@ -11,6 +11,10 @@ def donate(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
         return render(request, 'information/Donate.html', context)
 
@@ -21,6 +25,10 @@ def contact(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
         return render(request, 'information/Contact.html', context)
     if request.method == "POST":

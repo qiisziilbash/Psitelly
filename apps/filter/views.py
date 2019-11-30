@@ -15,6 +15,10 @@ def index(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    'isIndex': True}
 
         if 'search' in request.GET and request.GET.get('search', '') != '':
@@ -278,6 +282,10 @@ def filter_videos(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    'journals': Journal.objects.all(),
                    'focuses': Focus.objects.all(),
                    'topics': Topic.objects.all()

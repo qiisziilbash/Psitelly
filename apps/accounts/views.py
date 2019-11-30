@@ -21,6 +21,10 @@ def show_profile(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
         if 'logout' in request.GET:
             logout(request)
@@ -36,6 +40,10 @@ def edit_profile(request):
                'Statistics': True,
                'usersCount': User.objects.filter().count(),
                'videosCount': Video.objects.filter().count(),
+               'journalCount': Journal.objects.filter().count(),
+               'authorCount': Author.objects.filter().count(),
+               'topicCount': Topic.objects.filter().count(),
+               'focusCount': Focus.objects.filter().count(),
                }
 
     if request.method == "GET":
@@ -163,6 +171,10 @@ def show_notifications(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
 
         notifications = Notification.objects.filter(user=request.user).order_by('-time')
@@ -275,6 +287,10 @@ def sign_in(request):
                'Statistics': True,
                'usersCount': User.objects.filter().count(),
                'videosCount': Video.objects.filter().count(),
+               'journalCount': Journal.objects.filter().count(),
+               'authorCount': Author.objects.filter().count(),
+               'topicCount': Topic.objects.filter().count(),
+               'focusCount': Focus.objects.filter().count(),
                }
 
     if request.method == "GET":
@@ -308,6 +324,10 @@ def register(request):
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
                    'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
         return render(request, 'accounts/Register.html', context)
 
@@ -317,7 +337,12 @@ def verify_account(request):
         context = {'newses': News.objects.order_by('-time')[:5],
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
-                   'videosCount': Video.objects.filter().count()}
+                   'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
+                   }
         return render(request, 'accounts/Verify_Account.html', context)
 
 
@@ -326,7 +351,11 @@ def forgot(request):
         context = {'newses': News.objects.order_by('-time')[:5],
                    'Statistics': True,
                    'usersCount': User.objects.filter().count(),
-                   'videosCount': Video.objects.filter().count()
+                   'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
                    }
         return render(request, 'accounts/Forgot_Password.html', context)
 
