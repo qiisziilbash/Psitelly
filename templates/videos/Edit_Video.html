@@ -109,11 +109,11 @@
 
                     <span>
                         {% if video.isProcessed %}
-                            <button type="submit" id="uploadBtn3">Save</button>
-                            <input type="button" formnovalidate style="background-color: red" onclick="return deleteVideo({{ video.pk }})" value="Delete">
+                            <button type="submit" id="saveBtn">Save</button>
+                            <input type="button" id="deleteBtn" formnovalidate style="background-color: red" onclick="return deleteVideo({{ video.pk }})" value="Delete">
                         {% endif %}
 
-                        <input type="button" value="Cancel" onclick="return cancelEdit()">
+                        <input type="button" id="cancelBtn" value="Cancel" onclick="return cancelEdit()">
                     </span>
                 </div>
 
@@ -149,8 +149,13 @@
 
     document.getElementById('editVideoForm').addEventListener('submit', function(event) {
             if($('#videoID').get(0).files.length > 0){
-                $('#uploadBtn3').attr('disabled', true);
-                $('#uploadBtn3').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
+
+                $('#saveBtn').attr('disabled', true);
+                $('#cancelBtn').removeAttr('onclick');
+                $('#deleteBtn').removeAttr('onclick');
+                $('#cancelBtn').attr('disabled', true);
+                $('#deleteBtn').attr('disabled', true);
+                $('#saveBtn').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
             }
     });
     </script>
