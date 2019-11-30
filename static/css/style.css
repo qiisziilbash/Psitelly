@@ -257,7 +257,7 @@ a.button {
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(330px,1fr));
 }
 
 .video-gallery::-webkit-scrollbar { width: 0 !important }
