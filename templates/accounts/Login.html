@@ -13,21 +13,15 @@
         {% else %}
             <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
-
-                <h1> Log in</h1>
-
+                <h1> Log in </h1>
                 <div class="textContent">
-                    <label> Username:</label>
-                    <br>
-                    <input type="text" name="username" class="form-control" placeholder="Username ">
-                    <br/>  <br/>
+                    <label>Username:</label> <br>
+                    <input type="text" name="username" class="form-control" placeholder="Username"><br><br>
 
-                    <label> Password:</label>
-                    <br>
-                    <input type="password" name="password" class="form-control"  placeholder="Password">
-                    <br/>  <br/>
-                    <button type="submit" style="background-color: white">Log in</button>
-                    <br> <br>
+                    <label> Password:</label><br>
+                    <input type="password" name="password" class="form-control" placeholder="Password"><br><br>
+
+                    <button type="submit" style="background-color: white">Log in</button><br><br>
                 </div>
             </form>
         {% endif %}
@@ -35,40 +29,19 @@
 
     <div class="rightbar">
         <h3>Related Links</h3>
-
         <div class="textContent">
-            <li>
-                <a href="{% url 'login' %}">Log in</a>
-                <br>
-            </li>
-            <li>
-                <a href="{% url 'register' %}">Not a member yet?</a>
-                <br>
-            </li>
-
-            <li>
-                <a href="{% url 'forgot' %}">Forgot your password?</a>
-                <br>
-            </li>
-
-            <li>
-                <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
-                <br>
-            </li>
-
-            <li>
-                <a href="{% url 'contact' %}">Do you have any technical problem?</a>
-                <br>
-            </li>
+            <li><a href="{% url 'login' %}">Log in</a><br></li>
+            <li><a href="{% url 'register' %}">Not a member yet?</a><br></li>
+            <li><a href="{% url 'forgot' %}">Forgot your password?</a><br></li>
+            <li><a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a><br></li>
+            <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
         </div>
 
         <br>
-        <h3>Warnings</h3>
 
+        <h3>Warnings</h3>
         <div class="textContent">
-            <li>
-                Username is case-sensitive
-            </li>
+            <li>Username is case-sensitive</li>
         </div>
     </div>
 {% endblock %}

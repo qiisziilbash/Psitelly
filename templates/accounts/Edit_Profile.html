@@ -6,126 +6,69 @@
             {% for msg in msgs %}
                 <li style="font-weight: bold">{{ msg }}</li>
             {% endfor %}
-
-            <li style="font-weight: bold">
-                <a href="{% url 'profile' %}"> Back to your profile</a>
-            </li>
-
-            <br><br>
+            <li style="font-weight: bold"><a href="{% url 'profile' %}"> Back to your profile</a></li><br><br>
         {% endif %}
 
         {% if user.is_authenticated %}
             <form enctype="multipart/form-data" method="POST" action="{% url 'editProfile' %}">
                 {% csrf_token %}
-
-                <img class="profilePic" alt="" src={{ user.profile.picture }}>
-
-                <br><br>
+                <img class="profilePic" alt="" src={{ user.profile.picture }}><br><br>
 
                 <div class="uploadForm">
                     <span>
-                        <label>
-                            <span style="font-weight: bolder"> Profile Picture</span>
-                        </label>
-                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white">
-                        <br><br>
+                        <label><span style="font-weight: bolder"> Profile Picture</span></label>
+                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white"><br><br>
                     </span>
 
                     <br>
 
                     <span>
-                        <label>
-                            <span style="font-weight: bolder"> Username</span>
-                        </label>
+                        <label><span style="font-weight: bolder"> Username</span></label>
                         <input type="text" id="usernameText" name="username"
-                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}>
+                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}><br><br>
+                    </span>
+
+                    <span>
+                        <label><span style="font-weight: bolder"> Email</span></label>
+                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}><br><br>
+                    </span>
+
+                    <span>
+                        <label><span style="font-weight: bolder"> Security Question</span></label><br>
+                        <select id="secQuestionText" name="secQuestion" required style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white">
+                            <option value="What is your security phrase?">What is your security phrase?</option>
+                            <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
+                            <option value="Who was your first kiss?">Who was your first kiss?</option>
+                            <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
+                        </select>
                         <br><br>
                     </span>
 
                     <span>
-                        <label>
-                            <span style="font-weight: bolder"> Email</span>
-                        </label>
-                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}>
-                        <br><br>
+                        <label><span style="font-weight: bolder"> Security Answer</span></label>
+                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}><br><br>
                     </span>
-
-                    <span>
-                        <label>
-                            <span style="font-weight: bolder"> Security Question</span>
-                        </label>
-
-                        <br>
-
-
-                  <select id="secQuestionText" name="secQuestion" required style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white">
-                      <option value="What is your security phrase?">What is your security phrase?</option>
-                      <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
-                      <option value="Who was your first kiss?">Who was your first kiss?</option>
-                      <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
-                  </select>
-
-                        <br><br>
-                    </span>
-
-                    <span>
-                        <label>
-                            <span style="font-weight: bolder"> Security Answer</span>
-                        </label>
-                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}"
-                                   required value={{ user.profile.secAnswer }}>
-                        <br><br>
-                    </span>
-
 
                     <span>
                         <label for="newPass1Text">
-                            <span style="font-weight: bolder">
-                                New Password
-                            </span>
-
-                            <br>
-
-                            <span style="font-size: small">
-                                Leave empty, if you don't want to change your password
-                            </span>
-                        </label>
-                        <br>
-                        <input type="password" id="newPass1Text" name="newPass1" class="form-control"
-                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
-                        <br><br>
+                            <span style="font-weight: bolder">New Password</span><br>
+                            <span style="font-size: small">Leave empty, if you don't want to change your password</span>
+                        </label><br>
+                        <input type="password" id="newPass1Text" name="newPass1" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$"><br><br>
                     </span>
 
                     <span>
                         <label for="newPass2Text">
-                            <span style="font-weight: bolder">
-                                Confirm New Password
-                            </span>
-
-                            <br>
-
-                            <span style="font-size: small">
-                                Leave empty, if you don't want to change your password
-                            </span>
-                        </label>
-
-                        <br>
-
-                        <input type="password" id="newPass2Text" name="newPass2" class="form-control"
-                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
-                        <br><br>
+                            <span style="font-weight: bolder">Confirm New Password</span><br>
+                            <span style="font-size: small">Leave empty, if you don't want to change your password</span>
+                        </label><br>
+                        <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$"><br><br>
                     </span>
 
-                    <span>
-                        <h3><u>Notifications</u></h3>
-                    </span>
-
-                    <br>
-
+                    <span><h3><u>Notifications</u></h3></span><br>
 
                     <span>
-                        <b>When my followees upload a video:</b>
-                        <br>
+                        <b>When my followees upload a video:</b><br>
                         {% if user.profile.notifyUploads and user.profile.emailUploads %}
                             <input type="checkbox" name="notifyUploads" checked> Notify me here<br>
                             <input type="checkbox" name="emailUploads" checked> Notify me through email<br>
@@ -143,8 +86,7 @@
                     </span>
 
                     <span>
-                        <b>When someone comment on my videos:</b>
-                        <br>
+                        <b>When someone comment on my videos:</b><br>
                         {% if user.profile.notifyComments and user.profile.emailComments %}
                             <input type="checkbox" name="notifyComments" checked> Notify me here<br>
                             <input type="checkbox" name="emailComments" checked> Notify me through email<br>
@@ -161,10 +103,8 @@
                         <br><br>
                     </span>
 
-
                     <span>
-                        <b>When someone starts to follow me:</b>
-                        <br>
+                        <b>When someone starts to follow me:</b><br>
                         {% if user.profile.notifyFollows and user.profile.emailFollows %}
                             <input type="checkbox" name="notifyFollows" checked> Notify me here<br>
                             <input type="checkbox" name="emailFollows" checked> Notify me through email<br>
@@ -183,8 +123,7 @@
 
 
                     <span>
-                        <b>When someone mentions me on a post or comment:</b>
-                        <br>
+                        <b>When someone mentions me on a post or comment:</b><br>
                         {% if user.profile.notifyMentions and user.profile.emailMentions %}
                            <input type="checkbox" name="notifyMentions"  checked> Notify me here<br>
                             <input type="checkbox" name="emailMentions"  checked> Notify me through email<br>
@@ -204,13 +143,8 @@
                     <br>
 
                     <span>
-                        <button type="submit" name="save">
-                            Save
-                        </button>
-                        <button type="submit" name="cancel" formnovalidate>
-                            Cancel and Back to Profile
-                        </button>
-                        <br> <br>
+                        <button type="submit" name="save">Save</button>
+                        <button type="submit" name="cancel" formnovalidate>Cancel and Back to Profile</button><br><br>
                     </span>
                 </div>
             </form>
@@ -225,60 +159,25 @@
         {% if user.is_authenticated %}
             <h3>Related Links</h3>
             <div class="textContent">
-                <li>
-                    <a href="{% url 'contact' %}">Do you have any technical problem?</a>
-                    <br>
-                </li>
+                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
             </div>
 
             <h3>Warnings</h3>
             <div class="textContent">
-                <li>
-                    Username is case-sensitive
-                </li>
-
-                <li>
-                    Username should be at least 4 characters
-                </li>
-
-                <li>
-                    Password should be at least 4 characters
-                </li>
-
-                <li>
-                    Password should have at least 1 uppercase
-                </li>
-
-                <li>
-                    Password should have at least 1 lowercase
-                </li>
-
-                <li>
-                    Password should have at least 1 number
-                </li>
+                <li>Username is case-sensitive</li>
+                <li>Username should be at least 4 characters</li>
+                <li>Password should be at least 4 characters</li>
+                <li>Password should have at least 1 uppercase</li>
+                <li>Password should have at least 1 lowercase</li>
+                <li>Password should have at least 1 number</li>
             </div>
         {% else %}
             <span style="font-weight: bold">Related Links:</span>
             <div class="textContent">
-                <li>
-                    <a href="{% url 'register' %}">Not a member yet?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'forgot' %}">Forgot your password?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'contact' %}">Do you have any technical problem?</a>
-                    <br>
-                </li>
+                <li><a href="{% url 'register' %}">Not a member yet?</a><br></li>
+                <li><a href="{% url 'forgot' %}">Forgot your password?</a><br></li>
+                <li><a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a><br></li>
+                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
             </div>
         {% endif %}
     </div>

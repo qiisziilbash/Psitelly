@@ -2,10 +2,6 @@
 
 {% load static %}
 
-<script>
-    $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});
-</script>
-
 <html>
     <head>
         <title>Psitelly</title>
@@ -23,8 +19,6 @@
                     <span style="float: left">
                         <a href="{% url 'index' %}"><img src="/static/images/LogoText.png"  alt="" data-toggle="tooltip" data-placement="right" title="Home"></a>
                     </span>
-
-
                 </div>
 
                 <div class="search-box">
@@ -68,7 +62,6 @@
                 <div class="sidebar">
                     <h3>Dashboard</h3>
                     {% if user.is_authenticated %}
-
                         <ul>
                             <form method="GET" action={% url 'index' %}>
                                 <input type="submit" value="My Videos" name="content">
@@ -159,6 +152,9 @@
                 </div>
             </div>
         <!--------------------------------->
+        <script>
+            $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});
+        </script>
         {% block scripts %}{% endblock %}
         <!--------------------------------->
     </body>

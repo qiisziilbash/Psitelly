@@ -3,39 +3,26 @@
 {% block content%}
 
     <div class="content">
-        <h1>
-            What is Psitelly?
-        </h1>
-
+        <h1>What is Psitelly?</h1>
         <div class="textContent">
             <p>Psitelly is basically a video website like YouTube but specialized for scientific articles.
                 Let’s say you want to further understand the “Methods” section of a scientific article,
                 you go to Psitelly and search the article and you can find videos created by the author or other experts explaining “Methods” section.
-
                 <span id="dots" style="display: inline">...</span>
                 <div id="more" style="display: none">
                     <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing" target="_blank"> A quick quide to features of Psitelly.</a><br><br>
                 </div>
-
-                <a  href="javascript:void(0);" id="read" onclick="readMore()"> Read more</a>
-                <br>
+                <a  href="javascript:void(0);" id="read" onclick="readMore()"> Read more</a><br>
             </p>
-
         </div>
 
-
-
-
-
-        <h1>
-            Donate Psitelly
-        </h1>
-
+        <h1>Donate Psitelly</h1>
         <h2>Why?</h2>
-
         <div class="textContent">
             <p>
-                Psitelly aims to reimagine the way we share research, to streamline literature review, and to make the science universally accessible. It is a hopeful project, but it needs wings to get off the ground. Anything helps! Here’s how:
+                Psitelly aims to reimagine the way we share research, to streamline literature review,
+                and to make the science universally accessible. It is a hopeful project, but it needs wings to get off
+                the ground. Anything helps! Here’s how:
             </p>
         </div>
 
@@ -54,16 +41,11 @@
                 </ul>
             </p>
 
-            
-
             <h3> <u>Love</u> </h3>
             We need emotional support
             <ul>
-                <li>
-                    <a href="{% url 'contact' %}"> Send us love letters </a>
-                </li>
+                <li><a href="{% url 'contact' %}"> Send us love letters </a></li>
             </ul>
-
 
             <h3> <u>Dough</u> </h3>
             We need dough to maintain Psitelly
@@ -99,45 +81,33 @@
             <li>Django</li>
         </div>
 
-
-
         <h3>My power is powered by</h3>
-
-        <div class="textContent">
-            <li>Ruth Campos</li>
-        </div>
+        <div class="textContent"><li>Ruth Campos</li></div>
 
         <h3>Our Donors</h3>
         <div class="textContent">
-            <li>
-                Utah State University
-            </li>
-            <li>
-                Nate Hardy
-            </li>
+            <li>Utah State University</li>
+            <li>Nate Hardy</li>
         </div>
     </div>
-
-
 {% endblock %}
 
 {% block scripts %}
     <script>
-    function readMore() {
-        var dots = document.getElementById("dots");
-        var moreText = document.getElementById("more");
-        var btnText = document.getElementById("read");
+        function readMore() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("read");
 
-        if (dots.style.display === "none") {
-        dots.style.display = "inline";
-        btnText.innerHTML = "Read more";
-        moreText.style.display = "none";
-        } else {
-        dots.style.display = "none";
-        btnText.innerHTML = "Read less";
-        moreText.style.display = "inline";
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
         }
-    }
-
     </script>
 {% endblock %}

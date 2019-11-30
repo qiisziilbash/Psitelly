@@ -1,17 +1,10 @@
 {% extends "Base.html" %}
 
 {% block content%}
-
     <div class="content">
-
-
         {% if user.is_authenticated %}
-
             <div class="profile-info">
-                <a href="{% url 'profile' %}">
-                    <input type="image" src={{ user.profile.picture }}>
-                     {{ user.username }}
-                </a>
+                <a href="{% url 'profile' %}"><input type="image" src={{ user.profile.picture }}>{{ user.username }}</a>
             </div>
 
             <br>
@@ -25,69 +18,66 @@
              <br><br>
             {% if notificaations %}
                 {% for notification in notificaations %}
+                    <span id="{{ notification.pk }}">
+                        <input type="image" src="/static/images/Delete.png" onclick="return deleteNotification({{ notification.pk }})" style="float: right" width="25" height="25">
+                        <u><b>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</b></u>
 
-                        <span id="{{ notification.pk }}">
-                            <input type="image" src="/static/images/Delete.png"
-                                   onclick="return deleteNotification({{ notification.pk }})"
-                                   style="float: right" width="25" height="25">
+                        {% if not notification.seen %}
+                            <p class="textContentHighlighted">
+                        {% else %}
+                            <p class="textContent">
+                        {% endif %}
 
-                            <u><b>{{ notification.time|time:'H:i'}} - {{ notification.time|date:'d M Y'}}</b></u>
-                         {% if not notification.seen %}
-                             <p class="textContentHighlighted">
-                         {% else %}
-                             <p class="textContent">
-                         {% endif %}
+                        {% if notification.type == "Comment" %}
+                            <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            just commented on your video:
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "Comment" %}
-                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    just commented on your video:
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "User Video Upload" %}
+                            <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            just uploaded a video:
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "User Video Upload" %}
-                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    just uploaded a video:
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "Journal Video Upload" %}
+                            A video is just uploaded in
+                            <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            :
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "Journal Video Upload" %}
-                                    A video is just uploaded in
-                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    :
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "Focus Video Upload" %}
+                            A video is just uploaded with focus in
+                            <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            :
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "Focus Video Upload" %}
-                                    A video is just uploaded with focus in
-                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    :
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "Topic Video Upload" %}
+                            A video is just uploaded with
+                            <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            topic:
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "Topic Video Upload" %}
-                                    A video is just uploaded with
-                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    topic:
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "Author Video Upload" %}
+                            A video is just uploaded from
+                            <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            author:
+                            <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
+                        {% endif %}
 
-                                {% if notification.type == "Author Video Upload" %}
-                                    A video is just uploaded from
-                                    <a href="{% url 'index' %}?customCategory={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    author:
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ notification.itemID }}">{{ notification.text }}</a>
-                                {% endif %}
+                        {% if notification.type == "User Follow" %}
+                            <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
+                            just started to follow you.
+                        {% endif %}
+                        </p>
 
-                                {% if notification.type == "User Follow" %}
-                                    <a href="{% url 'index' %}?customUser={{ notification.publisher }}">{{ notification.publisher }}</a>
-                                    just started to follow you.
-                                {% endif %}
-                            </p>
-                            <br>
-                        </span>
+                        <br>
+                    </span>
                 {% endfor %}
             {% endif %}
-
         {% else %}
             <span style="font-weight: bold">You are not logged in yet. Please <a href="{% url 'login' %}"> Log in </a> first.</span>
         {% endif %}
@@ -98,12 +88,9 @@
             <h3>User Statistics</h3>
             <div class="textContent">
                 <span style="font-weight: bold">Member since:</span><span style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</span><br>
-
                 <span style="font-weight: bold">Uploaded videos:</span> <span style="float: right">{{ user.profile.nVideos }}</span><br>
                 <span style="font-weight: bold">Made Comments:</span> <span style="float: right">{{ user.profile.nComments }}</span><br>
-
                 <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
-
             </div>
             <h3>Upvotes</h3>
             <div class="textContent">
@@ -112,32 +99,16 @@
             </div>
             <h3>Followings</h3>
             <div class="textContent">
-
                 <span style="font-weight: bold">Followers:</span><span style="float: right">{{ user.profile.nFollowers }}</span> <br>
                 <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
             </div>
         {% else %}
             <h3>Related Links</h3>
             <div class="textContent">
-                <li>
-                    <a href="{% url 'register' %}">Not a member yet?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'forgot' %}">Forgot your password?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a>
-                    <br>
-                </li>
-
-                <li>
-                    <a href="{% url 'contact' %}">Do you have any technical problem?</a>
-                    <br>
-                </li>
+                <li><a href="{% url 'register' %}">Not a member yet?</a><br></li>
+                <li><a href="{% url 'forgot' %}">Forgot your password?</a><br></li>
+                <li><a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a><br></li>
+                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
             </div>
         {% endif %}
     </div>
@@ -166,13 +137,10 @@
         });
     </script>
 
-
     <script>
         function deleteNotification(notificationPK)
         {
-
             document.getElementById(notificationPK).remove();
-
             $.ajax({
               type: "GET",
               url:  '/ajax/deleteNotification',
@@ -183,5 +151,4 @@
             });
         }
     </script>
-
 {% endblock %}

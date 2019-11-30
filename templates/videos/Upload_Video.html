@@ -13,46 +13,37 @@
                 <div class="uploadForm">
                     <span>
                         <span style="font-weight: bolder"> Title*</span>
-                        <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
-                        <br><br>
+                        <textarea rows="4" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea><br><br>
                     </span>
-
 
                     <span>
                         <span style="font-weight: bolder"> Description</span>
-                        <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
-                        <br><br>
+                        <textarea rows="4" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea><br><br>
                     </span>
 
                     <span>
                         <span style="font-weight: bolder"> Google Scholar Link</span>
-                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
-                        <br><br>
+                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea><br><br>
                     </span>
+
                     <span>
                         <span style="font-weight: bolder"> Article Link</span>
-                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
-                        <br><br>
+                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea><br><br>
                     </span>
-
-
 
                     <span>
                         <span style="font-weight: bolder">Author*</span>
-                        <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez"
-                               list="authors" required>
+                        <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez" list="authors" required>
                         <datalist id="authors">
                             {% for author in authors %}
-                              <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
+                                <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
                             {% endfor %}
-                        </datalist>
-                        <br><br>
+                        </datalist><br><br>
                     </span>
 
                     <span>
                         <span style="font-weight: bolder"> Year*</span>
-                        <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 2000" value="2000" required>
-                        <br><br>
+                        <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 2000" value="2000" required><br><br>
                     </span>
 
                     <span>
@@ -60,10 +51,9 @@
                         <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
                         <datalist id="journals">
                             {% for journal in journals %}
-                              <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
+                                <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
                             {% endfor %}
-                        </datalist>
-                        <br><br>
+                        </datalist><br><br>
                     </span>
 
                     <span>
@@ -71,10 +61,9 @@
                         <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
                         <datalist id="topics">
                             {% for topic in topics %}
-                              <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
+                                <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
                             {% endfor %}
-                        </datalist>
-                        <br><br>
+                        </datalist><br><br>
                     </span>
 
                     <span>
@@ -82,31 +71,21 @@
                         <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
                         <datalist id="focuses">
                             {% for focus in focuses %}
-                              <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
+                                <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
                             {% endfor %}
-                        </datalist>
-                        <br><br>
+                        </datalist><br><br>
                     </span>
-
 
                     <span>
                         <span style="font-weight: bolder"> Select a Video* </span>
-                        <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white" required> <br>
-                        <br>
+                        <input type="file" id="videoID" name="videoFile" accept="video/*" style="background-color: white" required> <br><br>
                     </span>
 
                     <br>
 
-
-                    <span>
-                        <button type="submit" id="uploadBtn">
-                            Upload
-                        </button>
-                    </span>
-
+                    <span><button type="submit" id="uploadBtn">Upload</button></span>
                 </div>
             </form>
-
         {% else %}
             <p> You need to <a href="{% url 'login' %}">log in</a> (or <a href="{% url 'register' %}">sign up</a>, if you haven't yet)in order to upload a video</p>
         {% endif %}
@@ -117,21 +96,19 @@
 
         <h4>Author</h4>
         <p class="textContent">
-
-
             Please provide only full name of the first author in the article. For example,
-            if there are more than one author and the first author is "Gabriel García Márquez", type only "Gabriel García Márquez".
+            if there are more than one author and the first author is "Gabriel García Márquez",
+            type only "Gabriel García Márquez".
         </p>
 
         <h4>Journal, Topic, and Focus</h4>
         <p class="textContent">
-            When you filling these items please pay attention to the statistics suggested in the dropdown panel in regard to number of video, and pick one that you believe is spelled correctly and has more videos.
-            If you think it is not spelled correctly, or you can not find the one that you are looking for, type and create your own.
+            When you filling these items please pay attention to the statistics suggested in the dropdown panel
+            in regard to number of video, and pick one that you believe is spelled correctly and has more videos.
+            If you think it is not spelled correctly, or you can not find the one that you are looking for,
+            type and create your own.
         </p>
-
     </div>
-
-
 {% endblock %}
 
 {% block scripts %}
@@ -149,9 +126,7 @@
                 $('#uploadBtn').html("Uploading <i class=\"fa fa-circle-o-notch fa-spin\" style=\"font-size:24px;color:lightgreen\"></i>");
             }
     });
-
     </script>
-
 {% endblock %}
 
 

@@ -2,10 +2,6 @@
 
 {% block content%}
     <div class="content">
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
-
         {% if msgs %}
             {% for msg in msgs %}
                 <li style="font-weight: bold">{{ msg }}</li>
@@ -14,10 +10,7 @@
 
         {% if customUser %}
             <div class="profile-info">
-                <span>
-                    <input type="image" alt="" src={{ customUser.profile.picture}}>
-                </span>
-
+                <span><input type="image" alt="" src={{ customUser.profile.picture}}></span>
 
                 {% if customUser.username != user.username %}
                     <span>
@@ -37,15 +30,10 @@
                     <span style="font-weight: bold">Member since: </span> {{ customUser.profile.joinDateTime|date:'d M Y' }}<br>
                     <span style="font-weight: bold">Videos:</span> {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }} upvotes)<br>
                     <span style="font-weight: bold">comments:</span> {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }} upvotes)<br>
-
-
                     <span style="font-weight: bold">Followers:</span> {{ customUser.profile.nFollowers }}<br>
                     <span style="font-weight: bold">Followees:</span> {{ customUser.profile.nFollowees }}<br>
                 </span>
-
-            </div>
-
-            <br>
+            </div><br>
         {% endif %}
 
         <!------------------------------------------------------------------------------------->
@@ -83,97 +71,77 @@
                     <span style="font-weight: bold">Videos:</span> {{ customCategory.nVideos }}<br>
                     <span style="font-weight: bold">Followers:</span> {{ customCategory.nFollowers }}<br>
                 </span>
-            </div>
-            <br>
-
+            </div><br>
         {% endif %}
-
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
-
         {% if profiles %}
             <h1>{{ profilesTitle }}</h1>
-                <div class="profile-gallery">
-                    {% for profile in profiles %}
-                        <div class="profile-item">
-                            <a href="?customUser={{ profile.user.username }}">
-                                <img alt="" src="{{ profile.picture }}">
-                                <br>
-                                <label data-toggle="tooltip" data-placement="right" title="{{ profile.user.username }}">
-                                    {{ profile.user.username }}
-                                </label>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            <br>
+            <div class="profile-gallery">
+                {% for profile in profiles %}
+                    <div class="profile-item">
+                        <a href="?customUser={{ profile.user.username }}">
+                            <img alt="" src="{{ profile.picture }}"><br>
+                            <label data-toggle="tooltip" data-placement="right" title="{{ profile.user.username }}">
+                                {{ profile.user.username }}
+                            </label>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div><br>
         {% endif %}
-
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
-
         {% if categories %}
             <h1>{{ categoryTitles }}</h1>
-                <div class="profile-gallery">
-                    {% for category in categories %}
-                        <div class="profile-item">
-                            <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">
-                                {% if category.0  == "Focus" %}
-                                    <img alt="" src="/static/images/Focus_.png">
-                                {% elif category.0 == "Topic" %}
-                                    <img alt="" src="/static/images/Topic_.png">
-                                {% elif category.0 == "Journal" %}
-                                    <img alt="" src="/static/images/Journal_.png">
-                                {% elif category.0 == "Author" %}
-                                    <img alt="" src="/static/images/Author.png">
-                                {% endif %}
-                                <br>
-                                <label data-toggle="tooltip" data-placement="right" title="{{category.1}}">
-                                    {{category.1}}
-                                </label>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            <br>
+            <div class="profile-gallery">
+                {% for category in categories %}
+                    <div class="profile-item">
+                        <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">
+                            {% if category.0  == "Focus" %}
+                                <img alt="" src="/static/images/Focus_.png">
+                            {% elif category.0 == "Topic" %}
+                                <img alt="" src="/static/images/Topic_.png">
+                            {% elif category.0 == "Journal" %}
+                                <img alt="" src="/static/images/Journal_.png">
+                            {% elif category.0 == "Author" %}
+                                <img alt="" src="/static/images/Author.png">
+                            {% endif %}
+                            <br>
+                            <label data-toggle="tooltip" data-placement="right" title="{{category.1}}">{{category.1}}</label>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div><br>
         {% endif %}
-
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
-
         {% if videosList %}
             {% for videos in videosList %}
-
                 <h1>{{ videos.0 }}</h1>
-
                 <div class="video-gallery">
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
                             <div class="imageBox">
                                 <input type="image" src='{{ video.0.thumbnail }}' class="thumbnailImage">
-
                                 <div class="hoverImg">
                                     <a href="?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
                                         <img src="/static/images/Journal.png">
                                         {{ video.0.journal.title }}
                                     </a><br>
 
-
                                     <a href="?customCategory={{ video.0.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}" >
                                         <img src="/static/images/Topic.png">
                                         {{ video.0.topic.title }}
                                     </a><br>
 
-
                                     <a href="?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
                                         <img src="/static/images/Focus.png">
                                         {{ video.0.focus.title }}
-                                    </a><br>
-
-                                    <br>
+                                    </a><br><br>
                                 </div>
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
                                     <input type="image" src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
@@ -244,20 +212,16 @@
                                     <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
                                 </span>
 
-
                                 <br>
                                 <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
                                     <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="margin-left: 6px">{{ video.0.title }}</a>
                                 </label>
 
-
                                 <span style="float: left">
                                     <a href="?customCategory={{ video.0.author.title }}&type=Author"  data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
                                         <img src="/static/images/Author.png">
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
-                                    </a>
-
-                                    <br>
+                                    </a><br>
 
                                     {% if videos.0 != "My Videos" %}
                                         <a href="?customUser={{ video.0.user.username }}"  data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.0.user.username }}">
@@ -275,7 +239,6 @@
                 </div>
             {% endfor %}
         {% endif %}
-
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->

@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@gbusud8%-gs(iyid_9)zii&5%n7y09n!fdr*w4na1h&*^5(2x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -132,5 +132,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'psitelly@gmail.com'
 EMAIL_HOST_PASSWORD = 'a2503240A$'
-###
 
