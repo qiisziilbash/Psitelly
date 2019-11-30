@@ -56,14 +56,15 @@
                         </label>
 
                         <br>
-                        <input type="text" id="secQuestionText" name="secQuestion" class="form-control"
-                               placeholder="If you type your own question you have to remember the question as well"
-                               pattern=".{,100}" required list="questions" value="{{ user.profile.secQuestion }}">
-                        <datalist id="questions">
-                            <option value="Who is your secret crush?">
-                            <option value="Who was your first kiss?">
-                            <option value="Who do you want to go on date with him or her?">
-                        </datalist>
+
+
+                  <select id="secQuestionText" name="secQuestion" required style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;">
+                      <option value="What is your security phrase?">What is your security phrase?</option>
+                      <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
+                      <option value="Who was your first kiss?">Who was your first kiss?</option>
+                      <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
+                  </select>
+
                         <br><br>
                     </span>
 

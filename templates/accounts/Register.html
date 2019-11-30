@@ -18,24 +18,24 @@
                     <p id="formContent">
                         <label for="usernameText">Username:</label>
                         <br>
-                        <input type="text" id="usernameText" name="username" placeholder="4 Characters at least" required pattern=".{4,100}">
+                        <input type="text" id="usernameText" name="username" placeholder="4 Characters at least; username is case-sensitive" required pattern=".{4,100}">
                         <br><br>
 
 
                         <label for="emailText"> Email:</label>
                         <br>
-                        <input type="email" id="emailText" name="email" class="form-control" pattern=".{,100}" required>
+                        <input type="email" id="emailText" placeholder="Your email will be used for verification" name="email" class="form-control" pattern=".{,100}" required>
                         <br><br>
 
                         <label for="secQuestionText"> Security Question:</label>
                         <br>
-                        <input type="text" id="secQuestionText" name="secQuestion" class="form-control"
-                                placeholder="If you type your own question you have to remember the question as well"  pattern=".{,100}" required list="questions">
-                        <datalist id="questions">
-                            <option value="Who is your secret crush?">
-                            <option value="Who was your first kiss?">
-                            <option value="Who do you want to go on date with him or her?">
-                        </datalist>
+                          <select name="secQuestion" required style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;">
+                              <option value="What is your security phrase?">What is your security phrase?</option>
+                              <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
+                              <option value="Who was your first kiss?">Who was your first kiss?</option>
+                              <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
+                          </select>
+
                         <br><br>
 
                         <label for="secAnswerText"> Your Answer:</label>
@@ -48,11 +48,12 @@
                         <label for="passwordText">Password:</label>
                         <br>
                         <input type="password" id="passwordText" name="password" class="form-control"
-                               placeholder="4 Characters at least" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
-                        <!--
+                               placeholder="4 Characters at least (Should include at least 1 upper-case letter, 1 lower case, and 1 number)" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+
+                    <!--
                         <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p>
                         <br><br>
-                        -->
+                    -->
                     </p>
 
                     <button type="submit" name="preRegister" id="registerBtn">Register</button>
@@ -156,7 +157,7 @@
                         if(data.msg == 'Success'){
                             $('#formContent').append("<h1> Verify your email</h1>"+
                                 "<p> We sent a verification code to your email. Please verify your email using that code to complete your registration.</p>"+
-                                "<label> Verisfication Code:</label>" +
+                                "<label> Verification Code:</label>" +
                                 "<br>" +
                                 "<input type=\"text\"  id=\"verificationCode\" required>"
                             );

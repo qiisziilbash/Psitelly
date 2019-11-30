@@ -29,7 +29,7 @@
         <div class="video-info">
             <label style="width: 40%">
 
-                <a href="{% url 'index' %}?customUser={{ video.user.username }}">
+                <a href="{% url 'index' %}?customUser={{ video.user.username }}" data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.user.username }}">
                     <img src={{ video.user.profile.picture }}>
                     {{ video.user.username }}
                 </a>
@@ -41,10 +41,10 @@
                     <span style=" float: right;">
                         {% if watchLater %}
                             <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                 onclick="return watchLater(this, {{ video.pk }})">
+                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
                         {% else %}
                             <img alt="watchLater" src="/static/images/WatchLater_.png"
-                                 onclick="return watchLater(this, {{ video.pk }})">
+                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
                         {% endif %}
                     </span>
                 {% endif %}
@@ -55,30 +55,30 @@
 
                         {% if liked %}
                             <img alt="unLike" src="/static/images/Like.png"
-                                   onclick="return likeVideo(this)">
+                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote">
                         {% else %}
                             <img  alt="like" src="/static/images/Like_.png"
-                                   onclick="return likeVideo(this)">
+                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote">
                         {% endif %}
                     </span>
 
                 {% else %}
                     <span style="float: right;">{{ video.likes }}</span>
                     <span style=" float: right;">
-                        <img  src="/static/images/Like_.png" onclick="return aLike()">
+                        <img  src="/static/images/Like_.png" onclick="return aLike()" data-toggle="tooltip" data-placement="right" title="Upvote">
                     </span>
                 {% endif %}
 
 
                 <span style="float:right;" id="numberOfComments">{{ video.comments }}</span>
                 <span style="float: right">
-                    <img type="image" src="/static/images/Comment_.png">
+                    <img type="image" src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments">
                 </span>
 
 
                 <span style="float: right;">{{ video.views }}</span>
                 <span style="float:right;">
-                    <img src="/static/images/View_.png">
+                    <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
                 </span>
 
             </label>
@@ -99,22 +99,27 @@
             <span style="text-align:left; font-weight: bolder"><u>Description</u></span>
             {{ video.description|linebreaks }}
 
-            <span style="text-align:left; font-weight: bold">Google Scholar Link:</span>
-            {% if video.gsLink == '' or video.gsLink == None %}
-                Link is not provided
-            {% else %}
-                <a href="{{ video.gsLink }}" target="_blank">{{ video.gsLink }}</a>
-            {% endif %}
+            <li style="font-weight: bold">Google Scholar Link:
+                <span style="font-weight: normal">
+                    {% if video.gsLink == '' or video.gsLink == None %}
+                        Link is not provided
+                    {% else %}
+                        <a href="{{ video.gsLink }}" target="_blank">{{ video.gsLink }}</a>
+                    {% endif %}
+                </span>
+            </li>
+
+            <li style="font-weight: bold">Article Link:
+                <span style="font-weight: normal">
+                    {% if video.pdfLink == '' or video.pdfLink == None %}
+                        Link is not provided
+                    {% else %}
+                        <a href="{{ video.pdfLink }}" target="_blank">{{ video.pdfLink }}</a>
+                    {% endif %}
+                </span>
+            </li>
+
             <br>
-
-            <span style="text-align:left;  font-weight: bold;" >Article Link:</span>
-            {% if video.pdfLink == '' or video.pdfLink == None %}
-                Link is not provided
-            {% else %}
-                <a href="{{ video.pdfLink }}" target="_blank">{{ video.pdfLink }}</a>
-            {% endif %}
-
-            <br><br>
 
 
 
@@ -123,14 +128,14 @@
 
 
             <label>
-                <a href="{% url 'index' %}?customCategory={{ video.author.title }}&type=Author">
+                <a href="{% url 'index' %}?customCategory={{ video.author.title }}&type=Author" data-toggle="tooltip" data-placement="right" title="Author: {{ video.author.lastName }} ({{ video.year }})">
                     <img src="/static/images/Author.png">
                     {{ video.author.lastName }} ({{ video.year }})
                 </a>
             </label>
 
             <label>
-                <a href="{% url 'index' %}?customCategory={{ video.journal.title }}&type=Journal" >
+                <a href="{% url 'index' %}?customCategory={{ video.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.journal.title }}">
                     <img src="/static/images/Journal_.png">
                     {{ video.journal.title }}
                 </a>
@@ -139,7 +144,7 @@
             <br>
 
             <label>
-                <a href="{% url 'index' %}?customCategory={{ video.topic.title }}&type=Topic" >
+                <a href="{% url 'index' %}?customCategory={{ video.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.topic.title }}">
                     <img src="/static/images/Topic_.png">
                     {{ video.topic.title }}
                 </a>
@@ -147,7 +152,7 @@
 
 
             <label>
-                <a href="{% url 'index' %}?customCategory={{ video.focus.title }}&type=Focus" >
+                <a href="{% url 'index' %}?customCategory={{ video.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.focus.title }}">
                     <img src="/static/images/Focus_.png">
                     {{ video.focus.title }}
                 </a>
@@ -242,19 +247,19 @@
 
                                 <div class="hoverImg">
 
-                                    <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
                                         <img src="/static/images/Journal.png">
                                         {{ video.0.journal.title }}
                                     </a><br>
                                     
 
-                                    <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic"  data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}">
                                         <img src="/static/images/Topic.png">
                                         {{ video.0.topic.title }}
                                     </a><br>
 
 
-                                    <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
                                         <img src="/static/images/Focus.png">
                                         {{ video.0.focus.title }}
                                     </a><br>
@@ -262,13 +267,13 @@
                                     <br>
                                 </div>
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
-                                    <input type="image" src="/static/images/Play.png" class="hitPlayImage">
+                                    <input type="image" src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
                             </div>
 
 
                             <div class="video-item-info">
-                                <span style="float: left;">
+                                <span style="float: left;" data-toggle="tooltip" data-placement="right" title="Duration: {{ video.0.formatted_duration}}">
                                     <img src="/static/images/Timer.png">
                                     {{ video.0.formatted_duration}}
                                 </span>
@@ -304,11 +309,11 @@
                                         {% if video.1 %}
                                             <img alt="unWatchLater"
                                                    src="/static/images/WatchLater.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})">
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
                                         {% else %}
                                             <img alt="watchLater"
                                                    src="/static/images/WatchLater_.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})" >
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
                                         {% endif %}
                                     {% endif %}
                                 </span>
@@ -317,28 +322,28 @@
 
                                 <span style="float: right;">{{ video.0.likes }}</span>
                                 <span style="float: right;">
-                                    <img src="/static/images/Like_.png">
+                                    <img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes">
                                 </span>
 
                                 <span style="float: right;">{{ video.0.comments }}</span>
                                 <span style="float: right;">
-                                    <img src="/static/images/Comment_.png">
+                                    <img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments">
                                 </span>
 
                                 <span style="float: right;">{{ video.0.views }}</span>
                                 <span style="float: right;">
-                                    <img src="/static/images/View_.png">
+                                    <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
                                 </span>
 
 
                                 <br>
-                                <label data-toggle="tooltip" data-placement="right" title="{{ video.0.title }}">
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">{{ video.0.title }}</a>
+                                <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="margin-left: 6px">{{ video.0.title }}</a>
                                 </label>
 
 
                                 <span style="float: left">
-                                    <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author"  data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
                                         <img src="/static/images/Author.png">
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
                                     </a>
@@ -346,7 +351,7 @@
                                     <br>
 
                                     {% if videos.0 != "My Videos" %}
-                                        <a href="?customUser={{ video.0.user.username }}">
+                                        <a href="?customUser={{ video.0.user.username }}" data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.0.user.username }}">
                                             <img alt="" src="{{ video.0.user.profile.picture }}" class="bottom">
                                             {{ video.0.user.username }}
                                         </a>
