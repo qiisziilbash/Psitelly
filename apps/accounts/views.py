@@ -3,18 +3,14 @@ import random
 import re
 import string
 
-import sys
-
 from pytz import utc
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from apps.accounts.models import UserFollowing, Notification
 from apps.information.models import News
 from apps.videos.models import *
 
