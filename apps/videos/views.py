@@ -241,15 +241,7 @@ def play_video(request):
                    'focusCount': Focus.objects.filter().count(),
                    }
 
-        videoPK = request.GET.get('videoPK', 1)
-
-        # videos
-        titles = ['Related Videos']
-        videos = Video.objects.all()[:5]
-
-        if videos:
-            videoList = zip(videos, get_watch_later_videos(request.user, videos))
-            context['videosList'] = zip(titles, [videoList])
+        videoPK = request.GET.get('videoPK', -1)
 
         try:
             video = Video.objects.get(pk=videoPK)
@@ -266,10 +258,17 @@ def play_video(request):
 
             context['comments'] = zip(comments, get_liked_comments(request.user, comments))
 
+            titles = ['Related Videos']
+            videos = Video.objects.all()[:5]
+
+            if videos:
+                videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                context['videosList'] = zip(titles, [videoList])
+
             return render(request, 'videos/Play_Video.html', context)
 
         except ObjectDoesNotExist:
-            return render(request, 'videos/Play_Video.html', context)
+            return redirect('index')
 
 
 ########################################################################################################################

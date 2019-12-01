@@ -137,7 +137,7 @@
                 <button name="submit" onclick="return postComment(this,{{ video.pk }})">Submit</button>
             {% else %}
                 <textarea rows="4" spellcheck="true" placeholder="Please log in to be able to comment." id="commentText" disabled></textarea><br><br>
-                <button name="aSubmit" disabled>Submit</button>
+                <button name="aSubmit" onclick="aComment()">Submit</button>
             {% endif %}
         </div><br>
 
@@ -296,6 +296,9 @@
 <!------------------------------------------------------------------------------------->
     <script>
         function aLike() {alert("Please log in order to like!");}
+    </script>
+        <script>
+        function aComment() {alert("Please log in order to comment!");}
     </script>
 <!------------------------------------------------------------------------------------->
     <script>

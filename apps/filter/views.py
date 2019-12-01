@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from urllib.parse import urlencode
 
-from apps.accounts.models import UserFollowing, Profile
+from apps.accounts.models import Profile
 from apps.information.models import News
 from apps.videos.models import *
 from apps.videos.views import get_watch_later_videos
@@ -28,7 +28,7 @@ def index(request):
             else:
                 return render(request, 'filter/Index.html', search_general(context, keyword, request.user))
 
-        elif 'content' in request.GET:
+        elif 'content' in request.GET and request.user.is_authenticated:
             if request.GET.get('content', '') == 'My Videos':
                 videos = Video.objects.filter(user=request.user)
 
@@ -156,22 +156,22 @@ def index(request):
             return render(request, 'filter/Index.html', context)
 
         elif 'customUser' in request.GET:
-            user = User.objects.get(username=request.GET.get('customUser', ''))
+            if User.objects.filter(username=request.GET.get('customUser', '')).exists():
+                user = User.objects.get(username=request.GET.get('customUser', ''))
 
-            context['customUser'] = user
+                context['customUser'] = user
 
-            if request.user.is_authenticated:
-                context['following'] = UserFollowing.objects.filter(follower=request.user.profile,
-                                                                    followee=user.profile).count()
-            else:
-                context['following'] = -1
+                if request.user.is_authenticated:
+                    context['following'] = UserFollowing.objects.filter(follower=request.user.profile,followee=user.profile).count()
+                else:
+                    context['following'] = -1
 
-            titles = ['Videos by ' + user.username]
-            videos = Video.objects.filter(user=user)
+                titles = ['Videos by ' + user.username]
+                videos = Video.objects.filter(user=user)
 
-            if videos:
-                videoList = zip(videos, get_watch_later_videos(request.user, videos))
-                context['videosList'] = zip(titles, [videoList])
+                if videos:
+                    videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                    context['videosList'] = zip(titles, [videoList])
 
             return render(request, 'filter/Index.html', context)
 
@@ -183,21 +183,22 @@ def index(request):
                 context['customCategoryTitle'] = categoryName
                 context['categoryType'] = categoryType
 
-                focus = Focus.objects.get(title=categoryName)
+                if Focus.objects.filter(title=categoryName).exists():
+                    focus = Focus.objects.get(title=categoryName)
 
-                context['customCategory'] = focus
+                    context['customCategory'] = focus
 
-                if request.user.is_authenticated:
-                    context['following'] = FocusFollowing.objects.filter(user=request.user, focus=focus).count()
-                else:
-                    context['following'] = -1
+                    if request.user.is_authenticated:
+                        context['following'] = FocusFollowing.objects.filter(user=request.user, focus=focus).count()
+                    else:
+                        context['following'] = -1
 
-                titles = ['Videos by ' + categoryName + ' Focus']
-                videos = Video.objects.filter(focus=focus)
+                    titles = ['Videos by ' + categoryName + ' Focus']
+                    videos = Video.objects.filter(focus=focus)
 
-                if videos:
-                    videoList = zip(videos, get_watch_later_videos(request.user, videos))
-                    context['videosList'] = zip(titles, [videoList])
+                    if videos:
+                        videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                        context['videosList'] = zip(titles, [videoList])
 
                 return render(request, 'filter/Index.html', context)
 
@@ -205,21 +206,22 @@ def index(request):
                 context['customCategoryTitle'] = categoryName
                 context['categoryType'] = categoryType
 
-                topic = Topic.objects.get(title=categoryName)
+                if Topic.objects.filter(title=categoryName).exists():
+                    topic = Topic.objects.get(title=categoryName)
 
-                context['customCategory'] = topic
+                    context['customCategory'] = topic
 
-                if request.user.is_authenticated:
-                    context['following'] = TopicFollowing.objects.filter(user=request.user, topic=topic).count()
-                else:
-                    context['following'] = -1
+                    if request.user.is_authenticated:
+                        context['following'] = TopicFollowing.objects.filter(user=request.user, topic=topic).count()
+                    else:
+                        context['following'] = -1
 
-                titles = ['Videos under ' + categoryName + ' Topic']
-                videos = Video.objects.filter(topic=topic)
+                    titles = ['Videos under ' + categoryName + ' Topic']
+                    videos = Video.objects.filter(topic=topic)
 
-                if videos:
-                    videoList = zip(videos, get_watch_later_videos(request.user, videos))
-                    context['videosList'] = zip(titles, [videoList])
+                    if videos:
+                        videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                        context['videosList'] = zip(titles, [videoList])
 
                 return render(request, 'filter/Index.html', context)
 
@@ -227,41 +229,45 @@ def index(request):
                 context['customCategoryTitle'] = categoryName
                 context['categoryType'] = categoryType
 
-                journal = Journal.objects.get(title=categoryName)
-                context['customCategory'] = journal
+                if Journal.objects.filter(title=categoryName).exists():
+                    journal = Journal.objects.get(title=categoryName)
+                    context['customCategory'] = journal
 
-                if request.user.is_authenticated:
-                    context['following'] = JournalFollowing.objects.filter(user=request.user, journal=journal).count()
-                else:
-                    context['following'] = -1
+                    if request.user.is_authenticated:
+                        context['following'] = JournalFollowing.objects.filter(user=request.user, journal=journal).count()
+                    else:
+                        context['following'] = -1
 
-                titles = ['Videos from ' + categoryName]
-                videos = Video.objects.filter(journal=journal)
+                    titles = ['Videos from ' + categoryName]
+                    videos = Video.objects.filter(journal=journal)
 
-                if videos:
-                    videoList = zip(videos, get_watch_later_videos(request.user, videos))
-                    context['videosList'] = zip(titles, [videoList])
+                    if videos:
+                        videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                        context['videosList'] = zip(titles, [videoList])
 
                 return render(request, 'filter/Index.html', context)
+
             elif categoryType == 'Author':
                 context['customCategoryTitle'] = categoryName
                 context['categoryType'] = categoryType
 
-                author = Author.objects.get(title=categoryName)
-                context['customCategory'] = author
+                if Author.objects.filter(title=categoryName).exists():
+                    author = Author.objects.get(title=categoryName)
+                    context['customCategory'] = author
 
-                if request.user.is_authenticated:
-                    context['following'] = AuthorFollowing.objects.filter(user=request.user, author=author).count()
-                else:
-                    context['following'] = -1
+                    if request.user.is_authenticated:
+                        context['following'] = AuthorFollowing.objects.filter(user=request.user, author=author).count()
+                    else:
+                        context['following'] = -1
 
-                videos = Video.objects.filter(author=author)
+                    videos = Video.objects.filter(author=author)
 
-                if videos:
-                    videoList = zip(videos, get_watch_later_videos(request.user, videos))
-                    context['videosList'] = zip(['Videos by ' + categoryName    ], [videoList])
+                    if videos:
+                        videoList = zip(videos, get_watch_later_videos(request.user, videos))
+                        context['videosList'] = zip(['Videos by ' + categoryName    ], [videoList])
 
                 return render(request, 'filter/Index.html', context)
+
         else:
             titles = ['Recent videos', 'Popular videos']
 
