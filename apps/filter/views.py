@@ -173,7 +173,7 @@ def index(request):
                     videoList = zip(videos, get_watch_later_videos(request.user, videos))
                     context['videosList'] = zip(titles, [videoList])
 
-            return render(request, 'filter/Index.html', context)
+                return render(request, 'filter/Index.html', context)
 
         elif 'customCategory' in request.GET:
             categoryType = request.GET.get('type', '')
@@ -268,18 +268,17 @@ def index(request):
 
                 return render(request, 'filter/Index.html', context)
 
-        else:
-            titles = ['Recent videos', 'Popular videos']
+        titles = ['Recent videos', 'Popular videos']
 
-            recentVideos = Video.objects.order_by('-publishDate')[:4]
-            popularVideos = Video.objects.order_by('-likes')[:4]
+        recentVideos = Video.objects.order_by('-publishDate')[:4]
+        popularVideos = Video.objects.order_by('-likes')[:4]
 
-            recentVideoList = zip(recentVideos, get_watch_later_videos(request.user, recentVideos))
-            popularVideoList = zip(popularVideos, get_watch_later_videos(request.user, popularVideos))
+        recentVideoList = zip(recentVideos, get_watch_later_videos(request.user, recentVideos))
+        popularVideoList = zip(popularVideos, get_watch_later_videos(request.user, popularVideos))
 
-            context['videosList'] = zip(titles, [recentVideoList, popularVideoList])
+        context['videosList'] = zip(titles, [recentVideoList, popularVideoList])
 
-            return render(request, 'filter/Index.html', context)
+        return render(request, 'filter/Index.html', context)
 
 
 def filter_videos(request):
