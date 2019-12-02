@@ -21,6 +21,18 @@
 }
 body::-webkit-scrollbar { width: 0 !important }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #67605b;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #67605b;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #67605b;
+}
 
 a{text-decoration: none;}
 
@@ -402,18 +414,8 @@ a.button {
     float: right;
 }
 
-.comments textarea{
-    font-size: 14px;
-    border-radius: 5px;
-    width: 100%;
-    padding: 5px;
-}
 
-.comments button{
-    background-color: white;
-    border-radius: 5px;
-    float: right;
-}
+
 
 .indentedComments{
     background-color: var(--backgroundColor2);
@@ -457,6 +459,16 @@ a.button {
     margin-left: 2%;
 }
 
+ .comments textarea{
+     font-size: 14px;
+    border: none;
+    background-color: transparent;
+    border-left: 2px solid #060606;
+    width: 90%;
+    padding: 5px;
+    margin-left: 2%;
+ }
+
 .textContent select, .uploadForm select{
     font-size: 14px;
     border: none;
@@ -479,7 +491,7 @@ a.button {
 }
 
 
-.uploadForm button, .filterForm button, .textContent button{
+.uploadForm button, .filterForm button, .textContent button, .comments button{
     font-size: 14px;
     float: right;
     margin-right: 3%;

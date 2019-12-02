@@ -129,24 +129,35 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
-        <h1>Comments</h1>
 
         <div class="comments">
+            <h3> Comment here</h3>
             {%  if user.is_authenticated %}
-                <textarea rows="4" spellcheck="true"placeholder="What do you think ... " id="commentText"></textarea><br><br>
+                <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea><br><br>
                 <button name="submit" onclick="return postComment(this,{{ video.pk }})">Submit</button>
+                <br>
             {% else %}
                 <textarea rows="4" spellcheck="true" placeholder="Please log in to be able to comment." id="commentText" disabled></textarea><br><br>
                 <button name="aSubmit" onclick="aComment()">Submit</button>
+                <br>
             {% endif %}
         </div><br>
+
+
+    <div>
+                {% if comments %}
+            <h2> User Comments</h2>
+        {% endif %}
+    </div>
+
+
 
         <div id="userComments">
             {% if comments %}
                 {% for comment in comments %}
                     <div id="{{ comment.0.pk }}" class="comment-options">
                         <a href="{% url 'index' %}?customUser={{ comment.0.user.username }}">
-                            <img class="bottom" src="{{ comment.0.user.profile.picture }}" alt="">{{ comment.0.user.username }}
+                            <img class="bottom" src="{{ comment.0.user.profile.picture }}" alt=""> {{ comment.0.user.username }}
                         </a>
                         at {{ comment.0.time }}
 
@@ -379,7 +390,7 @@
                                 "<br><br>"+
 
                                 "<div class=\"indentedComments\">" +
-                                "<br>"+$('#commentText').val()+ "<br><br>"+
+                                "<br>"+$('#commentText').val().replace(/\n/g, "<br />")+ "<br><br>"+
                                 "</div>" + "<br> "
                             );
                             $('#commentText').val('');
