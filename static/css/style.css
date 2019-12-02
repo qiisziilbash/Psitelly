@@ -515,7 +515,7 @@ a.button {
   background-color: var(--backgroundColor4);
 }
 
-#deleteBtn:hover{
+#deleteBtn:hover, #logoutBtn:hover{
     background-color: red;
 }
 
