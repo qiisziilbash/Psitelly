@@ -36,10 +36,12 @@
                     <span style=" float: right;">
                         {% if watchLater %}
                             <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
+                            style="cursor: pointer">
                         {% else %}
                             <img alt="watchLater" src="/static/images/WatchLater_.png"
-                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                                 onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
+                            style="cursor: pointer">
                         {% endif %}
                     </span>
                 {% endif %}
@@ -49,10 +51,12 @@
                         <span style="float: right;">{{ video.likes }}</span>
                         {% if liked %}
                             <img alt="unLike" src="/static/images/Like.png"
-                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote">
+                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote"
+                            style="cursor: pointer">
                         {% else %}
                             <img  alt="like" src="/static/images/Like_.png"
-                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote">
+                                   onclick="return likeVideo(this)" data-toggle="tooltip" data-placement="right" title="Upvote"
+                            style="cursor: pointer">
                         {% endif %}
                     </span>
 
@@ -143,11 +147,10 @@
             {% endif %}
         </div><br>
 
-
-    <div>
-        <h2>User Comments</h2>
-        <hr>
-    </div>
+        <div>
+            <h2>User Comments</h2>
+            <hr>
+        </div>
 
 
 
@@ -251,10 +254,12 @@
                                     {% if user.is_authenticated and videos.0 != "Watch Later"%}
                                         {% if video.1 %}
                                             <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
+                                            style="cursor: pointer">
                                         {% else %}
                                             <img alt="watchLater" src="/static/images/WatchLater_.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
+                                            style="cursor: pointer">
                                         {% endif %}
                                     {% endif %}
                                 </span>
