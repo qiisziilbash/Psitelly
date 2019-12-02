@@ -141,11 +141,16 @@
                                     <a href="?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
                                         <img src="/static/images/Focus.png">
                                         {{ video.0.focus.title }}
-                                    </a><br><br>
+                                    </a>
+
                                 </div>
+
+
+
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
                                     <input type="image" src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
+
                             </div>
 
 
@@ -185,22 +190,20 @@
                                     {% endif %}
                                 </span>
 
+
                                 <span style="float: right;">
                                     {% if user.is_authenticated and videos.0 != "Watch Later"%}
                                         {% if video.1 %}
-                                            <img alt="unWatchLater"
-                                                   src="/static/images/WatchLater.png"
+                                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
                                                    onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                                             style="cursor: pointer">
                                         {% else %}
-                                            <img alt="watchLater"
-                                                   src="/static/images/WatchLater_.png"
+                                            <img alt="watchLater" src="/static/images/Plus.png"
                                                    onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                                             style="cursor: pointer">
                                         {% endif %}
                                     {% endif %}
                                 </span>
-
 
 
                                 <span style="float: right;">{{ video.0.likes }}</span>
@@ -283,7 +286,7 @@
                 $(element).attr('src','/static/images/WatchLater.png')
             }else{
                 $(element).attr('alt','watchLater');
-                $(element).attr('src','/static/images/WatchLater_.png')
+                $(element).attr('src','/static/images/Plus.png')
             }
 
             $.ajax({

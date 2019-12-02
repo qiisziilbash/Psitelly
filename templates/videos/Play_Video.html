@@ -39,7 +39,7 @@
                                  onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                             style="cursor: pointer">
                         {% else %}
-                            <img alt="watchLater" src="/static/images/WatchLater_.png"
+                            <img alt="watchLater" src="/static/images/Plus.png"
                                  onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                             style="cursor: pointer">
                         {% endif %}
@@ -138,11 +138,11 @@
             <h3> Comment here</h3>
             {%  if user.is_authenticated %}
                 <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea><br><br>
-                <button name="submit" onclick="return postComment(this,{{ video.pk }})">Submit</button>
+                <button name="submit" onclick="return postComment(this,{{ video.pk }})">Comment</button>
                 <br>
             {% else %}
                 <textarea rows="4" spellcheck="true" placeholder="Please log in to be able to comment." id="commentText" disabled></textarea><br><br>
-                <button name="aSubmit" onclick="aComment()">Submit</button>
+                <button name="aSubmit" onclick="aComment()">Comment</button>
                 <br>
             {% endif %}
         </div><br>
@@ -257,7 +257,7 @@
                                                    onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                                             style="cursor: pointer">
                                         {% else %}
-                                            <img alt="watchLater" src="/static/images/WatchLater_.png"
+                                            <img alt="watchLater" src="/static/images/Plus.png"
                                                    onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
                                             style="cursor: pointer">
                                         {% endif %}
@@ -417,7 +417,7 @@
                 $(element).attr('src','/static/images/WatchLater.png')
             }else{
                 $(element).attr('alt','watchLater');
-                $(element).attr('src','/static/images/WatchLater_.png')
+                $(element).attr('src','/static/images/Plus.png')
             }
 
             $.ajax({
