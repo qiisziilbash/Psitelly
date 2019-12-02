@@ -136,10 +136,14 @@
 
         <div class="comments">
             <h3> Comment here</h3>
+
+
             {%  if user.is_authenticated %}
-                <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea><br><br>
-                <button name="submit" onclick="return postComment(this,{{ video.pk }})">Comment</button>
-                <br>
+                <div class="comment-options">
+                    <img src="{{ user.profile.picture }}" style="vertical-align: top">
+                    <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea><br><br>
+                    <button name="submit" onclick="return postComment(this,{{ video.pk }})">Comment</button><br>
+                </div>
             {% else %}
                 <textarea rows="4" spellcheck="true" placeholder="Please log in to be able to comment." id="commentText" disabled></textarea><br><br>
                 <button name="aSubmit" onclick="aComment()">Comment</button>

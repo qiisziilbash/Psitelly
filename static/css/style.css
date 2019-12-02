@@ -4,7 +4,7 @@
     --backgroundColor1: gray;
     --backgroundColor2: #b8c3cd;
     --backgroundColor3: white;
-    --backgroundColor4: #00a651;
+    --backgroundColor4: green;
     --font1: "noto-serif";
 }
 
@@ -445,17 +445,39 @@ a.button {
     font-size: 14px;
     border: none;
     background-color: transparent;
-    border-bottom: 2px solid #060606;
+    border-bottom: 1px solid #787878;
     width: 90%;
     padding: 5px;
     margin-left: 2%;
+}
+
+.effectWrapper {
+  float: left;
+  width: 100%;
+  position: relative;
+}
+
+.textContent input ~ .focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background-color: black;
+    transition: 0.4s;
+}
+
+.textContent input:focus ~ .focus-border {
+  width: 90%;
+  transition: 1s;
+    left: 2%;
 }
 
 .uploadForm textarea, .filterForm textarea,.textContent textarea {
     font-size: 14px;
     border: none;
     background-color: transparent;
-    border-left: 2px solid #060606;
+    border-left: 1px solid #060606;
     width: 90%;
     padding: 5px;
     margin-left: 2%;
@@ -475,7 +497,7 @@ a.button {
     font-size: 14px;
     border: none;
     background-color: transparent;
-    border-bottom: 2px solid #060606;
+    border-bottom: 1px solid #060606;
     width: 90%;
     padding: 5px;
     margin-left: 2%;
