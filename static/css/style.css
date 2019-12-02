@@ -511,7 +511,7 @@ a.button {
     cursor: pointer;
 }
 
-.textContent button:hover,.uploadForm button:hover, .filterForm button:hover {
+.textContent button:hover,.uploadForm button:hover, .filterForm button:hover, .comments button:hover{
   background-color: var(--backgroundColor4);
 }
 
