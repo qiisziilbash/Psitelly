@@ -5,9 +5,9 @@
         <h1>Contact Us</h1>
         <form method="POST" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}
-            <div class="contactForm">
-                <span style="font-weight: bolder">Subject</span>
-                <input list="subjects" name="subject" id="subjectID" required><br>
+            <div class="textContent">
+                <label>Subject</label><br>
+                <input list="subjects" name="subject" id="subjectID" required><br><br>
 
                 <datalist id="subjects">
                     <option value="Report a problem">
@@ -15,18 +15,21 @@
                     <option value="Love letter">
                     <option value="Miscellaneous">
                 </datalist>
+                <br>
 
-                <span style="font-weight: bolder">Email (Optional)</span>
-                <input name="email" id="emailID"><br>
-                <span style="font-weight: bolder">Content </span>
-                <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea><br>
-                <span style="font-weight: bolder; width: 50%">Upload up to 3 pictures (Optional)</span>
-                <input type="file" name="picture1" accept="image/*" style="background-color: white"><br>
-                <input type="file" name="picture2" accept="image/*" style="background-color: white"><br>
-                <input type="file" name="picture3" accept="image/*" style="background-color: white"><br>
+                <label>Email (Optional)</label><br>
+                <input name="email" id="emailID"><br><br>
+
+                <label>Content </label><br><br>
+                <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea><br><br><br>
+
+                <label>Upload up to 3 pictures (Optional)</label><br><br>
+                <input type="file" name="picture1" accept="image/*" ><br>
+                <input type="file" name="picture2" accept="image/*" ><br>
+                <input type="file" name="picture3" accept="image/*" ><br>
                 <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p><br><br>
 
-                <span style="float:right;"><button type="submit">Submit</button></span>
+                <button type="submit">Send</button><br><br><br><br>
             </div>
         </form><br>
     </div>

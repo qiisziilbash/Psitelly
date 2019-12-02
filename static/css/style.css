@@ -44,11 +44,14 @@ a.button {
     grid-template-columns: 1fr;
 }
 
-.search-box input[type=text]{
+
+.search-box input{
+    font-size: 18px;
     border-radius: 10px;
     background-color: var(--backgroundColor2);
     border: none;
-    font-size: 24px;
+    border-bottom: 2px solid #060606;
+
     height: 100%;
     width: 100%;
     padding: 10px;
@@ -134,7 +137,6 @@ a.button {
     border: black;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    text-align: left;
     text-align: justify;
     text-justify: inter-word;
     font-size: 14px;
@@ -164,7 +166,6 @@ a.button {
     border: black;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    text-align: left;
     text-align: justify;
     text-justify: inter-word;
     font-size: 14px;
@@ -179,26 +180,10 @@ a.button {
     border: black;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    text-align: left;
     text-align: justify;
     text-justify: inter-word;
     font-size: 14px;
 }
-
-.textContent input, .textContent textarea {
-    font-size: 14px;
-    border-radius: 5px;
-    width: 100%;
-    padding: 5px;
-}
-
-.textContent button {
-    background-color: white;
-    border-radius: 7px;
-    font-size: 14px;
-    float: right;
-}
-
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
@@ -444,12 +429,6 @@ a.button {
     column-gap: 10px;
 }
 
-.contactForm{
-    display: grid;
-    background-color: var(--backgroundColor2);
-    grid-template-columns: repeat(1,minmax(240px, 1fr));
-    column-gap: 10px;
-}
 
 .filterForm-base{
     display: grid;
@@ -458,29 +437,74 @@ a.button {
     column-gap: 10px;
 }
 
-.uploadForm input:not([type="checkbox"]), .uploadForm textarea, .filterForm input, .filterForm textarea, .contactForm input, .contactForm textarea {
+.uploadForm input:not([type="checkbox"]), .filterForm input:not([type="checkbox"]), .textContent input{
     font-size: 14px;
-    border-radius: 5px;
-    width: 100%;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid #060606;
+    width: 90%;
     padding: 5px;
+    margin-left: 2%;
+}
+
+.uploadForm textarea, .filterForm textarea,.textContent textarea {
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    border-left: 2px solid #060606;
+    width: 90%;
+    padding: 5px;
+    margin-left: 2%;
+}
+
+.textContent select, .uploadForm select{
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid #060606;
+    width: 90%;
+    padding: 5px;
+    margin-left: 2%;
+}
+
+.textContent select option, .uploadForm option{
+    background-color: var(--backgroundColor2);
+    font-size: 14px;
+    padding: 5px;
+	border: none;
+}
+
+.textContent label .uploadForm label, .filterForm label{
+    font-weight: bold ;
 }
 
 
-.uploadForm button, .filterForm button, .contactForm  button{
-    background-color: white;
-    border-radius: 7px;
+.uploadForm button, .filterForm button, .textContent button{
     font-size: 14px;
-    height: 30px;
     float: right;
+    margin-right: 3%;
+    border-radius: 5px;
+
+    border: solid;
+    color: black;
+    background-color: transparent;
+
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
-.uploadForm input[type="button"]{
-    background-color: white;
-    border-radius: 7px;
-    font-size: 14px;
-    width: 100px;
-    height: 30px;
-    float: right;
+.textContent button:hover,.uploadForm button:hover, .filterForm button:hover {
+  background-color: var(--backgroundColor4);
+}
+
+#deleteBtn:hover{
+    background-color: red;
 }
 
 .profilePic{
@@ -488,6 +512,7 @@ a.button {
     height: 200px;
     width: 200px;
 }
+
 
 /********************************************************************************/
 /********************************************************************************/

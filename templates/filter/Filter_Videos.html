@@ -7,25 +7,28 @@
             {% csrf_token %}
             <div class="filterForm-base">
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Title</span>
-                    <textarea rows="4" spellcheck="true" placeholder="Title " name="title"></textarea><br><br>
+                    <label> Title</label><br>
+                    <textarea rows="2" spellcheck="true" placeholder="Title " name="title"></textarea><br><br>
                 </span>
 
                 <span><br></span>
 
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Author</span>
+                    <br>
+                    <label> Author</label>
                     <input type="text" name="author" class="form-control" placeholder="e.g. Afraz"><br><br>
                 </span>
 
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Year</span><br>
-                    <input type="number" name="yearFrom" class="form-control" placeholder="From" style="width: 49%">
-                    <input type="number" name="yearTo" class="form-control" placeholder="To" style="width: 49%"><br><br>
+                    <br>
+                    <label> Year</label><br>
+                    <input type="number" name="yearFrom" class="form-control" placeholder="From" style="width: 43%">
+                    <input type="number" name="yearTo" class="form-control" placeholder="To" style="width: 43%"><br><br>
                 </span>
 
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Journal</span>
+                <br>
+                    <label> Journal</label>
                     <input type="text" name="journal" class="form-control" placeholder="e.g. Nature" list="journals">
                     <datalist id="journals">
                         {% for journal in journals %}
@@ -35,7 +38,8 @@
                 </span>
 
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Topic</span>
+                <br>
+                    <label> Topic</label><br>
                     <input type="text" name="topic" class="form-control" list="topics" placeholder="e.g. neuroscience">
                     <datalist id="topics">
                         {% for topic in topics %}
@@ -45,7 +49,8 @@
                 </span>
 
                 <span class="filterForm">
-                    <span style="font-weight: bolder"> Focus</span>
+                <br>
+                    <label> Focus</label>
                     <input type="text" name="focus" list="focuses" class="form-control" placeholder="e.g. method">
                     <datalist id="focuses">
                         {% for focus in focuses %}
@@ -56,13 +61,20 @@
 
 
                 <span>
-                    <br>
+                    <br><br>
                     <input type="radio" id="andSearch" name="searchType" value="and" checked>
                     <label for="andSearch">"And" Search </label>
                     <input type="radio" id="orSearch" name="searchType" value="or">
                     <label for="orSearch">"Or" Search</label><br>
                     <input type="checkbox" name="PisA"> Publisher is the same as author
-                    <span class="filterForm"><button type="submit" id="filterBtn">Search</button></span>
+
+                </span>
+
+                <span><br></span>
+            <span><br></span><span><br></span>
+                <span class="filterForm">
+                    <button type="submit" id="filterBtn">Search</button>
+                    <br><br>
                 </span>
             </div>
         </form>

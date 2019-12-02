@@ -17,7 +17,7 @@
                 <div class="uploadForm">
                     <span>
                         <label><span style="font-weight: bolder"> Profile Picture</span></label>
-                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white"><br><br>
+                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" ><br><br><br>
                     </span>
 
                     <br>
@@ -25,28 +25,28 @@
                     <span>
                         <label><span style="font-weight: bolder"> Username</span></label>
                         <input type="text" id="usernameText" name="username"
-                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}><br><br>
+                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}><br><br><br>
                     </span>
 
                     <span>
                         <label><span style="font-weight: bolder"> Email</span></label>
-                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}><br><br>
+                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}><br><br><br>
                     </span>
 
                     <span>
                         <label><span style="font-weight: bolder"> Security Question</span></label><br>
-                        <select id="secQuestionText" name="secQuestion" required style="font-size: 14px;border-radius: 5px;width: 100%;padding: 5px;background-color: white">
+                        <select id="secQuestionText" name="secQuestion" required>
                             <option value="What is your security phrase?">What is your security phrase?</option>
                             <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
                             <option value="Who was your first kiss?">Who was your first kiss?</option>
                             <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
                         </select>
-                        <br><br>
+                        <br><br><br>
                     </span>
 
                     <span>
                         <label><span style="font-weight: bolder"> Security Answer</span></label>
-                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}><br><br>
+                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}><br><br><br>
                     </span>
 
                     <span>
