@@ -79,7 +79,18 @@
 {% endblock %}
 
 {% block scripts %}
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        $("form").submit(function(event) {
+
+           var recaptcha = $("#g-recaptcha-response").val();
+           if (recaptcha === "") {
+              event.preventDefault();
+              alert("Please check the recaptcha");
+           }
+        });
+    </script>
+
 {% endblock %}
 
 
