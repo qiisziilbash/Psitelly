@@ -82,6 +82,7 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
         $("form").submit(function(event) {
+            alert("hi");
 
            var recaptcha = $("#g-recaptcha-response").val();
            if (recaptcha === "") {
