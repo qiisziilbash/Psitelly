@@ -13,30 +13,50 @@
                 <div class="uploadForm">
                     <span>
                         <label> Title *</label><br>
-                        <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea><br><br>
+                        <span class="effectWrapper">
+                           <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span>
                         <label> Description</label>
-                        <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea><br><br>
+                        <span class="effectWrapper">
+                            <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span>
                         <br>
                         <label> Google Scholar Link</label>
-                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea><br><br>
+                        <span class="effectWrapper">
+                            <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span>
                         <br>
                         <label> Article Link</label>
-                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea><br><br>
+                        <span class="effectWrapper">
+                            <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span>
                     <br>
                         <label>Author * </label>
-                        <input type="text" id="authorLastNameID" name="author" class="form-control" placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                        <span class="effectWrapper">
+                            <input type="text" id="authorLastNameID" name="author" placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                            <span class="focus-border"></span>
+                        </span>
+
                         <datalist id="authors">
                             {% for author in authors %}
                                 <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
@@ -47,13 +67,21 @@
                     <span>
                         <br>
                         <label> Year *</label><br>
-                        <input type="number" id="yearID" name="year" class="form-control" placeholder="e.g. 2000" value="2000" required><br><br>
+                        <span class="effectWrapper">
+                             <input type="number" id="yearID" name="year" placeholder="e.g. 2000" value="2000" required>
+                            <span class="focus-border"></span>
+                        </span>
+                       <br><br>
                     </span>
 
                     <span>
-                    <br>
-                    <label> Journal *</label>
-                        <input type="text" id="journalID" name="journal" class="form-control" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
+                        <br>
+                        <label> Journal *</label>
+                        <span class="effectWrapper">
+                            <input type="text" id="journalID" name="journal" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
+                            <span class="focus-border"></span>
+                        </span>
+
                         <datalist id="journals">
                             {% for journal in journals %}
                                 <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
@@ -64,7 +92,11 @@
                     <span>
                     <br>
                         <label> Topic *</label>
-                        <input type="text" id="topicID" name="topic" class="form-control" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
+                        <span class="effectWrapper">
+                            <input type="text" id="topicID" name="topic" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
+                            <span class="focus-border"></span>
+                        </span>
+
                         <datalist id="topics">
                             {% for topic in topics %}
                                 <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
@@ -75,7 +107,10 @@
                     <span>
                     <br>
                         <label> Focus *</label>
-                        <input type="text" id="focusID" name="focus" class="form-control" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                        <span class="effectWrapper">
+                            <input type="text" id="focusID" name="focus" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                            <span class="focus-border"></span>
+                        </span>
                         <datalist id="focuses">
                             {% for focus in focuses %}
                                 <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">

@@ -16,25 +16,37 @@
 
                 <div class="uploadForm">
                     <span>
-                        <label><span style="font-weight: bolder"> Profile Picture</span></label>
-                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" ><br><br><br>
+                        <label>Profile Picture</label>
+                        <span class="effectWrapper">
+                            <input type="file" name="profilePicture" accept="image/png, image/jpeg" >
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
                     </span>
 
                     <br>
 
                     <span>
-                        <label><span style="font-weight: bolder"> Username</span></label>
-                        <input type="text" id="usernameText" name="username"
-                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}><br><br><br>
+                        <label>Username</label>
+                        <span class="effectWrapper">
+                            <input type="text" id="usernameText" name="username"
+                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
                     </span>
 
                     <span>
-                        <label><span style="font-weight: bolder"> Email</span></label>
-                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}><br><br><br>
+                        <label>Email</label>
+                        <span class="effectWrapper">
+                            <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
                     </span>
 
                     <span>
-                        <label><span style="font-weight: bolder"> Security Question</span></label><br>
+                        <label> Security Question</label><br>
                         <select id="secQuestionText" name="secQuestion" required>
                             <option value="What is your security phrase?">What is your security phrase?</option>
                             <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
@@ -45,16 +57,24 @@
                     </span>
 
                     <span>
-                        <label><span style="font-weight: bolder"> Security Answer</span></label>
-                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}><br><br><br>
+                        <label>Security Answer</label>
+                        <span class="effectWrapper">
+                            <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
                     </span>
 
                     <span>
                         <label for="newPass1Text">
-                            <span style="font-weight: bolder">New Password</span><br>
+                            <span style="font-weight: bolder">New Password</span style="font-weight: bolder"><br>
                             <span style="font-size: small">Leave empty, if you don't want to change your password</span>
                         </label><br>
-                        <input type="password" id="newPass1Text" name="newPass1" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$"><br><br>
+                        <span class="effectWrapper">
+                            <input type="password" id="newPass1Text" name="newPass1" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span>
@@ -62,7 +82,11 @@
                             <span style="font-weight: bolder">Confirm New Password</span><br>
                             <span style="font-size: small">Leave empty, if you don't want to change your password</span>
                         </label><br>
-                        <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$"><br><br>
+                        <span class="effectWrapper">
+                            <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br>
                     </span>
 
                     <span><h3><u>Notifications</u></h3></span><br>

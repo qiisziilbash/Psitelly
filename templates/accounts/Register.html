@@ -11,10 +11,19 @@
                 <div class="textContent">
                     <p id="formContent">
                         <label for="usernameText">Username</label><br>
-                        <input type="text" id="usernameText" name="username" placeholder="4 Characters at least; username is case-sensitive" required pattern=".{4,100}"><br><br><br>
+                        <span class="effectWrapper">
+                            <input type="text" id="usernameText" name="username" placeholder="4 Characters at least; username is case-sensitive" required pattern=".{4,100}">
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
 
                         <label for="emailText"> Email</label><br>
-                        <input type="email" id="emailText" placeholder="Your email will be used for verification" name="email" class="form-control" pattern=".{,100}" required><br><br><br>
+                        <span class="effectWrapper">
+                            <input type="email" id="emailText" placeholder="Your email will be used for verification" name="email" pattern=".{,100}" required>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
+
 
                         <label for="secQuestionText"> Security Question</label><br>
                         <select name="secQuestion" required>
@@ -27,11 +36,20 @@
                         <br><br><br>
 
                         <label for="secAnswerText"> Your Answer</label><br>
-                        <input type="text" id="secAnswerText" name="secAnswer" class="form-control" pattern=".{,100}" required><br><br><br>
+                        <span class="effectWrapper">
+                            <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required>
+                            <span class="focus-border"></span>
+                        </span>
+                        <br><br><br>
 
                         <label for="passwordText">Password</label><br>
-                        <input type="password" id="passwordText" name="password" class="form-control"
+                        <span class="effectWrapper">
+                            <input type="password" id="passwordText" name="password"
                                placeholder="4 Characters at least (Should include at least 1 upper-case letter, 1 lower case, and 1 number)" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+
+                            <span class="focus-border"></span>
+                        </span>
+
 
                     <br>
                         <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p><br><br>

@@ -10,7 +10,11 @@
             <h1> Verify your account</h1>
             <div class="textContent">
                 <label for="emailText"> Email</label><br>
-                <input id="emailText" type="text" name="email" class="form-control"><br><br><br>
+                <span class="effectWrapper">
+                    <input id="emailText" type="text" name="email">
+                    <span class="focus-border"></span>
+                </span>
+                <br><br><br>
 
                 <label for="secQuestionText"> Security Question</label><br>
                 <select id="secQuestionText" name="secQuestion" required>
@@ -23,11 +27,15 @@
                 <br><br><br>
 
                 <label for="secAnswerText"> Your Answer</label><br>
-                <input type="text" id="secAnswerText" name="secAnswer" class="form-control" pattern=".{,100}" required><br><br><br><br>
+                <span class="effectWrapper">
+                    <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required>
+                    <span class="focus-border"></span>
+                </span>
+                <br><br><br><br>
 
                 <p id="verificationContent"></p>
 
-                <button id="verifyBtn" type="submit"  name="sendCode">Send Code</button><br><br><br><br>
+                <button id="verifyBtn" type="submit" name="sendCode">Send Code</button><br><br><br><br>
             </div>
         </form>
     {% endif %}

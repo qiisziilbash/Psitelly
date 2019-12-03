@@ -140,8 +140,12 @@
 
             {%  if user.is_authenticated %}
                 <div class="comment-options">
-                    <img src="{{ user.profile.picture }}" style="vertical-align: top">
-                    <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea><br><br>
+                    <img src="{{ user.profile.picture }}" style="vertical-align: top"><br>
+                    <span class="effectWrapper">
+                        <textarea rows="4" spellcheck="true" placeholder="What do you think ... " id="commentText"></textarea>
+                        <span class="focus-border"></span>
+                    </span>
+                    <br><br><br>
                     <button name="submit" onclick="return postComment(this,{{ video.pk }})">Comment</button><br>
                 </div>
             {% else %}

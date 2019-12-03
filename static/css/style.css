@@ -457,7 +457,7 @@ a.button {
   position: relative;
 }
 
-.textContent input ~ .focus-border {
+.textContent input ~ .focus-border, .uploadForm input:not([type="checkbox"]) ~ .focus-border, .filterForm input:not([type="checkbox"]) ~ .focus-border{
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -467,31 +467,46 @@ a.button {
     transition: 0.4s;
 }
 
-.textContent input:focus ~ .focus-border {
-  width: 90%;
-  transition: 1s;
+.textContent input:focus ~ .focus-border, .uploadForm input:focus ~ .focus-border, .filterForm input:focus ~ .focus-border {
+    width: 90%;
+    transition: 1s;
     left: 2%;
 }
 
-.uploadForm textarea, .filterForm textarea,.textContent textarea {
+.textContent input:focus {
+    border: none;
+}
+
+.textContent textarea ~ .focus-border, .uploadForm textarea ~ .focus-border, .filterForm textarea ~ .focus-border, .comments textarea ~ .focus-border{
+    position: absolute;
+    bottom: 50%;
+    left: 2%;
+    width: 4px;
+    height: 0;
+    background-color: black;
+    transition: 0.4s;
+}
+
+.textContent textarea:focus ~ .focus-border, .uploadForm textarea:focus ~ .focus-border, .filterForm textarea:focus ~ .focus-border, .comments textarea:focus ~ .focus-border{
+    bottom: 0;
+    height:100%;
+    transition: 1s;
+}
+
+.textContent textarea:focus, .uploadForm textarea:focus,.filterForm textarea:focus, .comments textarea:focus {
+    border: none;
+}
+
+.uploadForm textarea, .filterForm textarea,.textContent textarea,  .comments textarea {
     font-size: 14px;
     border: none;
     background-color: transparent;
-    border-left: 1px solid #060606;
+    border-left: 1px solid #787878;
     width: 90%;
-    padding: 5px;
+    padding: 1em;
     margin-left: 2%;
 }
 
- .comments textarea{
-     font-size: 14px;
-    border: none;
-    background-color: transparent;
-    border-left: 2px solid #060606;
-    width: 90%;
-    padding: 5px;
-    margin-left: 2%;
- }
 
 .textContent select, .uploadForm select{
     font-size: 14px;
@@ -510,8 +525,9 @@ a.button {
 	border: none;
 }
 
-.textContent label .uploadForm label, .filterForm label{
+.textContent label, .uploadForm label, .filterForm label{
     font-weight: bold ;
+    float: left;
 }
 
 

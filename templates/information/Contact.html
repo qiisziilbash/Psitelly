@@ -3,11 +3,16 @@
 {% block content%}
     <div class="content">
         <h1>Contact Us</h1>
-        <form method="POST" enctype="multipart/form-data" autocomplete="off">
-            {% csrf_token %}
-            <div class="textContent">
+        <div class="textContent">
+            <form method="POST" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
                 <label>Subject</label><br>
-                <input list="subjects" name="subject" id="subjectID" required><br><br>
+                <span class="effectWrapper">
+                    <input list="subjects" name="subject" id="subjectID" required>
+                    <span class="focus-border"></span>
+                </span>
+                <br><br>
+
 
                 <datalist id="subjects">
                     <option value="Report a problem">
@@ -17,27 +22,55 @@
                 </datalist>
                 <br>
 
+
                 <label>Email (Optional)</label><br>
-                <input name="email" id="emailID"><br><br>
+                <span class="effectWrapper">
+                    <input name="email" id="emailID">
+                    <span class="focus-border"></span>
+                </span>
+                <br><br><br>
 
-                <label>Content </label><br><br>
-                <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea><br><br><br>
 
-                <label>Upload up to 3 pictures (Optional)</label><br><br>
-                <input type="file" name="picture1" accept="image/*" ><br>
-                <input type="file" name="picture2" accept="image/*" ><br>
-                <input type="file" name="picture3" accept="image/*" ><br>
-                <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p><br><br>
+                <label for="contentID">Content </label><br><br>
+                <span class="effectWrapper">
+                    <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea>
+                    <span class="focus-border"></span>
+                </span>
+                <br><br><br><br><br><br><br>
 
-                <button type="submit">Send</button><br><br><br><br>
-            </div>
-        </form><br>
+
+                <label>Screenshots (Optional)</label><br><br>
+                <span class="effectWrapper">
+                    <input type="file" name="picture1" accept="image/*" >
+                    <span class="focus-border"></span>
+                </span>
+
+
+                <span class="effectWrapper">
+                    <input type="file" name="picture2" accept="image/*" >
+                    <span class="focus-border"></span>
+                </span>
+
+                <span class="effectWrapper">
+                    <input type="file" name="picture3" accept="image/*" >
+                    <span class="focus-border"></span>
+                </span>
+
+
+                <br><br><br><br><br><br>
+                <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p>
+                <br><br>
+
+                <button type="submit">Send</button><br><br><br>
+            </form>
+        </div>
     </div>
 
     <div class="rightbar">
         <h3>Instructions</h3>
         <p>If you have any technical problem to contact us, email directly to this address: psitelly@gmail.com</p>
     </div>
+
 {% endblock %}
 
 {% block scripts %}
