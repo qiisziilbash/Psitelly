@@ -5,6 +5,7 @@
     --backgroundColor2: #b8c3cd;
     --backgroundColor3: white;
     --backgroundColor4: green;
+    --animationTime: .6s;
     --font1: "noto-serif";
 }
 
@@ -464,16 +465,16 @@ a.button {
     width: 0;
     height: 4px;
     background-color: black;
-    transition: 0.4s;
+    transition: var(--animationTime);
 }
 
 .textContent input:focus ~ .focus-border, .uploadForm input:focus ~ .focus-border, .filterForm input:focus ~ .focus-border {
     width: 90%;
-    transition: 1s;
+    transition: var(--animationTime);
     left: 2%;
 }
 
-.textContent input:focus {
+.textContent input:focus,.uploadForm input:focus, .filterForm input:focus {
     border: none;
 }
 
@@ -484,13 +485,13 @@ a.button {
     width: 4px;
     height: 0;
     background-color: black;
-    transition: 0.4s;
+    transition: var(--animationTime);
 }
 
 .textContent textarea:focus ~ .focus-border, .uploadForm textarea:focus ~ .focus-border, .filterForm textarea:focus ~ .focus-border, .comments textarea:focus ~ .focus-border{
     bottom: 0;
     height:100%;
-    transition: 1s;
+    transition: var(--animationTime);
 }
 
 .textContent textarea:focus, .uploadForm textarea:focus,.filterForm textarea:focus, .comments textarea:focus {
@@ -546,8 +547,8 @@ a.button {
     text-decoration: none;
     display: inline-block;
 
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+    -webkit-transition-duration: var(--animationTime);
+    transition-duration: var(--animationTime);
     cursor: pointer;
 }
 
