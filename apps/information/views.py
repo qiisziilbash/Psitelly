@@ -1,5 +1,6 @@
-import urllib
+from urllib.parse import urlencode
 from urllib.request import urlopen
+from urllib.request import Request
 import json
 
 from django.core.mail import EmailMessage
@@ -45,9 +46,11 @@ def contact(request):
             'response': recaptcha_response
         }
 
-        data = urllib.urlencode(values)
-        response = urlopen(url, data)
+        data = urlencode(values).encode("utf-8")
+        req = Request(url, data)
+        response = urlopen(req)
         result = json.load(response)
+
         ''' End reCAPTCHA validation '''
         if result['success']:
             content = request.POST.get('content', '')
