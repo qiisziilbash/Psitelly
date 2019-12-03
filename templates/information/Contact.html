@@ -9,7 +9,7 @@
         {% endif %}
         <h1>Contact Us</h1>
         <div class="textContent">
-            <form method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form method="POST" enctype="multipart/form-data" autocomplete="off" id="contactForm">
                 {% csrf_token %}
                 <label>Subject</label><br>
                 <span class="effectWrapper">
@@ -81,8 +81,8 @@
 {% block scripts %}
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
-        $("form").submit(function(event) {
-            alert("hi");
+        $("#contactForm").submit(function(event) {
+         
 
            var recaptcha = $("#g-recaptcha-response").val();
            if (recaptcha === "") {
