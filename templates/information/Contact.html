@@ -2,6 +2,11 @@
 
 {% block content%}
     <div class="content">
+        {% if msgs %}
+            {% for msg in msgs %}
+                <li style="font-weight: bold">{{ msg }}</li>
+            {% endfor %}
+        {% endif %}
         <h1>Contact Us</h1>
         <div class="textContent">
             <form method="POST" enctype="multipart/form-data" autocomplete="off">
@@ -58,7 +63,7 @@
 
 
                 <br><br><br><br><br><br>
-                <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p>
+                <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p>
                 <br><br>
 
                 <button type="submit">Send</button><br><br><br>
