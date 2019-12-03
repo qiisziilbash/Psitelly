@@ -1,4 +1,8 @@
-import datetime
+from urllib.parse import urlencode
+from urllib.request import urlopen
+from urllib.request import Request
+import json
+
 import random
 import re
 import string
@@ -11,6 +15,7 @@ from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
+from Psitelly import settings
 from apps.information.models import News
 from apps.videos.models import *
 
@@ -363,30 +368,45 @@ def forgot(request):
 ########################################################################################################################
 def pre_register(request):
     if request.method == "POST":
-        username = request.POST.get('username', None)
-        email = request.POST.get('email', None)
 
-        if not User.objects.filter(username=username).exists():
-            if not User.objects.filter(email=email).exists():
-                try:
-                    password = make_password(request.POST.get('password', None))
-                    secQuestion = request.POST.get('secQuestion', None)
-                    secAnswer = request.POST.get('secAnswer', None)
+        url = 'https://www.google.com/recaptcha/api/siteverify'
+        values = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': request.POST.get('recaptcha', None)
+        }
 
-                    user = User.objects.create(username=username, email=email, password=password)
-                    user.profile.secAnswer = secAnswer
-                    user.profile.secQuestion = secQuestion
-                    user.profile.save()
+        data = urlencode(values).encode("utf-8")
+        req = Request(url, data)
+        response = urlopen(req)
+        result = json.load(response)
 
-                    send_code(user)
+        if result['success']:
+            username = request.POST.get('username', None)
+            email = request.POST.get('email', None)
 
-                    return JsonResponse({'msg': 'Success'})
-                except:
-                    return JsonResponse({'msg': 'We could not register this account since entered email is not valid'})
+            if not User.objects.filter(username=username).exists():
+                if not User.objects.filter(email=email).exists():
+                    try:
+                        password = make_password(request.POST.get('password', None))
+                        secQuestion = request.POST.get('secQuestion', None)
+                        secAnswer = request.POST.get('secAnswer', None)
+
+                        user = User.objects.create(username=username, email=email, password=password)
+                        user.profile.secAnswer = secAnswer
+                        user.profile.secQuestion = secQuestion
+                        user.profile.save()
+
+                        send_code(user)
+
+                        return JsonResponse({'msg': 'Success'})
+                    except:
+                        return JsonResponse({'msg': 'We could not register this account since entered email is not valid'})
+                else:
+                    return JsonResponse({'msg': 'This email is already used'})
             else:
-                return JsonResponse({'msg': 'This email is already used'})
+                return JsonResponse({'msg': 'This username is already picked'})
         else:
-            return JsonResponse({'msg': 'This username is already picked'})
+            return JsonResponse({'msg': 'Invalid reCAPTCHA. Please try again.'})
 
 
 def post_register(request):

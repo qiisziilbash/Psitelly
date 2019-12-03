@@ -52,7 +52,7 @@
 
 
                     <br>
-                        <p class="g-recaptcha" data-sitekey="6Lcfi6MUAAAAAHKQMHR7-ObJr-DXrVcScuWbN59e"></p><br><br>
+                        <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p><br><br>
                     </p>
                     <button type="submit" name="preRegister" id="registerBtn">Register</button><br><br><br>
                 </div>
@@ -95,6 +95,11 @@
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
+            if (grecaptcha.getResponse() === '') {
+              alert('Please check the recaptcha');
+              return false;
+            }
+
             if ($('#registerBtn').attr('name') === 'preRegister'){
 
                 $('#registerBtn').attr('disabled', true);
@@ -109,6 +114,7 @@
                          email: $('#emailText').val(),
                          secQuestion: $('#secQuestionText').val(),
                          secAnswer: $('#secAnswerText').val(),
+                         recaptcha:grecaptcha.getResponse(),
                          csrfmiddlewaretoken: '{{ csrf_token }}',
                     },
                     dataType: 'json',

@@ -9,7 +9,7 @@
         {% endif %}
         <h1>Contact Us</h1>
         <div class="textContent">
-            <form method="POST" enctype="multipart/form-data" autocomplete="off" id="contactForm">
+            <form  id="contactUsForm" method="POST" enctype="multipart/form-data" autocomplete="off" >
                 {% csrf_token %}
                 <label>Subject</label><br>
                 <span class="effectWrapper">
@@ -64,9 +64,15 @@
 
                 <br><br><br><br><br><br>
                 <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p>
+                <!-- for local host tests
+                6LfNB8UUAAAAALcAwEJN-WVMTw24ifIoHeFKBBP0
+                 -->
+
                 <br><br>
 
-                <button type="submit">Send</button><br><br><br>
+                <button id="ahmad" type="submit" onclick="return checkCaptcha()">Send</button>
+                <br><br><br>
+
             </form>
         </div>
     </div>
@@ -80,18 +86,15 @@
 
 {% block scripts %}
     <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <script>
-        $("#contactForm").submit(function(event) {
-         
-
-           var recaptcha = $("#g-recaptcha-response").val();
-           if (recaptcha === "") {
-              event.preventDefault();
-              alert("Please check the recaptcha");
-           }
-        });
+    function checkCaptcha() {
+        if (grecaptcha.getResponse() === '') {
+          alert('Please check the recaptcha');
+          return false;
+        }
+    }
     </script>
-
 {% endblock %}
 
 

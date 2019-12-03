@@ -38,7 +38,7 @@ def contact(request):
                    }
         return render(request, 'information/Contact.html', context)
     if request.method == "POST":
-        ''' Begin reCAPTCHA validation '''
+
         recaptcha_response = request.POST.get('g-recaptcha-response')
         url = 'https://www.google.com/recaptcha/api/siteverify'
         values = {
@@ -51,7 +51,6 @@ def contact(request):
         response = urlopen(req)
         result = json.load(response)
 
-        ''' End reCAPTCHA validation '''
         if result['success']:
             content = request.POST.get('content', '')
             email = request.POST.get('email', '')
