@@ -101,7 +101,7 @@ def edit_profile(request):
 
             if not request.user.profile.secAnswer == secAnswer:
                 request.user.profile.secAnswer = secAnswer
-                msgs.append('Your security Answer is updated')
+                msgs.append('Your security answer is updated')
 
             if not newPass1 == '':
                 if newPass1 == newPass2:
@@ -159,7 +159,7 @@ def edit_profile(request):
                 notificationsIsUpdated = True
 
             if notificationsIsUpdated:
-                msgs.append('Your notification setting is updated.')
+                msgs.append('Your notification settings is updated.')
 
             request.user.save()
             request.user.profile.save()
