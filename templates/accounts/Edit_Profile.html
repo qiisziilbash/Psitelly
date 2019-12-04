@@ -181,28 +181,27 @@
 
     <div class="rightbar">
         {% if user.is_authenticated %}
-            <h3>Related Links</h3>
-            <div class="textContent">
-                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
-            </div>
 
-            <h3>Warnings</h3>
+
+            <h3>Notes</h3>
             <div class="textContent">
                 <li>Username is case-sensitive</li>
                 <li>Username should be at least 4 characters</li>
+                <hr>
                 <li>Password should be at least 4 characters</li>
                 <li>Password should have at least 1 uppercase</li>
                 <li>Password should have at least 1 lowercase</li>
                 <li>Password should have at least 1 number</li>
             </div>
         {% else %}
-            <span style="font-weight: bold">Related Links:</span>
-            <div class="textContent">
-                <li><a href="{% url 'register' %}">Not a member yet?</a><br></li>
-                <li><a href="{% url 'forgot' %}">Forgot your password?</a><br></li>
-                <li><a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a><br></li>
-                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
-            </div>
+            <h3>Related Links</h3>
+            <ul>
+                <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
+                <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
+                <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
+                <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+                <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
+            </ul>
         {% endif %}
     </div>
 {% endblock %}

@@ -40,7 +40,7 @@
                     <br>
 
                     <span>
-                        <b>When my followees upload a video:</b>
+                        <b>When my followees upload a video</b>
                         <br>
                         {% if user.profile.notifyUploads and user.profile.emailUploads %}
                             Notify me here and through email
@@ -55,7 +55,7 @@
                     </span>
 
                     <span>
-                        <b>When someone comment on my videos:</b>
+                        <b>When someone comment on my videos</b>
                         <br>
                         {% if user.profile.notifyComments and user.profile.emailComments %}
                             Notify me here and through email
@@ -72,7 +72,7 @@
 
 
                     <span>
-                        <b>When someone starts to follow me:</b>
+                        <b>When someone starts to follow me</b>
                         <br>
                         {% if user.profile.notifyFollows and user.profile.emailFollows %}
                             Notify me here and through email
@@ -120,30 +120,33 @@
         {% if user.is_authenticated %}
             <h3>User Statistics</h3>
             <div class="textContent">
-                <span style="font-weight: bold">Member since:</span><span style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</span><br>
-                <span style="font-weight: bold">Uploaded videos:</span> <span style="float: right">{{ user.profile.nVideos }}</span><br>
-                <span style="font-weight: bold">Made Comments:</span> <span style="float: right">{{ user.profile.nComments }}</span><br>
-                <span style="font-weight: bold">Watched videos:</span><span style="float: right"> {{ user.profile.nWatchedVideos}}</span><br>
+                <label>Member since</label><label style="float: right">{{ user.profile.joinDateTime|date:'d M Y' }}</label><br>
+                <hr>
+                <label>Uploaded Videos</label> <label style="float: right">{{ user.profile.nVideos }}</label><br>
+                <label>Made Comments</label> <label style="float: right">{{ user.profile.nComments }}</label><br>
+                <label>Watched Videos</label><label style="float: right"> {{ user.profile.nWatchedVideos}}</label><br>
             </div>
+
             <h3>Upvotes</h3>
             <div class="textContent">
-                <span style="font-weight: bold">Video upvotes received:</span> <span style="float: right">{{ user.profile.nVideoUpVotesReceived }}</span> <br>
-                <span style="font-weight: bold">Comment upvotes received:</span><span style="float: right">{{ user.profile.nCommentUpVotesReceived }}</span> <br>
+                <label>Upvotes Received for Videos</label> <label style="float: right">{{ user.profile.nVideoUpVotesReceived }}</label> <br>
+                <label>Upvotes Received for Comments</label><label style="float: right">{{ user.profile.nCommentUpVotesReceived }}</label> <br>
             </div>
+
             <h3>Followings</h3>
             <div class="textContent">
-                <span style="font-weight: bold">Followers:</span><span style="float: right">{{ user.profile.nFollowers }}</span> <br>
-                <span style="font-weight: bold">Followees:</span><span style="float: right"> {{ user.profile.nFollowees }}</span><br>
+                <label>Followers</label><label style="float: right">{{ user.profile.nFollowers }}</label> <br>
+                <label>Followees</label><label style="float: right"> {{ user.profile.nFollowees }}</label><br>
             </div>
         {% else %}
             <h3>Related Links</h3>
-            <div class="textContent">
-                <li><a href="{% url 'login' %}">Log in</a><br></li>
-                <li><a href="{% url 'register' %}">Not a member yet?</a><br></li>
-                <li><a href="{% url 'forgot' %}">Forgot your password?</a><br></li>
-                <li><a href="{% url 'verifyAccount' %}">Registered but not verified your email?</a><br></li>
-                <li><a href="{% url 'contact' %}">Do you have any technical problem?</a><br></li>
-            </div>
+            <ul>
+                <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
+                <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
+                <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
+                <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+                <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
+            </ul>
         {% endif %}
     </div>
 {% endblock %}

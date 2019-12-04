@@ -16,9 +16,9 @@
             <div class="basic-wrapper">
         {% endif %}
                 <div class="logo">
-                    <span style="float: left">
-                        <a href="{% url 'index' %}"><img src="/static/images/LogoText.png"  alt="" data-toggle="tooltip" data-placement="right" title="Home"></a>
-                    </span>
+                    <a href="{% url 'index' %}">
+                        <img src="/static/images/LogoText.png" alt="" data-toggle="tooltip" data-placement="right" title="Home">
+                    </a>
                 </div>
 
                 <div class="search-box">
@@ -48,13 +48,11 @@
                 <div class="profile">
                     {% if user.is_authenticated %}
                         <a href="{% url 'profile' %}">
-                            <img src={{ user.profile.picture }} alt="{{ user.profile.picture }}"
-                            data-toggle="tooltip" data-placement="right" title="Profile">
+                            <img src="{{ user.profile.picture }}" alt=" " data-toggle="tooltip" data-placement="right" title="Profile">
                         </a>
                     {% else %}
                         <a href="{% url 'login' %}">
-                            <img src="/static/images/Profile_.png"
-                            data-toggle="tooltip" data-placement="right" title="Not logged in">
+                            <img src="/static/images/Profile_.png" data-toggle="tooltip" data-placement="right" title="Not logged in">
                         </a>
                     {% endif %}
                 </div>
@@ -63,77 +61,52 @@
                     <h3>Dashboard</h3>
                     {% if user.is_authenticated %}
                         <ul>
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="My Videos" name="content">
-                            </form>
-
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="Upvoted Videos" name="content">
-                            </form>
-
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="Watch History" name="content">
-                            </form>
-
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="Watch Later" name="content">
-                            </form>
-
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="Followers" name="content">
-                            </form>
-
-                            <form method="GET" action={% url 'index' %}>
-                                <input type="submit" value="Following" name="content">
-                            </form>
+                            <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
+                            <a href="{% url 'index' %}?content=Upvoted+Videos"><input type="button" value="Upvoted Videos"></a>
+                            <a href="{% url 'index' %}?content=Watch+History"><input type="button" value="Watch History"></a>
+                            <a href="{% url 'index' %}?content=Watch+Later"><input type="button" value="Watch Later"></a>
+                            <a href="{% url 'index' %}?content=Followers"><input type="button" value="Followers"></a>
+                            <a href="{% url 'index' %}?content=Following"><input type="button" value="Following"></a>
                         </ul>
                     {% else %}
                         <ul>
-                            <form method="GET" action={% url 'login' %}>
-                                <input type="submit" value="Log in to access your dashboard" name="content">
-                            </form>
+                            <a href="{% url 'login' %}"><input type="button" value="Log in to access your dashboard"></a>
                         </ul>
                     {% endif %}
 
                     <h3>Psitelly Links</h3>
-
-                    <div class="textContent">
-                        <a href="{% url 'contact' %}"><li>Contact us</li></a>
+                    <ul>
+                        <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
                         <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
-                           target="_blank"><li>Quick guide for Psitelly</li></a>
+                           target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
                         <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
-                           target="_blank"><li>Quick guide for testers</li></a>
-                    </div>
+                           target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
+                    </ul>
 
                     {% if Statistics %}
                         <h3>Psitelly Statistics</h3>
-                        <p>
-                            <span style="font-weight: bold">Members: </span><span style="float: right">{{ usersCount }}</span><br>
-                            <span style="font-weight: bold;">Videos: </span><span style="float: right">{{ videosCount }}</span><br>
-
-                            <span style="font-weight: bold">Journals: </span><span style="float: right">{{ journalCount }}</span><br>
-                            <span style="font-weight: bold;">Authors: </span><span style="float: right">{{ authorCount }}</span><br>
-
-                            <span style="font-weight: bold">Topics: </span><span style="float: right">{{ topicCount }}</span><br>
-                            <span style="font-weight: bold;">Focuses: </span><span style="float: right">{{ focusCount }}</span><br>
-                        </p>
+                        <div class="textContent">
+                            <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
+                            <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
+                            <hr>
+                            <label>Journals </label><label style="float: right">{{ journalCount }}</label><br>
+                            <label>Authors </label><label style="float: right">{{ authorCount }}</label><br>
+                            <hr>
+                            <label>Topics </label><label style="float: right">{{ topicCount }}</label><br>
+                            <label>Focuses </label><label style="float: right">{{ focusCount }}</label><br>
+                        </div>
                     {% endif %}
 
 
                     {% if newses %}
                         <h3> Recent News</h3>
                         {% for news in newses %}
-                                <p>
-                                    <span style="font-weight: bold">
-                                        <u>{{ news.title }}</u><br>
-                                    </span>
+                                <div class="textContent">
+                                    <label><u>{{ news.title }}</u></label><br><br>
+                                    {{ news.text }}<br><hr>
+                                    <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
                                     <br>
-                                    {{ news.text }}
-                                    <br><br>
-                                    <span style="font-weight: bold">
-                                        {{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}
-                                    </span>
-                                </p>
+                                </div>
                         {% endfor %}
                     {% endif %}
                 </div>

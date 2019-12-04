@@ -120,17 +120,22 @@ a.button {
 .sidebar {
     grid-area: sidebar;
     background-color: var(--backgroundColor1);
-    overflow: auto;
 }
+
+.rightbar{
+    grid-area: rightbar;
+    background-color: var(--backgroundColor1);
+}
+
 .sidebar::-webkit-scrollbar { width: 0 !important }
 
-.sidebar ul {
+.sidebar ul, .rightbar ul{
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.sidebar input {
+.sidebar input, .rightbar input{
     border-radius: 5px;
     padding: 8px;
     margin-bottom: 7px;
@@ -141,27 +146,9 @@ a.button {
     text-align: left;
 }
 
-.sidebar p, .rightbar p{
-    border-radius: 5px;
-    padding: 8px;
-    margin-bottom: 7px;
-    background-color: var(--backgroundColor2);
-    color: #000000;
-    border: black;
-    width: 100%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    text-align: justify;
-    text-justify: inter-word;
-    font-size: 14px;
-}
-
-.sidebar input:hover {
-  background-color: green;
-}
-
-.rightbar{
-    grid-area: rightbar;
-    background-color: var(--backgroundColor1);
+.sidebar input:hover, .rightbar input:hover {
+    background-color: green;
+    transition: .3s;
 }
 
 .content {
