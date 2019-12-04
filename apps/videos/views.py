@@ -1,6 +1,7 @@
 import random
 from urllib.parse import urlencode
 
+from django.db.models import Q
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -259,7 +260,7 @@ def play_video(request):
             context['comments'] = zip(comments, get_liked_comments(request.user, comments))
 
             titles = ['Related Videos']
-            videos = Video.objects.all()[:5]
+            videos = get_related_videos(video, 5)
 
             if videos:
                 videoList = zip(videos, get_watch_later_videos(request.user, videos))
@@ -365,6 +366,23 @@ def delete_video(request):
             return JsonResponse({'msg': 'Video does not exist or you are not authorized to delete'})
 
 
+def get_related_videos(video, n):
+    videos = Video.objects.filter(topic=video.topic)
+    if videos.count() >= n:
+        temp = videos.filter(journal=video.journal)
+        if temp.count() >= n:
+            videos = videos.filter(journal=video.journal)
+            temp = videos.filter(author=video.author)
+            if temp.count() >= n:
+                return temp[:n]
+            else:
+                return temp | videos.filter(~Q(author=video.author))[:n-temp.count()]
+        else:
+            return temp | videos.filter(~Q(journal=video.journal))[:n-temp.count()]  # can sort on author
+    else:
+        return videos | Video.objects.filter(~Q(topic=video.topic))[:n-videos.count()]  # can sort on journal and author
+
+
 def start_new_thread(function):
     def decorator(*args, **kwargs):
         t = Thread(target=function, args=args, kwargs=kwargs)
@@ -399,3 +417,4 @@ def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
     video.isProcessed = True
 
     video.save()
+
