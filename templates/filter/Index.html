@@ -16,10 +16,10 @@
                     <span>
                         {% if following == 1 %}
                             <img alt="unFollow" src="/static/images/Following.png"
-                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" ata-toggle="tooltip" data-placement="right" title="Un-follow">
+                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Un-follow">
                         {% elif following == 0 %}
                             <img alt="follow" src="/static/images/Following_.png"
-                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" ata-toggle="tooltip" data-placement="right" title="Follow">
+                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Follow">
                         {% endif %}
                     </span>
                 {% endif %}
@@ -126,7 +126,7 @@
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
                             <div class="imageBox">
-                                <input type="image" src='{{ video.0.thumbnail }}' class="thumbnailImage">
+                                <img src='{{ video.0.thumbnail }}' class="thumbnailImage">
                                 <div class="hoverImg">
                                     <a href="?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
                                         <img src="/static/images/Journal.png">
@@ -146,9 +146,8 @@
                                 </div>
 
 
-
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
-                                    <input type="image" src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
+                                    <img src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
 
                             </div>
