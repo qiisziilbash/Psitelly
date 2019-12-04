@@ -217,6 +217,15 @@ a.button {
 .profile-info{
     background-color: var(--backgroundColor2);
     border-radius: 5px;
+    width: 455px;
+}
+
+.profile-info label{
+    font-weight: bold;
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .profile-info img{

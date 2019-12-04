@@ -16,22 +16,31 @@
                     <span>
                         {% if following == 1 %}
                             <img alt="unFollow" src="/static/images/Following.png"
-                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Un-follow">
+                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
                         {% elif following == 0 %}
                             <img alt="follow" src="/static/images/Following_.png"
-                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Follow">
+                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to follow">
                         {% endif %}
                     </span>
                 {% endif %}
+                <br>
+                <hr>
 
                 <span>
-                    <br><br>
-                    <span style="font-weight: bold">Username:</span> {{ customUser.username }}<br>
-                    <span style="font-weight: bold">Member since: </span> {{ customUser.profile.joinDateTime|date:'d M Y' }}<br>
-                    <span style="font-weight: bold">Videos:</span> {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }} upvotes)<br>
-                    <span style="font-weight: bold">comments:</span> {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }} upvotes)<br>
-                    <span style="font-weight: bold">Followers:</span> {{ customUser.profile.nFollowers }}<br>
-                    <span style="font-weight: bold">Followees:</span> {{ customUser.profile.nFollowees }}<br>
+                    <label>Username</label> <span style="float: right">{{ customUser.username }}</span><br>
+                    <label>Member since </label><span style="float: right">{{ customUser.profile.joinDateTime|date:'d M Y' }}</span> <br>
+                    <hr>
+                    <label>Videos</label>
+                    <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
+                        {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }})
+                    </span><br>
+                    <label>comments</label>
+                    <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
+                        {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }})
+                    </span><br>
+                    <hr>
+                    <label>Followers</label> <span style="float: right"> {{ customUser.profile.nFollowers }}</span><br>
+                    <label>Followees</label> <span style="float: right"> {{ customUser.profile.nFollowees }}</span><br>
                 </span>
             </div><br>
         {% endif %}
@@ -42,36 +51,36 @@
 
         {% if customCategory %}
             <div class="profile-info">
-                <span>
-                    {% if categoryType == "Focus" %}
-                        <input type="image" src="/static/images/Focus_.png" alt="">
-                    {% elif categoryType == "Topic" %}
-                        <input type="image" src="/static/images/Topic_.png" alt="">
-                    {% elif categoryType == "Journal" %}
-                        <input type="image"  src="/static/images/Journal_.png" alt="">
-                    {% elif categoryType == "Author" %}
-                        <input type="image"  src="/static/images/Author.png" alt="">
-                    {% endif %}
-                </span>
+                {% if categoryType == "Focus" %}
+                    <input type="image" src="/static/images/Focus_.png" alt="" data-toggle="tooltip" data-placement="right" title="Focus">
+                {% elif categoryType == "Topic" %}
+                    <input type="image" src="/static/images/Topic_.png" alt="" data-toggle="tooltip" data-placement="right" title="Topic">
+                {% elif categoryType == "Journal" %}
+                    <input type="image"  src="/static/images/Journal_.png" alt="" data-toggle="tooltip" data-placement="right" title="Journal">
+                {% elif categoryType == "Author" %}
+                    <input type="image"  src="/static/images/Author.png" alt="" data-toggle="tooltip" data-placement="right" title="Author">
+                {% endif %}
 
 
-                <span style="float: right">
-                    {% if following == 1 %}
-                        <img alt="unFollow" src="/static/images/Following.png"
-                            onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Un-follow">
-                    {% elif following == 0 %}
-                        <img alt="follow" src="/static/images/Following_.png"
-                             onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Follow">
-                    {% endif %}
-                </span>
+                {% if following == 1 %}
+                    <img alt="unFollow" src="/static/images/Following.png"
+                        onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
+                {% elif following == 0 %}
+                    <img alt="follow" src="/static/images/Following_.png"
+                         onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to follow">
+                {% endif %}
 
-                <span>
-                    <br><br>
-                    <span style="font-weight: bold">Title: </span> {{ customCategoryTitle }}<br>
-                    <span style="font-weight: bold">Videos:</span> {{ customCategory.nVideos }}<br>
-                    <span style="font-weight: bold">Followers:</span> {{ customCategory.nFollowers }}<br>
-                </span>
-            </div><br>
+                <br>
+                <hr>
+
+                <b>Title:</b> {{ customCategoryTitle }}<br>
+
+                <hr>
+                <label>Videos</label><span style="float: right">{{ customCategory.nVideos }}</span><br>
+                <label>Followers</label><span style="float: right">{{ customCategory.nFollowers }}</span><br>
+
+            </div>
+            <br>
         {% endif %}
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
@@ -128,30 +137,25 @@
                             <div class="imageBox">
                                 <img src='{{ video.0.thumbnail }}' class="thumbnailImage">
                                 <div class="hoverImg">
-                                    <a href="?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
                                         <img src="/static/images/Journal.png">
                                         {{ video.0.journal.title }}
                                     </a><br>
 
-                                    <a href="?customCategory={{ video.0.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}" >
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}" >
                                         <img src="/static/images/Topic.png">
                                         {{ video.0.topic.title }}
                                     </a><br>
 
-                                    <a href="?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
                                         <img src="/static/images/Focus.png">
                                         {{ video.0.focus.title }}
                                     </a>
-
                                 </div>
-
-
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
                                     <img src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
-
                             </div>
-
 
                             <div class="video-item-info">
                                 <span style="float: left;" data-toggle="tooltip" data-placement="right" title="Duration: {{ video.0.formatted_duration}}">
@@ -162,85 +166,82 @@
                                 <span style="float: right;">
                                     {% if user.is_authenticated and videos.0 == "Watch History"%}
                                         <img alt="unWatchLater"
-                                                   src="/static/images/Delete.png"
-                                                   onclick="return deleteWatchHistory({{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Remove from Watch History"
-                                        style="cursor: pointer">
+                                             src="/static/images/Delete.png"
+                                             onclick="return deleteWatchHistory({{ video.0.pk }})"
+                                             data-toggle="tooltip" data-placement="right" title="Remove from Watch History"
+                                             style="cursor: pointer">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "Upvoted Videos"%}
                                         <img alt="unWatchLater"
-                                                   src="/static/images/Delete.png"
-                                                   onclick="return unLike({{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Take back your Upvote"
-                                        style="cursor: pointer">
+                                             src="/static/images/Delete.png"
+                                             onclick="return unLike({{ video.0.pk }})"
+                                             data-toggle="tooltip" data-placement="right" title="Take back your Upvote"
+                                             style="cursor: pointer">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "Watch Later"%}
                                         <img alt="unWatchLater"
-                                                   src="/static/images/Delete.png"
-                                                   onclick="return unWatchLater({{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Remove from your Watch Later List"
-                                        style="cursor: pointer">
+                                             src="/static/images/Delete.png"
+                                             onclick="return unWatchLater({{ video.0.pk }})"
+                                             data-toggle="tooltip" data-placement="right" title="Remove from your Watch Later List"
+                                             style="cursor: pointer">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "My Videos"%}
                                         <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
-                                            <img type="image" src="/static/images/Edit.png" data-toggle="tooltip" data-placement="right" title="Edit"
-                                            style="cursor: pointer">
+                                            <img type="image" src="/static/images/Edit.png"
+                                                 data-toggle="tooltip" data-placement="right" title="Edit"
+                                                 style="cursor: pointer">
                                         </a>
                                     {% endif %}
                                 </span>
-
 
                                 <span style="float: right;">
                                     {% if user.is_authenticated and videos.0 != "Watch Later"%}
                                         {% if video.1 %}
                                             <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
-                                            style="cursor: pointer">
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Watch Later"
+                                                 style="cursor: pointer">
                                         {% else %}
                                             <img alt="watchLater" src="/static/images/Plus.png"
-                                                   onclick="return watchLater(this, {{ video.0.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Watch Later"
                                             style="cursor: pointer">
                                         {% endif %}
                                     {% endif %}
                                 </span>
 
-
                                 <span style="float: right;">{{ video.0.likes }}</span>
-                                <span style="float: right;">
-                                    <img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes">
-                                </span>
+                                <span style="float: right;"><img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes"></span>
 
                                 <span style="float: right;">{{ video.0.comments }}</span>
-                                <span style="float: right;">
-                                    <img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments">
-                                </span>
+                                <span style="float: right;"><img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments"></span>
 
                                 <span style="float: right;">{{ video.0.views }}</span>
-                                <span style="float: right;">
-                                    <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
-                                </span>
+                                <span style="float: right;"><img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views"></span>
 
-                                <br>
                                 <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
                                     <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="margin-left: 6px">{{ video.0.title }}</a>
                                 </label>
 
-                                <span style="float: left">
-                                    <a href="?customCategory={{ video.0.author.title }}&type=Author"  data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
+                                <label data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
                                         <img src="/static/images/Author.png">
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
-                                    </a><br>
+                                    </a>
+                                </label>
 
-                                    {% if videos.0 != "My Videos" %}
-                                        <a href="?customUser={{ video.0.user.username }}"  data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.0.user.username }}">
-                                            <img alt="" src="{{ video.0.user.profile.picture }}">
-                                            {{ video.0.user.username }}
-                                        </a>
-                                        at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
-                                    {% else %}
-                                        Uploaded at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
-                                    {% endif %}
-                                </span>
+                                {% if videos.0 != "My Videos" %}
+                                    <a href="{% url 'index' %}?customUser={{ video.0.user.username }}" data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.0.user.username }}">
+                                        <img alt="" src="{{ video.0.user.profile.picture }}">
+                                        {{ video.0.user.username }}
+                                    </a>
+                                    at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                {% else %}
+                                    Uploaded at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
@@ -343,11 +344,11 @@
             if($(element).attr('alt') === 'unFollow'){
                 $(element).attr("src", "/static/images/Following_.png");
                 $(element).attr("alt", "follow");
-                $(element).attr("title","Follow");
+                $(element).attr("title","Click to follow");
             }else{
                 $(element).attr("src", "/static/images/Following.png");
                 $(element).attr("alt", "unFollow");
-                $(element).attr("title","Un-follow");
+                $(element).attr("title","Click to un-follow");
             }
 
             $.ajax({
@@ -361,9 +362,9 @@
 
               success: function (data) {
                   if(followType === 'user'){
-                      $(element).attr("onclick","return follow(this,\"user\",\"-\",\""+username+"\")");
+                      $(element).attr("onclick","return follow(this,\"user\",\"_\",\""+username+"\")");
                   }else{
-                      $(element).attr("onclick","return follow(this,"+followType+","+customCategory+",\"-\")");
+                      $(element).attr("onclick","return follow(this,\""+followType+"\",\""+customCategory+"\",\"_\")");
                   }
 
               }
