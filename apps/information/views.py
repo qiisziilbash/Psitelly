@@ -79,7 +79,7 @@ def contact(request):
 
             msg.send()
             context.msgs = ['Thank you. We received your feedback.']
-            return redirect('contact')
+            return render(request, 'information/Contact.html', context)
         else:
             context.msgs = ['Invalid reCAPTCHA. Please try again.']
             return render(request, 'information/Contact.html', context)
