@@ -66,6 +66,15 @@
                 <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p>
 
                 <br><br>
+                <label>
+                    A random question to stop the smart bots: what number you will get if you stack two "o" on top of each other?
+                </label><br><br>
+                <span class="effectWrapper">
+                    <input type="text"  id="smartQ">
+                    <span class="focus-border"></span>
+                </span>
+                <br><br><br><br>
+
 
                 <button id="ahmad" type="submit" onclick="return checkCaptcha()">Send</button>
                 <br><br><br>
@@ -88,6 +97,18 @@
 
     <script>
     function checkCaptcha() {
+
+        if (document.getElementById('smartQ').value === "8") {
+
+        } else if( document.getElementById('smartQ').value === "eight") {
+
+        } else if(document.getElementById('smartQ').value === "Eight") {
+
+        }else{
+            alert("Please check your answer for the last question and try again.");
+            return false;
+        }
+
         if (grecaptcha.getResponse() === '') {
           alert('Please check the recaptcha');
           return false;
