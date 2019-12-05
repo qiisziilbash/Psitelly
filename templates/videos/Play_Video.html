@@ -15,9 +15,8 @@
                     <source src="{{ video.videoFile }}"  type="video/mp4">
                 </video>
             {% else %}
-                <h3>
-                Uploaded file is being converted to the supported formats. Try to watch it in a few seconds.
-                </h3>
+                <img src="/static/images/Info.jpg" style="width: 100%; height: 600px; border-radius: 10px">
+                <br>
             {% endif %}
         {% else %}
             <video id="player" controls crossorigin playsinline>

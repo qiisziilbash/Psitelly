@@ -426,3 +426,6 @@ def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
     video.isProcessed = True
 
     video.save()
+
+    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+
