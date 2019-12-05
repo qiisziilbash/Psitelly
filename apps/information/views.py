@@ -47,6 +47,7 @@ def contact(request):
                    'authorCount': Author.objects.filter().count(),
                    'topicCount': Topic.objects.filter().count(),
                    'focusCount': Focus.objects.filter().count(),
+                   'msgs': []
                    }
 
         recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -78,9 +79,9 @@ def contact(request):
                 msg.attach(picture3.name, picture3.read(), picture3.content_type)
 
             msg.send()
-            context.msgs = ['Thank you. We received your feedback.']
+            context['msgs'].append('Thank you. We received your feedback.')
             return render(request, 'information/Contact.html', context)
         else:
-            context.msgs = ['Invalid reCAPTCHA. Please try again.']
+            context['msgs'].append('Invalid reCAPTCHA. Please try again.')
             return render(request, 'information/Contact.html', context)
 
