@@ -9,15 +9,23 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
-        <video id="player" controls crossorigin playsinline>
-            {% if video.videoFile720 == '' %}
-                <source src="{{ video.videoFile }}" type="video/mp4" />
+        {% if video.videoFile720 == '' %}
+            {% if video.videoFile.name|default:""|slice:"-4:" == ".mp4"%}
+                <video id="player" controls crossorigin playsinline>
+                    <source src="{{ video.videoFile }}"  type="video/mp4">
+                </video>
             {% else %}
+                <h3>
+                Uploaded file is being converted to the supported formats. Try to watch it in a few seconds.
+                </h3>
+            {% endif %}
+        {% else %}
+            <video id="player" controls crossorigin playsinline>
                 <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
                 <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
                 <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
-            {% endif %}
-        </video>
+             </video>
+        {% endif %}
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
