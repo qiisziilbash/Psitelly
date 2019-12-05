@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
+from taggit.managers import TaggableManager
 
 from Psitelly.settings import MEDIA_ROOT
 from apps.accounts.models import UserFollowing, Notification
@@ -67,6 +68,8 @@ class Video(models.Model):
     thumbnail = models.ImageField(null=True)
 
     isProcessed = models.BooleanField(default=False)
+
+    tags = TaggableManager()
 
     def formatted_duration(self):
         secs_t = self.duration.total_seconds()

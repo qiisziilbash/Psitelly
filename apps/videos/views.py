@@ -1,7 +1,6 @@
 import random
 from urllib.parse import urlencode
 
-from django.db.models import Q
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -78,6 +77,8 @@ def upload_video(request):
                                          journal=Journal.objects.get(title=journal),
                                          focus=Focus.objects.get(title=focus),
                                          topic=Topic.objects.get(title=topic))
+
+            add_tags(video)
 
             create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
 
@@ -224,6 +225,9 @@ def edit_video(request):
                                                     description=request.POST.get('description', ''),
                                                     gsLink=request.POST.get('gs', ''),
                                                     pdfLink=request.POST.get('link', ''))
+            video.tags.clear()
+            video.save()
+            add_tags(video)
 
             return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:
@@ -260,7 +264,7 @@ def play_video(request):
             context['comments'] = zip(comments, get_liked_comments(request.user, comments))
 
             titles = ['Related Videos']
-            videos = Video.objects.all()[:5]
+            videos = video.tags.similar_objects()
 
             if videos:
                 videoList = zip(videos, get_watch_later_videos(request.user, videos))
@@ -366,6 +370,27 @@ def delete_video(request):
             return JsonResponse({'msg': 'Video does not exist or you are not authorized to delete'})
 
 
+def add_tags(video):
+    video.tags.add(video.topic.title + "#t", video.topic.title + "@t", video.topic.title + "$t")
+    video.tags.add(video.author.title + "#a", video.author.title + "@a")
+    video.tags.add(video.journal.title + "#j")
+    video.tags.add(video.focus.title + "#f")
+
+    stopwords = ['what', 'which', 'is', 'are', 'have', 'has', 'that', 'of', 'a', 'the', 'those', 'not', 'dose',
+                 'do', 'an', 'and', 'if', 'but', 'or', 'until', 'while', 'at', 'by', 'for', 'with', 'about',
+                 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'nor',
+                 'in', 'out', 'on', 'off', 'over', 'under', 'further', 'then', 'once', 'there', 'when', 'why',
+                 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'against',
+                 'only', 'same', 'so', 'than', 'too', 'as', 'many', 'can', 'could', 'just', 'should', 'into']
+
+    title_words = video.title.split()
+    for word in title_words:
+        if word not in stopwords:
+            video.tags.add(word)
+
+    video.save()
+
+
 def start_new_thread(function):
     def decorator(*args, **kwargs):
         t = Thread(target=function, args=args, kwargs=kwargs)
@@ -400,4 +425,3 @@ def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
     video.isProcessed = True
 
     video.save()
-
