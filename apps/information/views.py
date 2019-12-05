@@ -39,6 +39,16 @@ def contact(request):
         return render(request, 'information/Contact.html', context)
     if request.method == "POST":
 
+        context = {'newses': News.objects.order_by('-time')[:5],
+                   'Statistics': True,
+                   'usersCount': User.objects.filter().count(),
+                   'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
+                   }
+
         recaptcha_response = request.POST.get('g-recaptcha-response')
         url = 'https://www.google.com/recaptcha/api/siteverify'
         values = {
@@ -68,17 +78,9 @@ def contact(request):
                 msg.attach(picture3.name, picture3.read(), picture3.content_type)
 
             msg.send()
+            context.msgs = ['Thank you. We received your feedback.']
             return redirect('contact')
         else:
-            context = {'newses': News.objects.order_by('-time')[:5],
-                       'Statistics': True,
-                       'usersCount': User.objects.filter().count(),
-                       'videosCount': Video.objects.filter().count(),
-                       'journalCount': Journal.objects.filter().count(),
-                       'authorCount': Author.objects.filter().count(),
-                       'topicCount': Topic.objects.filter().count(),
-                       'focusCount': Focus.objects.filter().count(),
-                       'msgs': ['Invalid reCAPTCHA. Please try again.']
-                       }
+            context.msgs = ['Invalid reCAPTCHA. Please try again.']
             return render(request, 'information/Contact.html', context)
 
