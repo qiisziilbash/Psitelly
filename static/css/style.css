@@ -604,7 +604,7 @@ a.button {
 @media only screen and (max-width: 1100px) {
     .main-wrapper {
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto minmax(55vh,1fr) auto;
         grid-template-areas:
             "logo logo logo logo"
             "filter upload donate   profile"
@@ -623,7 +623,7 @@ a.button {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto minmax(100vh,1fr) auto;
+    grid-template-rows: auto minmax(55vh,1fr) auto;
     grid-template-areas:
         "logo header filter upload donate   profile"
         "sidebar content content content content content"
@@ -639,7 +639,7 @@ a.button {
         display: grid;
         grid-gap: 10px;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto minmax(55vh,1fr) auto auto;
         grid-template-areas:
                 "logo logo logo logo"
                 "filter upload donate profile"
