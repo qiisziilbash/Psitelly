@@ -58,56 +58,86 @@
                 </div>
 
                 <div class="sidebar">
-                    <h3>Dashboard</h3>
-                    {% if user.is_authenticated %}
-                        <ul>
-                            <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
-                            <a href="{% url 'index' %}?content=Upvoted+Videos"><input type="button" value="Upvoted Videos"></a>
-                            <a href="{% url 'index' %}?content=Watch+History"><input type="button" value="Watch History"></a>
-                            <a href="{% url 'index' %}?content=Watch+Later"><input type="button" value="Watch Later"></a>
-                            <a href="{% url 'index' %}?content=Followers"><input type="button" value="Followers"></a>
-                            <a href="{% url 'index' %}?content=Following"><input type="button" value="Following"></a>
-                        </ul>
-                    {% else %}
-                        <ul>
-                            <a href="{% url 'login' %}"><input type="button" value="Log in to access your dashboard"></a>
-                        </ul>
-                    {% endif %}
+                    <h3>Dashboard
+                    <span style="float: right">
+                        <a href="javascript:void(0);" id="dashboardMore" onclick="showDashboard()">☰</a>
+                    </span>
+                    </h3>
+                    <span id="dashboard">
+                        {% if user.is_authenticated %}
+                            <ul>
+                                <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
+                                <a href="{% url 'index' %}?content=Upvoted+Videos"><input type="button" value="Upvoted Videos"></a>
+                                <a href="{% url 'index' %}?content=Watch+History"><input type="button" value="Watch History"></a>
+                                <a href="{% url 'index' %}?content=Watch+Later"><input type="button" value="Watch Later"></a>
+                                <a href="{% url 'index' %}?content=Followers"><input type="button" value="Followers"></a>
+                                <a href="{% url 'index' %}?content=Following"><input type="button" value="Following"></a>
+                            </ul>
+                        {% else %}
+                            <ul>
+                                <a href="{% url 'login' %}"><input type="button" value="Log in to access your dashboard"></a>
+                            </ul>
+                        {% endif %}
+                    </span>
 
-                    <h3>Psitelly Links</h3>
-                    <ul>
-                        <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
-                        <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
-                           target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
-                        <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
-                           target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
-                    </ul>
+                    <h3>
+                        Psitelly Links
+                        <span style="float: right">
+                            <a href="javascript:void(0);" onclick="showLinks()">☰</a>
+                        </span>
+                    </h3>
+
+                    <span id="links">
+                        <ul>
+                            <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
+                            <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
+                               target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
+                            <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
+                               target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
+                        </ul>
+                    </span>
 
                     {% if Statistics %}
-                        <h3>Psitelly Statistics</h3>
-                        <div class="textContent">
-                            <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
-                            <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
-                            <hr>
-                            <label>Journals </label><label style="float: right">{{ journalCount }}</label><br>
-                            <label>Authors </label><label style="float: right">{{ authorCount }}</label><br>
-                            <hr>
-                            <label>Topics </label><label style="float: right">{{ topicCount }}</label><br>
-                            <label>Focuses </label><label style="float: right">{{ focusCount }}</label><br>
-                        </div>
+                        <h3>
+                            Psitelly Statistics
+                            <span style="float: right">
+                                <a href="javascript:void(0);" onclick="showStats()">☰</a>
+                            </span>
+                        </h3>
+                        <span id="stats">
+                            <div class="textContent">
+                                <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
+                                <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
+                                <hr>
+                                <label>Journals </label><label style="float: right">{{ journalCount }}</label><br>
+                                <label>Authors </label><label style="float: right">{{ authorCount }}</label><br>
+                                <hr>
+                                <label>Topics </label><label style="float: right">{{ topicCount }}</label><br>
+                                <label>Focuses </label><label style="float: right">{{ focusCount }}</label><br>
+                            </div>
+                        </span>
+
                     {% endif %}
 
 
                     {% if newses %}
-                        <h3> Recent News</h3>
-                        {% for news in newses %}
-                                <div class="textContent">
-                                    <label><u>{{ news.title }}</u></label><br><br>
-                                    {{ news.text }}<br><hr>
-                                    <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
-                                    <br>
-                                </div>
-                        {% endfor %}
+                        <h3>
+                            Recent News
+                            <span style="float: right">
+                                <a href="javascript:void(0);" onclick="showNews()">☰</a>
+                            </span>
+                        </h3>
+                        <span id="news">
+                            {% for news in newses %}
+                                    <div class="textContent">
+                                        <label><u>{{ news.title }}</u></label><br><br>
+                                        {{ news.text }}<br><hr>
+                                        <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
+                                        <br>
+                                    </div>
+                            {% endfor %}
+                        </span>
+
                     {% endif %}
                 </div>
 
@@ -127,6 +157,56 @@
         <!--------------------------------->
         <script>
             $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});
+        </script>
+
+        <script>
+        function showDashboard() {
+            var moreText = document.getElementById("dashboard");
+
+            alert(moreText.style.display);
+
+            if (moreText.style.display === "none" || moreText.style.display === "") {
+                moreText.style.display = "inline";
+            } else {
+                moreText.style.display = "none";
+            }
+        }
+        </script>
+
+        <script>
+        function showLinks() {
+            var moreText = document.getElementById("links");
+            alert(moreText.style.display);
+            if (moreText.style.display === "none" || moreText.style.display === "") {
+                moreText.style.display = "inline";
+            } else {
+                moreText.style.display = "none";
+            }
+        }
+        </script>
+
+        <script>
+        function showStats() {
+            var moreText = document.getElementById("stats");
+
+            if (moreText.style.display === "none" || moreText.style.display === "") {
+                moreText.style.display = "inline";
+            } else {
+                moreText.style.display = "none";
+            }
+        }
+        </script>
+
+        <script>
+        function showNews() {
+            var moreText = document.getElementById("news");
+
+            if (moreText.style.display === "none" || moreText.style.display === "") {
+                moreText.style.display = "inline";
+            } else {
+                moreText.style.display = "none";
+            }
+        }
         </script>
         {% block scripts %}{% endblock %}
         <!--------------------------------->

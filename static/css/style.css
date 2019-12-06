@@ -584,6 +584,24 @@ a.button {
         "footer footer footer footer footer footer";
 }
 
+
+    #dashboard{
+        display: inline;
+    }
+
+    #links {
+        display: inline;
+    }
+
+    #stats {
+        display: inline;
+    }
+
+    #news {
+        display: inline;
+    }
+
+
 .basic-wrapper{
     background-color: black;
     display: grid;
@@ -609,6 +627,22 @@ a.button {
             "sidebar sidebar sidebar sidebar"
             "content content content content"
             "footer footer footer footer"
+    }
+
+    #dashboardMore{
+    display: inline;
+    }
+    #dashboard{
+        display: none;
+    }
+    #links{
+        display: none;
+    }
+    #stats{
+        display: none;
+    }
+    #news{
+        display: none;
     }
 }
 
@@ -643,6 +677,19 @@ a.button {
                 "content content content content"
                 "rightbar rightbar rightbar rightbar"
                 "footer footer footer footer"
+    }
+
+    #dashboard{
+        display: none;
+    }
+    #links{
+        display: none;
+    }
+    #stats{
+        display: none;
+    }
+    #news{
+        display: none;
     }
 }
 
