@@ -2,7 +2,7 @@
 
 {% load static %}
 
-<html>
+<html lang="en">
     <head>
         <title>Psitelly</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -58,87 +58,97 @@
                 </div>
 
                 <div class="sidebar">
-                    <h3>Dashboard
-                    <span style="float: right">
-                        <a href="javascript:void(0);" id="dashboardMore" onclick="showDashboard()">☰</a>
-                    </span>
-                    </h3>
-                    <span id="dashboard">
-                        {% if user.is_authenticated %}
+
+                    <h2 id="menuTitle" style="display: none">
+                        Menu
+                        <span style="float: right"><a href="javascript:void(0);" onclick="showMenu()">☰</a></span>
+                    </h2>
+
+                    <span id="menu">
+
+                        <h3>Dashboard
+                            <span style="float: right">
+                                <a href="javascript:void(0);" id="dashboardExpand" style="display: none" onclick="showDashboard()">☰</a>
+                            </span>
+                        </h3>
+
+                        <span id="dashboard">
+                            {% if user.is_authenticated %}
+                                <ul>
+                                    <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
+                                    <a href="{% url 'index' %}?content=Upvoted+Videos"><input type="button" value="Upvoted Videos"></a>
+                                    <a href="{% url 'index' %}?content=Watch+History"><input type="button" value="Watch History"></a>
+                                    <a href="{% url 'index' %}?content=Watch+Later"><input type="button" value="Watch Later"></a>
+                                    <a href="{% url 'index' %}?content=Followers"><input type="button" value="Followers"></a>
+                                    <a href="{% url 'index' %}?content=Following"><input type="button" value="Following"></a>
+                                </ul>
+                            {% else %}
+                                <ul>
+                                    <a href="{% url 'login' %}"><input type="button" value="Log in to access your dashboard"></a>
+                                </ul>
+                            {% endif %}
+                        </span>
+
+                        <h3>
+                            Psitelly Links
+                            <span style="float: right">
+                                <a href="javascript:void(0);" id="linksExpand" style="display: none" onclick="showLinks()">☰</a>
+                            </span>
+                        </h3>
+
+                        <span id="links">
                             <ul>
-                                <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
-                                <a href="{% url 'index' %}?content=Upvoted+Videos"><input type="button" value="Upvoted Videos"></a>
-                                <a href="{% url 'index' %}?content=Watch+History"><input type="button" value="Watch History"></a>
-                                <a href="{% url 'index' %}?content=Watch+Later"><input type="button" value="Watch Later"></a>
-                                <a href="{% url 'index' %}?content=Followers"><input type="button" value="Followers"></a>
-                                <a href="{% url 'index' %}?content=Following"><input type="button" value="Following"></a>
+                                <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
+                                <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
+                                   target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
+                                <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
+                                   target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
                             </ul>
-                        {% else %}
-                            <ul>
-                                <a href="{% url 'login' %}"><input type="button" value="Log in to access your dashboard"></a>
-                            </ul>
+                        </span>
+
+                        {% if Statistics %}
+                            <h3>
+                                Psitelly Statistics
+                                <span style="float: right">
+                                    <a href="javascript:void(0);" id="statsExpand" style="display: none" onclick="showStats()">☰</a>
+                                </span>
+                            </h3>
+                            <span id="stats">
+                                <div class="textContent">
+                                    <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
+                                    <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
+                                    <hr>
+                                    <label>Journals </label><label style="float: right">{{ journalCount }}</label><br>
+                                    <label>Authors </label><label style="float: right">{{ authorCount }}</label><br>
+                                    <hr>
+                                    <label>Topics </label><label style="float: right">{{ topicCount }}</label><br>
+                                    <label>Focuses </label><label style="float: right">{{ focusCount }}</label><br>
+                                </div>
+                            </span>
                         {% endif %}
-                    </span>
 
-                    <h3>
-                        Psitelly Links
-                        <span style="float: right">
-                            <a href="javascript:void(0);" onclick="showLinks()">☰</a>
-                        </span>
-                    </h3>
 
-                    <span id="links">
-                        <ul>
-                            <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
-                            <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
-                               target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
-                            <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
-                               target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
-                        </ul>
-                    </span>
+                        {% if newses %}
+                            <h3>
+                                Recent News
+                                <span style="float: right">
+                                    <a href="javascript:void(0);" id="newsExpand" style="display: none" onclick="showNews()">☰</a>
+                                </span>
+                            </h3>
 
-                    {% if Statistics %}
-                        <h3>
-                            Psitelly Statistics
-                            <span style="float: right">
-                                <a href="javascript:void(0);" onclick="showStats()">☰</a>
+                            <span id="news">
+                                {% for news in newses %}
+                                        <div class="textContent">
+                                            <label><u>{{ news.title }}</u></label><br><br>
+                                            {{ news.text }}<br><hr>
+                                            <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
+                                            <br>
+                                        </div>
+                                {% endfor %}
                             </span>
-                        </h3>
-                        <span id="stats">
-                            <div class="textContent">
-                                <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
-                                <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
-                                <hr>
-                                <label>Journals </label><label style="float: right">{{ journalCount }}</label><br>
-                                <label>Authors </label><label style="float: right">{{ authorCount }}</label><br>
-                                <hr>
-                                <label>Topics </label><label style="float: right">{{ topicCount }}</label><br>
-                                <label>Focuses </label><label style="float: right">{{ focusCount }}</label><br>
-                            </div>
-                        </span>
+                        {% endif %}
 
-                    {% endif %}
-
-
-                    {% if newses %}
-                        <h3>
-                            Recent News
-                            <span style="float: right">
-                                <a href="javascript:void(0);" onclick="showNews()">☰</a>
-                            </span>
-                        </h3>
-                        <span id="news">
-                            {% for news in newses %}
-                                    <div class="textContent">
-                                        <label><u>{{ news.title }}</u></label><br><br>
-                                        {{ news.text }}<br><hr>
-                                        <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
-                                        <br>
-                                    </div>
-                            {% endfor %}
-                        </span>
-
-                    {% endif %}
+                    </span>
                 </div>
 
                 <!--------------------------------->
@@ -155,17 +165,63 @@
                 </div>
             </div>
         <!--------------------------------->
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
         <script>
-            $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});
+        $(document).ready(function(){
+            checkScreen();
+            $(document).load($(window).bind("resize", checkScreen));
+         });
+        </script>
+
+        <script>
+            function checkScreen()
+            {
+                if (window.matchMedia('(max-width: 1100px)').matches) {
+                    document.getElementById("menuTitle").style.display = "inline";
+                    document.getElementById("menu").style.display = "none";
+                    document.getElementById("dashboard").style.display = "none";
+                    document.getElementById("links").style.display = "none";
+                    document.getElementById("stats").style.display = "none";
+                    document.getElementById("news").style.display = "none";
+
+                    document.getElementById("dashboardExpand").style.display = "inline";
+                    document.getElementById("linksExpand").style.display = "inline";
+                    document.getElementById("statsExpand").style.display = "inline";
+                    document.getElementById("newsExpand").style.display = "inline";
+                } else {
+                    document.getElementById("menuTitle").style.display = "none";
+
+                    document.getElementById("dashboardExpand").style.display = "none";
+                    document.getElementById("linksExpand").style.display = "none";
+                    document.getElementById("statsExpand").style.display = "none";
+                    document.getElementById("newsExpand").style.display = "none";
+
+                    document.getElementById("menu").style.display = "inline";
+                    document.getElementById("dashboard").style.display = "inline";
+                    document.getElementById("links").style.display = "inline";
+                    document.getElementById("stats").style.display = "inline";
+                    document.getElementById("news").style.display = "inline";
+                }
+            }
+        </script>
+
+        <script>
+        function showMenu() {
+            var moreText = document.getElementById("menu");
+
+            if (window.getComputedStyle(document.getElementById('menu')).display === "none") {
+                moreText.style.display = "inline";
+            } else {
+                moreText.style.display = "none";
+            }
+        }
         </script>
 
         <script>
         function showDashboard() {
             var moreText = document.getElementById("dashboard");
 
-            alert(moreText.style.display);
-
-            if (moreText.style.display === "none" || moreText.style.display === "") {
+            if (window.getComputedStyle(document.getElementById('dashboard')).display === "none") {
                 moreText.style.display = "inline";
             } else {
                 moreText.style.display = "none";
@@ -176,8 +232,8 @@
         <script>
         function showLinks() {
             var moreText = document.getElementById("links");
-            alert(moreText.style.display);
-            if (moreText.style.display === "none" || moreText.style.display === "") {
+
+            if (window.getComputedStyle(document.getElementById('links')).display === "none") {
                 moreText.style.display = "inline";
             } else {
                 moreText.style.display = "none";
@@ -189,7 +245,7 @@
         function showStats() {
             var moreText = document.getElementById("stats");
 
-            if (moreText.style.display === "none" || moreText.style.display === "") {
+            if (window.getComputedStyle(document.getElementById('stats')).display === "none") {
                 moreText.style.display = "inline";
             } else {
                 moreText.style.display = "none";
@@ -201,13 +257,14 @@
         function showNews() {
             var moreText = document.getElementById("news");
 
-            if (moreText.style.display === "none" || moreText.style.display === "") {
+            if (window.getComputedStyle(document.getElementById('news')).display === "none") {
                 moreText.style.display = "inline";
             } else {
                 moreText.style.display = "none";
             }
         }
         </script>
+
         {% block scripts %}{% endblock %}
         <!--------------------------------->
     </body>
