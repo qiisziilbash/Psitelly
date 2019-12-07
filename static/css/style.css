@@ -304,7 +304,7 @@ h1{
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-        width: 100%;
+    width: 95%;
     font-weight: bold;
     margin-left: 8px;
 }
@@ -369,7 +369,7 @@ h1{
     overflow: hidden;
     white-space: nowrap;
     vertical-align: middle;
-    width: 80%;
+    width: 95%;
 
     text-shadow:
             0 0 10px var(--backgroundColor3),

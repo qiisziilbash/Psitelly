@@ -146,8 +146,6 @@
                                         {{ video.0.focus.title }}
                                     </a><br>
                                 </div>
-
-
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
                                     <img src="/static/images/Play.png" id="hitPlayImage"  alt=""
                                          data-toggle="tooltip" data-placement="right" title="Play Video">
@@ -160,6 +158,17 @@
                                 </span>
 
                                 <span style="float: right; cursor: pointer; margin-right: 8px">
+                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
+                                        {% if video.1 %}
+                                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
+                                        {% else %}
+                                            <img alt="watchLater" src="/static/images/Plus.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
+                                        {% endif %}
+                                    {% endif %}
                                     {% if user.is_authenticated and videos.0 == "Watch History"%}
                                         <img alt="unWatchLater"
                                              src="/static/images/Delete.png"
@@ -187,19 +196,8 @@
                                                  data-toggle="tooltip" data-placement="right" title="Edit">
                                         </a>
                                     {% endif %}
-
-                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
-                                        {% if video.1 %}
-                                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                                 onclick="return watchLater(this, {{ video.0.pk }})"
-                                                 data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
-                                        {% else %}
-                                            <img alt="watchLater" src="/static/images/Plus.png"
-                                                 onclick="return watchLater(this, {{ video.0.pk }})"
-                                                 data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
-                                        {% endif %}
-                                    {% endif %}
                                 </span>
+
                                 <span style="float: right; cursor: default">{{ video.0.likes}}</span>
                                 <span style="float: right;">
                                     <img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes">
@@ -234,6 +232,7 @@
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
                                     </a>
                                 </label>
+
                                 <br>
 
                                 <label>
@@ -246,9 +245,6 @@
                                     at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
                                 </label>
                             </span>
-
-
-
                         </div>
                     {% endfor %}
                 </div>
