@@ -33,12 +33,12 @@
                     <label style="width: 49%"> Google Scholar Link</label>
                     <label style="width: 49%"> Article Link</label>
                     <span class="effectWrapper" style="width: 49%">
-                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"> {{ video.gsLink }}</textarea>
+                        <input type="url" placeholder="e.g. http://psitelly.com (optional)" id="gsID" name="gs" value="{{ video.gsLink }}">
                         <span class="focus-border"></span>
                     </span>
 
                     <span class="effectWrapper" style="width: 49%">
-                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link">{{ video.pdfLink }}</textarea>
+                        <input type="url" placeholder="e.g. http://psitelly.com (optional)" id="linkID" name="link" value="{{ video.pdfLink }}">
                         <span class="focus-border"></span>
                     </span>
 
@@ -48,7 +48,7 @@
                     <label style="width: 49%"> Year *</label>
                     <span class="effectWrapper" style="width: 49%">
                         <input type="text" id="authorLastNameID" name="author" value="{{ video.author.title }}"
-                               placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                               placeholder="Full name of first author e.g. Gabriel García Márquez" list="authors" required>
                         <span class="focus-border"></span>
                     </span>
 
@@ -97,7 +97,7 @@
                     <label style="width: 49%"> Pick a Different Video (Optional)</label>
                     <span class="effectWrapper" style="width: 49%">
                         <input type="text" id="focusID" name="focus" value="{{ video.focus.title}}"
-                               placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                               placeholder="e.g. Methods, Commentary, Simplified, Results, Figures ..." list="focuses" required>
                         <span class="focus-border"></span>
                     </span>
                     <datalist id="focuses">

@@ -29,21 +29,21 @@
                     <label style="width: 49%"> Google Scholar Link</label>
                     <label style="width: 49%"> Article Link</label>
                     <span class="effectWrapper" style="width: 49%">
-                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
+                        <input type="url" placeholder="e.g. http://psitelly.com (optional)" id="gsID" name="gs" >
                         <span class="focus-border"></span>
                     </span>
 
                     <span class="effectWrapper" style="width: 49%">
-                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
+                        <input type="url" placeholder="e.g. http://psitelly.com (optional)" id="linkID" name="link">
                         <span class="focus-border"></span>
                     </span>
 
-                    <br><br><br><br><br><br>
+                    <br><br><br><br>
 
                     <label style="width: 49%">Author *</label>
                     <label style="width: 49%"> Year *</label>
                     <span class="effectWrapper" style="width: 49%">
-                        <input type="text" id="authorLastNameID" name="author" placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                        <input type="text" id="authorLastNameID" name="author" placeholder="Full name of first author e.g. Gabriel García Márquez" list="authors" required>
                         <span class="focus-border"></span>
                     </span>
 
@@ -89,7 +89,7 @@
                     <label style="width: 49%"> Focus *</label>
                     <label style="width: 49%"> Select a Video * </label>
                     <span class="effectWrapper" style="width: 49%">
-                        <input type="text" id="focusID" name="focus" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                        <input type="text" id="focusID" name="focus" placeholder="e.g. Methods, Commentary, Simplified, Results, Figures ..." list="focuses" required>
                         <span class="focus-border"></span>
                     </span>
                     <datalist id="focuses">
