@@ -230,6 +230,7 @@ h1{
     white-space: nowrap;
     display: inline-block;
     cursor: pointer;
+    width: 100%;
 }
 
 .profile-item img {
