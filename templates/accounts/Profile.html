@@ -53,8 +53,8 @@
                     <h3><u>Notifications</u></h3>
 
 
-                    <label style="width: 49%">When my followees upload a video</label>
-                    <label style="width: 49%">When someone comment on my videos</label><br>
+                    <label style="width: 45%">When my followees upload a video</label>
+                    <label style="width: 45%; margin-left: 4%">When someone comment on my videos</label><br>
                     <label style="width: 49%; font-weight: normal">
                         {% if user.profile.notifyUploads and user.profile.emailUploads %}
                             Notify me here and through email
@@ -77,10 +77,10 @@
                             Don't notify me
                         {% endif %}
                     </label>
-                    <br><br>
+                    <br><br><br>
 
-                    <label style="width: 49%">When someone starts to follow me</label>
-                    <label style="width: 49%">When someone mentions me on a post or comment</label><br>
+                    <label style="width: 45%">When someone starts to follow me</label>
+                    <label style="width: 45%; margin-left: 4%">When someone mentions me on a post or comment</label><br>
                     <label style="width: 49%; font-weight: normal">
                         {% if user.profile.notifyFollows and user.profile.emailFollows %}
                             Notify me here and through email
@@ -103,7 +103,7 @@
                             Don't notify me
                         {% endif %}
                     </label>
-                    <br><br>
+                    <br><br><br>
 
                     <button type="submit" name="logout" id="logoutBtn">Log out</button>
                     <button type="submit" name="edit">Edit Profile</button>
