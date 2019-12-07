@@ -44,10 +44,12 @@
                 <span style=" float: right; cursor: pointer">
                     {% if watchLater %}
                         <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                             onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                             onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip"
+                             data-placement="right" title="Remove from your 'Watch Later' list">
                     {% else %}
                         <img alt="watchLater" src="/static/images/Plus.png"
-                             onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip" data-placement="right" title="Watch Later">
+                             onclick="return watchLater(this, {{ video.pk }})" data-toggle="tooltip"
+                             data-placement="right" title="Add to your 'Watch Later' list">
                     {% endif %}
                 </span>
             {% endif %}
@@ -265,33 +267,6 @@
                                                  data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
                                         {% endif %}
                                     {% endif %}
-                                    {% if user.is_authenticated and videos.0 == "Watch History"%}
-                                        <img alt="unWatchLater"
-                                             src="/static/images/Delete.png"
-                                             onclick="return deleteWatchHistory({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Remove from Watch History">
-                                    {% endif %}
-
-                                    {% if user.is_authenticated and videos.0 == "Upvoted Videos"%}
-                                        <img alt="unWatchLater"
-                                             src="/static/images/Delete.png"
-                                             onclick="return unLike({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Take back your Upvote">
-                                    {% endif %}
-
-                                    {% if user.is_authenticated and videos.0 == "Watch Later"%}
-                                        <img alt="unWatchLater"
-                                             src="/static/images/Delete.png"
-                                             onclick="return unWatchLater({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Remove from your Watch Later List">
-                                    {% endif %}
-
-                                    {% if user.is_authenticated and videos.0 == "My Videos"%}
-                                        <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
-                                            <img alt="" src="/static/images/Edit.png"
-                                                 data-toggle="tooltip" data-placement="right" title="Edit">
-                                        </a>
-                                    {% endif %}
                                 </span>
 
                                 <span style="float: right; cursor: default">{{ video.0.likes}}</span>
@@ -463,9 +438,11 @@
             if($(element).attr('alt') =='watchLater'){
                 $(element).attr('alt','unWatchLater');
                 $(element).attr('src','/static/images/WatchLater.png')
+                $(element).attr('title', "Remove from your 'Watch Later' list");
             }else{
                 $(element).attr('alt','watchLater');
                 $(element).attr('src','/static/images/Plus.png')
+                $(element).attr('title', "Add to your 'Watch Later' list");
             }
 
             $.ajax({
