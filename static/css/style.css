@@ -280,6 +280,28 @@ h1{
     cursor: pointer;
 }
 
+.profile-container{
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-container img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+
+.profile-container input{
+    position: absolute;
+    top: 72%;
+    left: 72%;
+    width: 30%;
+    height: 30%;
+}
+
+
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/

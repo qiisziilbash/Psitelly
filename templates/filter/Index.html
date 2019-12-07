@@ -10,26 +10,23 @@
 
         {% if customUser %}
             <div class="profile-info">
+                <div class="profile-container">
+                    <img id="userIcon" alt="" src={{ customUser.profile.picture}}>
 
-
-                <img id="userIcon" alt="" src={{ customUser.profile.picture}}>
-
-
-
-                {% if customUser.username != user.username %}
+                    {% if customUser.username != user.username %}
                     {% if following == 1 %}
-                        <input type="image" alt="unFollow" src="/static/images/Following.png"
+                        <input type="image" alt="unFollow" src="/static/images/Follow.png"
                             onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
                     {% elif following == 0 %}
-                        <input type="image" alt="follow" src="/static/images/Following_.png"
+                        <input type="image" alt="follow" src="/static/images/Follow_.png"
                              onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to follow">
                     {% endif %}
-                {% endif %}
 
+                    {% endif %}
+                </div>
 
                 <br>
                 <hr>
-
 
                 <label>Username</label> <span style="float: right">{{ customUser.username }}</span><br>
                 <label>Member since </label><span style="float: right">{{ customUser.profile.joinDateTime|date:'d M Y' }}</span> <br>
@@ -54,24 +51,26 @@
         <!------------------------------------------------------------------------------------->
         {% if customCategory %}
             <div class="profile-info">
-                {% if categoryType == "Focus" %}
-                    <img src="/static/images/Focus_.png" alt="" data-toggle="tooltip" data-placement="right" title="Focus">
-                {% elif categoryType == "Topic" %}
-                    <img src="/static/images/Topic_.png" alt="" data-toggle="tooltip" data-placement="right" title="Topic">
-                {% elif categoryType == "Journal" %}
-                    <img  src="/static/images/Journal_.png" alt="" data-toggle="tooltip" data-placement="right" title="Journal">
-                {% elif categoryType == "Author" %}
-                    <img  src="/static/images/Author.png" alt="" data-toggle="tooltip" data-placement="right" title="Author">
-                {% endif %}
+                <div class="profile-container">
+                    {% if categoryType == "Focus" %}
+                        <img src="/static/images/Focus_.png" alt="" data-toggle="tooltip" data-placement="right" title="Focus">
+                    {% elif categoryType == "Topic" %}
+                        <img src="/static/images/Topic_.png" alt="" data-toggle="tooltip" data-placement="right" title="Topic">
+                    {% elif categoryType == "Journal" %}
+                        <img  src="/static/images/Journal_.png" alt="" data-toggle="tooltip" data-placement="right" title="Journal">
+                    {% elif categoryType == "Author" %}
+                        <img  src="/static/images/Author.png" alt="" data-toggle="tooltip" data-placement="right" title="Author">
+                    {% endif %}
 
+                    {% if following == 1 %}
+                        <input type="image" alt="unFollow" src="/static/images/Follow.png"
+                            onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
+                    {% elif following == 0 %}
+                        <input type="image" alt="follow" src="/static/images/Follow_.png"
+                             onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to follow">
+                    {% endif %}
+                </div>
 
-                {% if following == 1 %}
-                    <input type="image" alt="unFollow" src="/static/images/Following.png"
-                        onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
-                {% elif following == 0 %}
-                    <input type="image" alt="follow" src="/static/images/Following_.png"
-                         onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to follow">
-                {% endif %}
 
                 <br>
                 <hr>
@@ -350,11 +349,11 @@
             $(element).removeAttr('onclick');
 
             if($(element).attr('alt') === 'unFollow'){
-                $(element).attr("src", "/static/images/Following_.png");
+                $(element).attr("src", "/static/images/Follow_.png");
                 $(element).attr("alt", "follow");
                 $(element).attr("title","Click to follow");
             }else{
-                $(element).attr("src", "/static/images/Following.png");
+                $(element).attr("src", "/static/images/Follow.png");
                 $(element).attr("alt", "unFollow");
                 $(element).attr("title","Click to un-follow");
             }
