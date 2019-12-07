@@ -154,7 +154,6 @@
                                 </a>
                             </div>
 
-
                             <span class="video-item-info">
                                 <span id="duration">
                                     {{ video.0.formatted_duration}}
@@ -201,23 +200,31 @@
                                         {% endif %}
                                     {% endif %}
                                 </span>
-
                                 <span style="float: right; cursor: default">{{ video.0.likes}}</span>
-                                <span style="float: right;"><img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes"></span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes">
+                                </span>
 
                                 <span style="float: right; cursor: default">{{ video.0.comments }}</span>
-                                <span style="float: right;"><img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments"></span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments">
+                                </span>
 
                                 <span style="float: right; cursor: default">{{ video.0.views }}</span>
-                                <span style="float: right;"><img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views"></span>
+                                <span style="float: right;">
+                                    <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
+                                </span>
                             </span>
 
                             <br><br>
 
                             <span class="video-item-info">
                                 <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="padding-left: 5px">{{ video.0.title }}</a>
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="padding-left: 5px">
+                                        {{ video.0.title }}
+                                    </a>
                                 </label>
+
                                 <br>
 
                                 <label data-toggle="tooltip" class="video-item-info-label" data-placement="right"
@@ -239,6 +246,9 @@
                                     at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
                                 </label>
                             </span>
+
+
+
                         </div>
                     {% endfor %}
                 </div>

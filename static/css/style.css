@@ -288,6 +288,7 @@ h1{
     grid-template-columns: repeat(auto-fill, minmax(330px,1fr));
 }
 
+
 .video-item-info img{
     height: 27px;
     width: 27px;
@@ -296,11 +297,14 @@ h1{
     vertical-align: middle;
 }
 
-.video-item-info label {
+
+
+.video-item-info label{
     text-overflow: ellipsis;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
+        width: 100%;
     font-weight: bold;
     margin-left: 8px;
 }
