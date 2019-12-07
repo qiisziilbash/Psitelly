@@ -59,23 +59,23 @@
                 </div>
 
                 <div class="sidebar">
-
-                    <h2 id="menuTitle" style="display: none">
+                    <h2 id="menuTitle" style="display: inline">
                         <span>
                             Menu
                         </span>
-                        <span style="float: right"><a href="javascript:void(0);" onclick="showMenu()">☰</a></span>
+                        <span style="float: right">
+                            <a href="javascript:void(0);" onclick="showMenu()">☰</a>
+                        </span>
                     </h2>
 
-                    <span id="menu">
-
+                    <span id="menu" style="display: inline">
                         <h3>Dashboard
-                            <span style="float: right">
-                                <a href="javascript:void(0);" id="dashboardExpand" style="display: none" onclick="showDashboard()">☰</a>
+                            <span id="dashboardExpand" style="float: right; display: inline">
+                                <a href="javascript:void(0);" onclick="showDashboard()">☰</a>
                             </span>
                         </h3>
 
-                        <span id="dashboard">
+                        <span id="dashboard" style="display: inline">
                             {% if user.is_authenticated %}
                                 <ul>
                                     <a href="{% url 'index' %}?content=My+Videos"><input type="button" value="My Videos"></a>
@@ -94,12 +94,12 @@
 
                         <h3>
                             Psitelly Links
-                            <span style="float: right">
-                                <a href="javascript:void(0);" id="linksExpand" style="display: none" onclick="showLinks()">☰</a>
+                            <span id="linksExpand" style="float: right; display: inline">
+                                <a href="javascript:void(0);" onclick="showLinks()">☰</a>
                             </span>
                         </h3>
 
-                        <span id="links">
+                        <span id="links" style="display: inline">
                             <ul>
                                 <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
                                 <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
@@ -112,11 +112,11 @@
                         {% if Statistics %}
                             <h3>
                                 Psitelly Statistics
-                                <span style="float: right">
-                                    <a href="javascript:void(0);" id="statsExpand" style="display: none" onclick="showStats()">☰</a>
+                                <span id="statsExpand" style="float: right; display: inline">
+                                    <a href="javascript:void(0);"  onclick="showStats()">☰</a>
                                 </span>
                             </h3>
-                            <span id="stats">
+                            <span id="stats" style="display: inline">
                                 <div class="textContent">
                                     <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
                                     <label>Videos </label><label style="float: right">{{ videosCount }}</label><br>
@@ -134,12 +134,12 @@
                         {% if newses %}
                             <h3>
                                 Recent News
-                                <span style="float: right">
-                                    <a href="javascript:void(0);" id="newsExpand" style="display: none" onclick="showNews()">☰</a>
+                                <span id="newsExpand" style="float: right;display: inline">
+                                    <a href="javascript:void(0);" onclick="showNews()">☰</a>
                                 </span>
                             </h3>
 
-                            <span id="news">
+                            <span id="newss" style="display: inline">
                                 {% for news in newses %}
                                     <div class="textContent">
                                         <label><u>{{ news.title }}</u></label><br><br>
@@ -157,7 +157,6 @@
                 <!--------------------------------->
                 {% block content %}{% endblock %}
                 <!--------------------------------->
-
                 <div class="footline">
                     <h3>
                         Powered by
@@ -180,93 +179,84 @@
         </script>
 
         <script>
-            function checkScreen()
-            {
+            function checkScreen() {
                 if (window.matchMedia('(max-width: 1100px)').matches) {
-                    document.getElementById("menuTitle").style.display = "inline";
                     document.getElementById("menu").style.display = "none";
-                    document.getElementById("dashboard").style.display = "none";
-                    document.getElementById("links").style.display = "none";
-                    document.getElementById("stats").style.display = "none";
-                    document.getElementById("news").style.display = "none";
-
+                    document.getElementById("menuTitle").style.display = "inline";
                     document.getElementById("dashboardExpand").style.display = "inline";
                     document.getElementById("linksExpand").style.display = "inline";
                     document.getElementById("statsExpand").style.display = "inline";
                     document.getElementById("newsExpand").style.display = "inline";
+
+                    document.getElementById("dashboard").style.display = "none";
+                    document.getElementById("links").style.display = "none";
+                    document.getElementById("stats").style.display = "none";
+                    document.getElementById("newss").style.display = "none";
+
                 } else {
                     document.getElementById("menuTitle").style.display = "none";
-
                     document.getElementById("dashboardExpand").style.display = "none";
                     document.getElementById("linksExpand").style.display = "none";
                     document.getElementById("statsExpand").style.display = "none";
                     document.getElementById("newsExpand").style.display = "none";
 
-                    document.getElementById("menu").style.display = "inline";
                     document.getElementById("dashboard").style.display = "inline";
                     document.getElementById("links").style.display = "inline";
                     document.getElementById("stats").style.display = "inline";
-                    document.getElementById("news").style.display = "inline";
+                    document.getElementById("newss").style.display = "inline";
+
+
+                    document.getElementById("menu").style.display = "inline";
                 }
             }
         </script>
 
         <script>
-        function showMenu() {
-            var moreText = document.getElementById("menu");
-
-            if (window.getComputedStyle(document.getElementById('menu')).display === "none") {
-                moreText.style.display = "inline";
-            } else {
-                moreText.style.display = "none";
+            function showMenu() {
+                if (window.getComputedStyle(document.getElementById('menu')).display === "none") {
+                        document.getElementById("menu").style.display = "inline";
+                } else {
+                        document.getElementById("menu").style.display = "none";
+                }
             }
-        }
         </script>
 
         <script>
         function showDashboard() {
-            var moreText = document.getElementById("dashboard");
-
             if (window.getComputedStyle(document.getElementById('dashboard')).display === "none") {
-                moreText.style.display = "inline";
+                document.getElementById("dashboard").style.display = "inline";
             } else {
-                moreText.style.display = "none";
+                document.getElementById("dashboard").style.display = "none";
             }
         }
         </script>
 
         <script>
         function showLinks() {
-            var moreText = document.getElementById("links");
-
             if (window.getComputedStyle(document.getElementById('links')).display === "none") {
-                moreText.style.display = "inline";
+                document.getElementById("links").style.display = "inline";
             } else {
-                moreText.style.display = "none";
+                document.getElementById("links").style.display = "none";
             }
         }
         </script>
 
         <script>
         function showStats() {
-            var moreText = document.getElementById("stats");
-
             if (window.getComputedStyle(document.getElementById('stats')).display === "none") {
-                moreText.style.display = "inline";
+                document.getElementById("stats").style.display = "inline";
             } else {
-                moreText.style.display = "none";
+                document.getElementById("stats").style.display = "none";
             }
         }
         </script>
 
         <script>
         function showNews() {
-            var moreText = document.getElementById("news");
-
             if (window.getComputedStyle(document.getElementById('news')).display === "none") {
-                moreText.style.display = "inline";
+                document.getElementById("newss").style.display = "inline";
             } else {
-                moreText.style.display = "none";
+                document.getElementById("newss").style.display = "none";
             }
         }
         </script>

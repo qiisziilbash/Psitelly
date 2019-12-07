@@ -327,7 +327,7 @@ h1{
     color: white;
     font-weight: bold;
     background-color: black;
-    opacity: .3;
+    opacity: .5;
     border-radius: 2px;
     padding-left: 2px;
     padding-right: 2px;
@@ -386,7 +386,7 @@ h1{
 }
 
 .image-box:hover #thumbnailImage{
-    opacity: .7;
+    opacity: .5;
 }
 
 .image-box:hover #hitPlayImage {
