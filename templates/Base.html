@@ -9,6 +9,7 @@
         <link rel="icon" href="/static/images/Logo.png">
         {% block head %}{% endblock %}
     </head>
+
     <body>
         {% if isIndex %}
             <div class="main-wrapper">
@@ -21,7 +22,7 @@
                     </a>
                 </div>
 
-                <div class="search-box">
+                <div class="search">
                     <form method="GET" action="{% url 'index'%}">
                         <input type="text" placeholder="Search an author, article, journal, topic, focus, or a username " name="search">
                     </form>
@@ -60,7 +61,9 @@
                 <div class="sidebar">
 
                     <h2 id="menuTitle" style="display: none">
-                        Menu
+                        <span>
+                            Menu
+                        </span>
                         <span style="float: right"><a href="javascript:void(0);" onclick="showMenu()">☰</a></span>
                     </h2>
 
@@ -138,12 +141,12 @@
 
                             <span id="news">
                                 {% for news in newses %}
-                                        <div class="textContent">
-                                            <label><u>{{ news.title }}</u></label><br><br>
-                                            {{ news.text }}<br><hr>
-                                            <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
-                                            <br>
-                                        </div>
+                                    <div class="textContent">
+                                        <label><u>{{ news.title }}</u></label><br><br>
+                                        {{ news.text }}<br><hr>
+                                        <label style="float: right">{{ news.time|time:'H:i'}} - {{ news.time|date:'d M Y'}}</label>
+                                        <br>
+                                    </div>
                                 {% endfor %}
                             </span>
                         {% endif %}
@@ -155,12 +158,15 @@
                 {% block content %}{% endblock %}
                 <!--------------------------------->
 
-                <div class="footer">
+                <div class="footline">
                     <h3>
                         Powered by
                         <a href="https://www.linkedin.com/in/mahdishafiei0423/" target="_blank">Qiisziilbash</a> and
-                        <a href="https://www.djangoproject.com/" target="_blank">Django</a> (February 2019) and hosted by
+                        <a href="https://www.djangoproject.com/" target="_blank">Django</a>  and hosted by
                         <a href="http://usu.edu" target="_blank">Utah State University</a>
+                        <span style="float: right">
+                            February 2019
+                        </span>
                     </h3>
                 </div>
             </div>

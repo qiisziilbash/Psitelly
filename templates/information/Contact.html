@@ -9,15 +9,13 @@
         {% endif %}
         <h1>Contact Us</h1>
         <div class="textContent">
-            <form  id="contactUsForm" method="POST" enctype="multipart/form-data" autocomplete="off" >
+            <form id="contactUsForm" method="POST" enctype="multipart/form-data" autocomplete="off" >
                 {% csrf_token %}
                 <label>Subject</label><br>
                 <span class="effectWrapper">
                     <input list="subjects" name="subject" id="subjectID" required>
                     <span class="focus-border"></span>
                 </span>
-                <br><br>
-
 
                 <datalist id="subjects">
                     <option value="Report a problem">
@@ -25,7 +23,7 @@
                     <option value="Love letter">
                     <option value="Miscellaneous">
                 </datalist>
-                <br>
+                <br><br><br>
 
 
                 <label>Email (Optional)</label><br>
@@ -41,6 +39,7 @@
                     <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea>
                     <span class="focus-border"></span>
                 </span>
+
                 <br><br><br><br><br><br><br>
 
 
@@ -61,11 +60,14 @@
                     <span class="focus-border"></span>
                 </span>
 
-
                 <br><br><br><br><br><br>
+
                 <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p>
 
                 <br><br>
+
+
+
                 <label>
                     A random question to stop the smart bots: what number you will get if you stack two "o" on top of each other?
                 </label><br><br>
@@ -75,10 +77,8 @@
                 </span>
                 <br><br><br><br>
 
-
                 <button id="ahmad" type="submit" onclick="return checkCaptcha()">Send</button>
                 <br><br><br>
-
             </form>
         </div>
     </div>
@@ -93,6 +93,7 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
     function checkCaptcha() {
 

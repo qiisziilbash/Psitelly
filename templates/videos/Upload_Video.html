@@ -10,134 +10,106 @@
             <h1>Video Uploader</h1>
             <form method="post" enctype="multipart/form-data" autocomplete="off" id="uploadForm">
                 {% csrf_token %}
-                <div class="uploadForm">
-                    <span>
-                        <label> Title *</label><br>
-                        <span class="effectWrapper">
-                           <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                <div class="textContent">
+                    <label style="width: 49%"> Title *</label>
+                    <label style="width: 49%"> Description</label>
+
+                    <span class="effectWrapper" style="width: 49%">
+                       <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required></textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <label> Description</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description"></textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Google Scholar Link</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                    <br><br><br><br><br><br>
+
+                    <label style="width: 49%"> Google Scholar Link</label>
+                    <label style="width: 49%"> Article Link</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"></textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Article Link</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                    <br>
-                        <label>Author * </label>
-                        <span class="effectWrapper">
-                            <input type="text" id="authorLastNameID" name="author" placeholder="e.g. Gabriel García Márquez" list="authors" required>
-                            <span class="focus-border"></span>
-                        </span>
+                    <br><br><br><br><br><br>
 
-                        <datalist id="authors">
-                            {% for author in authors %}
-                                <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
-                            {% endfor %}
-                        </datalist><br><br>
+                    <label style="width: 49%">Author *</label>
+                    <label style="width: 49%"> Year *</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="authorLastNameID" name="author" placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Year *</label><br>
-                        <span class="effectWrapper">
-                             <input type="number" id="yearID" name="year" placeholder="e.g. 2000" value="2000" required>
-                            <span class="focus-border"></span>
-                        </span>
-                       <br><br>
+                    <datalist id="authors">
+                        {% for author in authors %}
+                            <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
+
+                    <span class="effectWrapper" style="width: 49%">
+                         <input type="number" id="yearID" name="year" placeholder="e.g. 2000" value="2000" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Journal *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="journalID" name="journal" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
-                            <span class="focus-border"></span>
-                        </span>
+                    <br><br><br><br>
 
-                        <datalist id="journals">
-                            {% for journal in journals %}
-                                <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
-                            {% endfor %}
-                        </datalist><br><br>
+                    <label style="width: 49%"> Journal *</label>
+                    <label style="width: 49%"> Topic *</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="journalID" name="journal" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                    <br>
-                        <label> Topic *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="topicID" name="topic" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
-                            <span class="focus-border"></span>
-                        </span>
+                    <datalist id="journals">
+                        {% for journal in journals %}
+                            <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
 
-                        <datalist id="topics">
-                            {% for topic in topics %}
-                                <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
-                            {% endfor %}
-                        </datalist><br><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="topicID" name="topic" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                    <br>
-                        <label> Focus *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="focusID" name="focus" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
-                            <span class="focus-border"></span>
-                        </span>
-                        <datalist id="focuses">
-                            {% for focus in focuses %}
-                                <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
-                            {% endfor %}
-                        </datalist><br><br>
+                    <datalist id="topics">
+                        {% for topic in topics %}
+                            <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
+
+                    <br><br><br><br>
+
+                    <label style="width: 49%"> Focus *</label>
+                    <label style="width: 49%"> Select a Video * </label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="focusID" name="focus" placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                        <span class="focus-border"></span>
+                    </span>
+                    <datalist id="focuses">
+                        {% for focus in focuses %}
+                            <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
+
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="file" id="videoID" name="videoFile"
+                               accept="video/*, video/x-ms-wmv, video/x-ms-asf,
+                                video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
+                                video/x-msvideo, video/mp4, video/x-m4v"  required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Select a Video * </label>
-                            <span class="effectWrapper">
-                                <input type="file" id="videoID" name="videoFile"
-                                       accept="video/*, video/x-ms-wmv, video/x-ms-asf,
-                                        video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
-                                        video/x-msvideo, video/mp4, video/x-m4v"  required>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
-                    </span>
+                    <br><br><br><br><br>
 
-                    <br>
-
-                    <span>
-                        <br>
-                        <button type="submit" id="uploadBtn">Upload</button>
-                        <br><br>
-                    </span>
+                    <button type="submit" id="uploadBtn">Upload</button>
+                    <br><br>
                 </div>
             </form>
         {% else %}
@@ -150,15 +122,15 @@
 
         <h4>Author</h4>
         <div class="textContent">
-            Please provide only full name of the first author in the article. For example,
-            if there are more than one author and the first author is "Gabriel García Márquez",
+            Please provide only the full name of the first author in the article. For example,
+            if there is more than one author and the first author is "Gabriel García Márquez",
             type only "Gabriel García Márquez".
         </div>
 
         <h4>Journal, Topic, and Focus</h4>
         <div class="textContent">
-            When you filling these items please pay attention to the statistics suggested in the dropdown panel
-            in regard to number of video, and pick one that you believe is spelled correctly and has more videos.
+            When you are filling these items please pay attention to the statistics suggested in the dropdown panel
+            in regard to number of videos, and pick one that you believe is spelled correctly and has more videos.
             If you think it is not spelled correctly, or you can not find the one that you are looking for,
             type and create your own.
         </div>

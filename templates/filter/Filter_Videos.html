@@ -5,108 +5,82 @@
         <h1>Video Finder</h1>
         <form method="post" enctype="multipart/form-data" >
             {% csrf_token %}
-            <div class="filterForm-base">
-                <span class="filterForm">
-                    <label> Title</label><br>
-                    <span class="effectWrapper">
-                        <textarea rows="2" spellcheck="true" placeholder="Title " name="title"></textarea>
-                        <span class="focus-border"></span>
-                    </span>
-                    <br><br>
+            <div class="textContent">
+                <label style="width: 49%"> Title</label><br>
+                <span class="effectWrapper" style="width: 49%">
+                    <textarea rows="2" spellcheck="true" placeholder="Title " name="title"></textarea>
+                    <span class="focus-border"></span>
                 </span>
 
+                <br><br><br><br><br>
 
-                <span><br></span>
-
-
-                <span class="filterForm">
-                    <br>
-                    <label> Author</label>
-                    <span class="effectWrapper">
-                        <input type="text" name="author" placeholder="e.g. Afraz">
-                        <span class="focus-border"></span>
-                    </span>
-                    <br><br>
+                <label style="width: 49%"> Author</label>
+                <label style="width: 49%"> Journal</label><br>
+                <span class="effectWrapper" style="width: 49%">
+                    <input type="text" name="author" placeholder="e.g. Afraz">
+                    <span class="focus-border"></span>
                 </span>
 
-                <span class="filterForm">
-                <br>
-                    <label> Journal</label>
-                    <span class="effectWrapper">
-                         <input type="text" name="journal" class="form-control" placeholder="e.g. Nature" list="journals">
-                        <span class="focus-border"></span>
-                    </span>
-
-                    <datalist id="journals">
-                        {% for journal in journals %}
-                            <option value="{{ journal.name }}" label="{{ journal.name }} ({{ journal.frequency}})">
-                        {% endfor %}
-                    </datalist><br><br>
+                <span class="effectWrapper" style="width: 49%">
+                     <input type="text" name="journal" class="form-control" placeholder="e.g. Nature" list="journals">
+                    <span class="focus-border"></span>
                 </span>
 
-                <span class="filterForm">
-                    <br>
-                    <label> Topic</label><br>
-                    <span class="effectWrapper">
-                         <input type="text" name="topic" list="topics" placeholder="e.g. neuroscience">
-                         <span class="focus-border"></span>
-                    </span>
+                <datalist id="journals">
+                    {% for journal in journals %}
+                        <option value="{{ journal.name }}" label="{{ journal.name }} ({{ journal.frequency}})">
+                    {% endfor %}
+                </datalist>
 
-                    <datalist id="topics">
-                        {% for topic in topics %}
-                            <option value="{{ topic.text }}" label="{{ topic.text }} ({{ topic.frequency}})">
-                        {% endfor %}
-                    </datalist><br><br>
+                <br><br><br>
+
+                <label style="width: 49%"> Topic</label>
+                <label style="width: 49%"> Focus</label><br>
+
+                <span class="effectWrapper" style="width: 49%">
+                     <input type="text" name="topic" list="topics" placeholder="e.g. neuroscience">
+                     <span class="focus-border"></span>
                 </span>
 
-                <span class="filterForm">
-                    <br>
-                    <label> Focus</label><br>
-                    <span class="effectWrapper">
-                        <input type="text" name="focus" list="focuses" class="form-control" placeholder="e.g. method">
-                        <span class="focus-border"></span>
-                    </span>
+                <datalist id="topics">
+                    {% for topic in topics %}
+                        <option value="{{ topic.text }}" label="{{ topic.text }} ({{ topic.frequency}})">
+                    {% endfor %}
+                </datalist>
 
-                    <datalist id="focuses">
-                        {% for focus in focuses %}
-                            <option value="{{ focus.text }}" label="{{ focus.text }} ({{ focus.frequency}})">
-                        {% endfor %}
-                    </datalist><br><br>
-                </span >
-
-                <span class="filterForm">
-                    <br>
-                    <label> Year</label><br>
-                    <span class="effectWrapper">
-                        <input type="number" name="yearFrom" class="form-control" placeholder="From">
-                        <span class="focus-border"></span>
-                    </span>
-                    <br><br>
+                <span class="effectWrapper" style="width: 49%">
+                    <input type="text" name="focus" list="focuses" class="form-control" placeholder="e.g. method">
+                    <span class="focus-border"></span>
                 </span>
 
-                <span class="filterForm">
-                    <br><br>
-                    <span class="effectWrapper">
-                        <input type="number" name="yearTo" class="form-control" placeholder="To" >
-                        <span class="focus-border"></span>
-                    </span>
+                <datalist id="focuses">
+                    {% for focus in focuses %}
+                        <option value="{{ focus.text }}" label="{{ focus.text }} ({{ focus.frequency}})">
+                    {% endfor %}
+                </datalist>
+
+                <br><br><br>
+
+                <label style="width: 49%"> Year</label><br>
+                <span class="effectWrapper" style="width: 49%">
+                    <input type="number" name="yearFrom" class="form-control" placeholder="From">
+                    <span class="focus-border"></span>
                 </span>
 
-                <span>
-                    <br>
-                    <input type="radio" id="andSearch" name="searchType" value="and" checked>
-                    <label for="andSearch">"And" Search </label>
-                    <input type="radio" id="orSearch" name="searchType" value="or">
-                    <label for="orSearch">"Or" Search</label><br>
-                    <input type="checkbox" name="PisA"> Publisher is the same as author
-
+                <span class="effectWrapper" style="width: 49%">
+                    <input type="number" name="yearTo" class="form-control" placeholder="To" >
+                    <span class="focus-border"></span>
                 </span>
 
-                <span><br></span><span><br></span>
-                <span class="filterForm">
-                    <button type="submit" id="filterBtn">Search</button>
-                    <br><br>
-                </span>
+                <br><br><br>
+
+
+                <input type="radio" id="andSearch" name="searchType" value="and" checked>"And" Search<br>
+                <input type="radio" id="orSearch" name="searchType" value="or"> "Or" Search<br>
+                <input type="checkbox" name="PisA" style="margin-left: 5px"> Publisher is the same as author<br>
+
+                <button type="submit" id="filterBtn">Search</button>
+                <br><br>
             </div>
         </form>
     </div>
@@ -124,7 +98,6 @@
             If you check this option, only videos that made by the original author of the paper will be in the results.
         </div>
     </div>
-
 {% endblock %}
 
 

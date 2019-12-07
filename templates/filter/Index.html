@@ -10,38 +10,35 @@
 
         {% if customUser %}
             <div class="profile-info">
-                <span><input type="image" alt="" src={{ customUser.profile.picture}}></span>
-
+                <img alt="" src={{ customUser.profile.picture}}>
                 {% if customUser.username != user.username %}
-                    <span>
                         {% if following == 1 %}
-                            <img alt="unFollow" src="/static/images/Following.png"
+                            <input type="image" alt="unFollow" src="/static/images/Following.png"
                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
                         {% elif following == 0 %}
-                            <img alt="follow" src="/static/images/Following_.png"
+                            <input type="image" alt="follow" src="/static/images/Following_.png"
                                  onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to follow">
                         {% endif %}
-                    </span>
                 {% endif %}
                 <br>
                 <hr>
 
-                <span>
-                    <label>Username</label> <span style="float: right">{{ customUser.username }}</span><br>
-                    <label>Member since </label><span style="float: right">{{ customUser.profile.joinDateTime|date:'d M Y' }}</span> <br>
-                    <hr>
-                    <label>Videos</label>
-                    <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
-                        {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }})
-                    </span><br>
-                    <label>comments</label>
-                    <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
-                        {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }})
-                    </span><br>
-                    <hr>
-                    <label>Followers</label> <span style="float: right"> {{ customUser.profile.nFollowers }}</span><br>
-                    <label>Followees</label> <span style="float: right"> {{ customUser.profile.nFollowees }}</span><br>
-                </span>
+
+                <label>Username</label> <span style="float: right">{{ customUser.username }}</span><br>
+                <label>Member since </label><span style="float: right">{{ customUser.profile.joinDateTime|date:'d M Y' }}</span> <br>
+                <hr>
+                <label>Videos</label>
+                <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
+                    {{ customUser.profile.nVideos }} ({{ customUser.profile.nVideoUpVotesReceived }})
+                </span><br>
+                <label>comments</label>
+                <span style="float: right" data-toggle="tooltip" data-placement="right" title="Received upvotes is shown in parentheses">
+                    {{ customUser.profile.nComments }} ({{ customUser.profile.nCommentUpVotesReceived }})
+                </span><br>
+                <hr>
+                <label>Followers</label> <span style="float: right"> {{ customUser.profile.nFollowers }}</span><br>
+                <label>Followees</label> <span style="float: right"> {{ customUser.profile.nFollowees }}</span><br>
+
             </div><br>
         {% endif %}
 
@@ -52,33 +49,30 @@
         {% if customCategory %}
             <div class="profile-info">
                 {% if categoryType == "Focus" %}
-                    <input type="image" src="/static/images/Focus_.png" alt="" data-toggle="tooltip" data-placement="right" title="Focus">
+                    <img src="/static/images/Focus_.png" alt="" data-toggle="tooltip" data-placement="right" title="Focus">
                 {% elif categoryType == "Topic" %}
-                    <input type="image" src="/static/images/Topic_.png" alt="" data-toggle="tooltip" data-placement="right" title="Topic">
+                    <img src="/static/images/Topic_.png" alt="" data-toggle="tooltip" data-placement="right" title="Topic">
                 {% elif categoryType == "Journal" %}
-                    <input type="image"  src="/static/images/Journal_.png" alt="" data-toggle="tooltip" data-placement="right" title="Journal">
+                    <img  src="/static/images/Journal_.png" alt="" data-toggle="tooltip" data-placement="right" title="Journal">
                 {% elif categoryType == "Author" %}
-                    <input type="image"  src="/static/images/Author.png" alt="" data-toggle="tooltip" data-placement="right" title="Author">
+                    <img  src="/static/images/Author.png" alt="" data-toggle="tooltip" data-placement="right" title="Author">
                 {% endif %}
 
 
                 {% if following == 1 %}
-                    <img alt="unFollow" src="/static/images/Following.png"
+                    <input type="image" alt="unFollow" src="/static/images/Following.png"
                         onclick="return follow(this, '{{ categoryType }}', '{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
                 {% elif following == 0 %}
-                    <img alt="follow" src="/static/images/Following_.png"
+                    <input type="image" alt="follow" src="/static/images/Following_.png"
                          onclick="return follow(this, '{{ categoryType }}','{{ customCategoryTitle }}', '_')" data-toggle="tooltip" data-placement="right" title="Click to follow">
                 {% endif %}
 
                 <br>
                 <hr>
-
-                <b>Title:</b> {{ customCategoryTitle }}<br>
-
+                <label>Title</label><span style="float: right">{{ customCategoryTitle }}</span><br>
                 <hr>
                 <label>Videos</label><span style="float: right">{{ customCategory.nVideos }}</span><br>
                 <label>Followers</label><span style="float: right">{{ customCategory.nFollowers }}</span><br>
-
             </div>
             <br>
         {% endif %}
@@ -134,115 +128,117 @@
                 <div class="video-gallery">
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
-                            <div class="imageBox">
-                                <img src='{{ video.0.thumbnail }}' class="thumbnailImage">
-                                <div class="hoverImg">
+                            <div class="image-box">
+                                <img src='{{ video.0.thumbnail }}' id="thumbnailImage" alt="">
+                                <div class="hover-box">
                                     <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
-                                        <img src="/static/images/Journal.png">
+                                        <img src="/static/images/Journal.png" alt="">
                                         {{ video.0.journal.title }}
                                     </a><br>
 
                                     <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}" >
-                                        <img src="/static/images/Topic.png">
+                                        <img src="/static/images/Topic.png" alt="">
                                         {{ video.0.topic.title }}
                                     </a><br>
 
                                     <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
-                                        <img src="/static/images/Focus.png">
+                                        <img src="/static/images/Focus.png" alt="">
                                         {{ video.0.focus.title }}
-                                    </a>
+                                    </a><br>
                                 </div>
+
+
                                 <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
-                                    <img src="/static/images/Play.png" class="hitPlayImage" data-toggle="tooltip" data-placement="right" title="Play Video">
+                                    <img src="/static/images/Play.png" id="hitPlayImage"  alt=""
+                                         data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
                             </div>
 
-                            <div class="video-item-info">
-                                <span style="float: left;" data-toggle="tooltip" data-placement="right" title="Duration: {{ video.0.formatted_duration}}">
-                                    <img src="/static/images/Timer.png">
+
+                            <span class="video-item-info">
+                                <span id="duration">
                                     {{ video.0.formatted_duration}}
                                 </span>
 
-                                <span style="float: right;">
+                                <span style="float: right; cursor: pointer; margin-right: 8px">
                                     {% if user.is_authenticated and videos.0 == "Watch History"%}
                                         <img alt="unWatchLater"
                                              src="/static/images/Delete.png"
                                              onclick="return deleteWatchHistory({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Remove from Watch History"
-                                             style="cursor: pointer">
+                                             data-toggle="tooltip" data-placement="right" title="Remove from Watch History">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "Upvoted Videos"%}
                                         <img alt="unWatchLater"
                                              src="/static/images/Delete.png"
                                              onclick="return unLike({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Take back your Upvote"
-                                             style="cursor: pointer">
+                                             data-toggle="tooltip" data-placement="right" title="Take back your Upvote">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "Watch Later"%}
                                         <img alt="unWatchLater"
                                              src="/static/images/Delete.png"
                                              onclick="return unWatchLater({{ video.0.pk }})"
-                                             data-toggle="tooltip" data-placement="right" title="Remove from your Watch Later List"
-                                             style="cursor: pointer">
+                                             data-toggle="tooltip" data-placement="right" title="Remove from your Watch Later List">
                                     {% endif %}
 
                                     {% if user.is_authenticated and videos.0 == "My Videos"%}
                                         <a href="{% url 'editVideo' %}?videoPK={{ video.0.pk }}">
-                                            <img type="image" src="/static/images/Edit.png"
-                                                 data-toggle="tooltip" data-placement="right" title="Edit"
-                                                 style="cursor: pointer">
+                                            <img alt="" src="/static/images/Edit.png"
+                                                 data-toggle="tooltip" data-placement="right" title="Edit">
                                         </a>
                                     {% endif %}
-                                </span>
 
-                                <span style="float: right;">
                                     {% if user.is_authenticated and videos.0 != "Watch Later"%}
                                         {% if video.1 %}
                                             <img alt="unWatchLater" src="/static/images/WatchLater.png"
                                                  onclick="return watchLater(this, {{ video.0.pk }})"
-                                                 data-toggle="tooltip" data-placement="right" title="Watch Later"
-                                                 style="cursor: pointer">
+                                                 data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
                                         {% else %}
                                             <img alt="watchLater" src="/static/images/Plus.png"
                                                  onclick="return watchLater(this, {{ video.0.pk }})"
-                                                 data-toggle="tooltip" data-placement="right" title="Watch Later"
-                                            style="cursor: pointer">
+                                                 data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
                                         {% endif %}
                                     {% endif %}
                                 </span>
 
-                                <span style="float: right;">{{ video.0.likes }}</span>
+                                <span style="float: right; cursor: default">{{ video.0.likes}}</span>
                                 <span style="float: right;"><img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes"></span>
 
-                                <span style="float: right;">{{ video.0.comments }}</span>
+                                <span style="float: right; cursor: default">{{ video.0.comments }}</span>
                                 <span style="float: right;"><img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments"></span>
 
-                                <span style="float: right;">{{ video.0.views }}</span>
+                                <span style="float: right; cursor: default">{{ video.0.views }}</span>
                                 <span style="float: right;"><img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views"></span>
+                            </span>
 
+                            <br><br>
+
+                            <span class="video-item-info">
                                 <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
-                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="margin-left: 6px">{{ video.0.title }}</a>
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="padding-left: 5px">{{ video.0.title }}</a>
                                 </label>
+                                <br>
 
-                                <label data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
+                                <label data-toggle="tooltip" class="video-item-info-label" data-placement="right"
+                                       title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
                                     <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
-                                        <img src="/static/images/Author.png">
+                                        <img class="video-item-info-img" src="/static/images/Author.png">
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
                                     </a>
                                 </label>
+                                <br>
 
-                                {% if videos.0 != "My Videos" %}
-                                    <a href="{% url 'index' %}?customUser={{ video.0.user.username }}" data-toggle="tooltip" data-placement="right" title="Uploaded by: {{ video.0.user.username }}">
-                                        <img alt="" src="{{ video.0.user.profile.picture }}">
+                                <label>
+                                    <a href="{% url 'index' %}?customUser={{ video.0.user.username }}"
+                                       data-toggle="tooltip" data-placement="right"
+                                       title="Uploaded by {{ video.0.user.username }} at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}">
+                                        <img class="video-item-info-img" alt="" src="{{ video.0.user.profile.picture }}">
                                         {{ video.0.user.username }}
                                     </a>
                                     at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
-                                {% else %}
-                                    Uploaded at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
-                                {% endif %}
-                            </div>
+                                </label>
+                            </span>
                         </div>
                     {% endfor %}
                 </div>
@@ -281,10 +277,12 @@
 
             if($(element).attr('alt') =='watchLater'){
                 $(element).attr('alt','unWatchLater');
-                $(element).attr('src','/static/images/WatchLater.png')
+                $(element).attr('src','/static/images/WatchLater.png');
+                $(element).attr('title', "Remove from your 'Watch Later' list");
             }else{
                 $(element).attr('alt','watchLater');
-                $(element).attr('src','/static/images/Plus.png')
+                $(element).attr('src','/static/images/Plus.png');
+                $(element).attr('title', "Add from your 'Watch Later' list");
             }
 
             $.ajax({

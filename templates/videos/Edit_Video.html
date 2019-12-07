@@ -14,138 +14,115 @@
             {% endif %}
             <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
                 {% csrf_token %}
-                <div class="uploadForm">
-                    <span>
-                        <label> Title *</label><br>
-                        <span class="effectWrapper">
-                            <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required>{{ video.title }}</textarea>
-                            <span class="focus-border"></span>
-                        </span>
+                <div class="textContent">
+                    <label style="width: 49%"> Title *</label>
+                    <label style="width: 49%"> Description</label>
 
+                    <span class="effectWrapper" style="width: 49%">
+                       <textarea rows="2" spellcheck="true" placeholder="Title " id="titleID" name="title" required>{{ video.title }}</textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <label> Description</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID"
-                                  name="description">{{ video.description }}</textarea>
-                            <span class="focus-border"></span>
-                        </span>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" spellcheck="true" placeholder="Description (optional)" id="descriptionID" name="description">{{ video.description }}</textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Google Scholar Link</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs" ></textarea>
-                            <span class="focus-border"></span>
-                        </span>
+                    <br><br><br><br><br><br>
+
+                    <label style="width: 49%"> Google Scholar Link</label>
+                    <label style="width: 49%"> Article Link</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" placeholder="Google Scholar Link (optional)" id="gsID" name="gs"> {{ video.gsLink }}</textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Article Link</label>
-                        <span class="effectWrapper">
-                            <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link"></textarea>
-                            <span class="focus-border"></span>
-                        </span>
+                    <span class="effectWrapper" style="width: 49%">
+                        <textarea rows="2" placeholder="Article Link (optional)" id="linkID" name="link">{{ video.pdfLink }}</textarea>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label>Author *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="authorLastNameID" name="author"
-                               placeholder="e.g. Gabriel García Márquez" list="authors" value="{{ video.author.title}}" required >
-                            <span class="focus-border"></span>
-                        </span>
+                    <br><br><br><br><br><br>
 
-                        <datalist id="authors">
-                            {% for author in authors %}
-                                <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
-                            {% endfor %}
-                        </datalist>
+                    <label style="width: 49%">Author *</label>
+                    <label style="width: 49%"> Year *</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="authorLastNameID" name="author" value="{{ video.author.title }}"
+                               placeholder="e.g. Gabriel García Márquez" list="authors" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Year *</label><br>
-                        <span class="effectWrapper">
-                            <input type="number" id="yearID" name="year" placeholder="e.g. 1999" value="{{ video.year }}" required>
-                            <span class="focus-border"></span>
-                        </span>
+                    <datalist id="authors">
+                        {% for author in authors %}
+                            <option value="{{ author.title }}" label="{{ author.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
+
+                    <span class="effectWrapper" style="width: 49%">
+                         <input type="number" id="yearID" name="year" placeholder="e.g. 2000" value="{{video.year}}" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Journal *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="journalID" name="journal" placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals"
-                              value="{{ video.journal.title }}" required >
-                            <span class="focus-border"></span>
-                        </span>
-                        <datalist id="journals">
-                            {% for journal in journals %}
-                                <option value="{{ journal.title }}" label="{{ journal.nVideos}} videos">
-                            {% endfor %}
-                        </datalist>
+                    <br><br><br><br>
+
+                    <label style="width: 49%"> Journal *</label>
+                    <label style="width: 49%"> Topic *</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="journalID" name="journal" value="{{ video.journal.title }}"
+                               placeholder="e.g. Nature, PNAS, Journal of Physiology, ..." list="journals" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Topic *</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="topicID" name="topic" placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics"
-                               value="{{ video.topic.title }}" required >
-                            <span class="focus-border"></span>
-                        </span>
+                    <datalist id="journals">
+                        {% for journal in journals %}
+                            <option value="{{ journal.title }}" label=" {{ journal.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
 
-                        <datalist id="topics">
-                            {% for topic in topics %}
-                                <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
-                            {% endfor %}
-                        </datalist>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="topicID" name="topic" value="{{ video.topic.title }}"
+                               placeholder="e.g. Neuroscience, Literature, Computer Science, Math, ..." list="topics" required>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Focus *</label>
-                        <span class="effectWrapper">
-                        <input type="text" id="focusID" name="focus"  placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses"
-                               value="{{ video.focus.title }}" required >
-                            <span class="focus-border"></span>
-                        </span>
+                    <datalist id="topics">
+                        {% for topic in topics %}
+                            <option value="{{ topic.title }}" label="{{ topic.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
 
-                        <datalist id="focuses">
-                            {% for focus in focuses %}<option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
-                            {% endfor %}
-                        </datalist>
+                    <br><br><br><br>
+
+                    <label style="width: 49%"> Focus *</label>
+                    <label style="width: 49%"> Pick a Different Video (Optional)</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="focusID" name="focus" value="{{ video.focus.title}}"
+                               placeholder="e.g. Method, Commentary, Simplified, Results, Figures ..." list="focuses" required>
+                        <span class="focus-border"></span>
+                    </span>
+                    <datalist id="focuses">
+                        {% for focus in focuses %}
+                            <option value="{{ focus.title }}" label="{{ focus.nVideos}} videos">
+                        {% endfor %}
+                    </datalist>
+
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="file" id="videoID" name="videoFile"
+                               accept="video/*, video/x-ms-wmv, video/x-ms-asf,
+                                video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
+                                video/x-msvideo, video/mp4, video/x-m4v">
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <br>
-                        <label> Select a Different Video</label>
-                        <span class="effectWrapper">
-                            <input type="file" id="videoID" name="videoFile" accept="video/*, video/x-ms-wmv, video/x-ms-asf,
-                                        video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
-                                        video/x-msvideo, video/mp4, video/x-m4v">
-                            <span class="focus-border"></span>
-                        </span>
-                         <br><br>
-                    </span>
+                    <br><br><br><br><br>
+                    <input name="videoPK" value="{{ video.pk }}" style="display: none">
 
-                    <br>
-
-                    <span>
-                        <br>
-                        {% if video.isProcessed %}
-                            <button type="submit" id="saveBtn">Save</button>
-                            <button  id="deleteBtn" class="dangerButton" formnovalidate  onclick="return deleteVideo({{ video.pk }})"> Delete</button>
-                        {% endif %}
-
-                        <button  id="cancelBtn"  onclick="return cancelEdit()" > Cancel</button>
-                    </span>
-                    <br>
+                    {% if video.isProcessed %}
+                        <button type="submit" id="saveBtn" name="saveReq" value="{{ video.pk }}">Save</button>
+                        <button  id="deleteBtn" class="dangerButton" formnovalidate  onclick="return deleteVideo({{ video.pk }})"> Delete</button>
+                    {% endif %}
+                    <button  id="cancelBtn"  onclick="return cancelEdit()" > Cancel</button>
+                    <br><br>
                 </div>
             </form>
         {% else %}

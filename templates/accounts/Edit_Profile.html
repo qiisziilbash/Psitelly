@@ -12,87 +12,80 @@
         {% if user.is_authenticated %}
             <form enctype="multipart/form-data" method="POST" action="{% url 'editProfile' %}">
                 {% csrf_token %}
-                <img class="profilePic" alt="" src={{ user.profile.picture }}><br><br>
+                <img class="profile-picture" alt="" src={{ user.profile.picture }}><br><br>
 
-                <div class="uploadForm">
-                    <span>
-                        <label>Profile Picture</label>
-                        <span class="effectWrapper">
-                            <input type="file" name="profilePicture" accept="image/png, image/jpeg" >
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br><br>
+                <div class="textContent">
+
+                    <label style="width: 49%">Profile Picture</label><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="file" name="profilePicture" accept="image/png, image/jpeg" >
+                        <span class="focus-border"></span>
+                    </span>
+                    <br><br><br>
+
+                    <label style="width: 49%">Username</label>
+                    <label style="width: 49%">Email</label>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="text" id="usernameText" name="username"
+                               placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <br>
-
-                    <span>
-                        <label>Username</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="usernameText" name="username"
-                                   placeholder="4 Characters at least" required pattern=".{4,100}" value={{ user.username }}>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}>
+                        <span class="focus-border"></span>
                     </span>
+                    <br><br><br><br>
 
-                    <span>
-                        <label>Email</label>
-                        <span class="effectWrapper">
-                            <input type="email" id="emailText" name="email" pattern=".{,100}" required value={{ user.email }}>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br><br>
-                    </span>
 
-                    <span>
-                        <label> Security Question</label><br>
+                    <label style="width: 49%">Security Question</label>
+                    <label style="width: 49%">Security Answer</label>
+
+                    <span class="effectWrapper" style="width: 49%;">
                         <select id="secQuestionText" name="secQuestion" required>
                             <option value="What is your security phrase?">What is your security phrase?</option>
                             <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
                             <option value="Who was your first kiss?">Who was your first kiss?</option>
                             <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
                         </select>
-                        <br><br><br>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <label>Security Answer</label>
-                        <span class="effectWrapper">
-                            <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}>
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br><br>
+
+                    <span class="effectWrapper" style="width: 49%;">
+                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}>
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <label for="newPass1Text">
-                            <span style="font-weight: bolder">New Password</span style="font-weight: bolder"><br>
-                            <span style="font-size: small">Leave empty, if you don't want to change your password</span>
-                        </label><br>
-                        <span class="effectWrapper">
-                            <input type="password" id="newPass1Text" name="newPass1" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                    <br><br><br><br>
+
+
+                    <label style="width: 49%">New Password</label>
+                    <label style="width: 49%">Confirm New Password</label>
+
+                    <label style="width: 49%; font-size: small; font-weight: normal">Leave empty, if you don't want to change your password</label>
+                    <label style="width: 49%; font-size: small; font-weight: normal">Leave empty, if you don't want to change your password</label>
+
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="password" id="newPass1Text" name="newPass1"
+                               class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                        <span class="focus-border"></span>
                     </span>
 
-                    <span>
-                        <label for="newPass2Text">
-                            <span style="font-weight: bolder">Confirm New Password</span><br>
-                            <span style="font-size: small">Leave empty, if you don't want to change your password</span>
-                        </label><br>
-                        <span class="effectWrapper">
-                            <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
-                            <span class="focus-border"></span>
-                        </span>
-                        <br><br>
+                    <span class="effectWrapper" style="width: 49%">
+                        <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                        <span class="focus-border"></span>
                     </span>
+                    <br><br><br><br>
 
-                    <span><h3><u>Notifications</u></h3></span><br>
 
-                    <span>
-                        <b>When my followees upload a video:</b><br>
+                    <h3><u>Notifications</u></h3>
+
+
+                    <label style="width: 49%">When my followees upload a video</label>
+                    <label style="width: 49%">When someone comment on my videos</label>
+
+                    <span class="effectWrapper" style="width: 49%">
                         {% if user.profile.notifyUploads and user.profile.emailUploads %}
                             <input type="checkbox" name="notifyUploads" checked> Notify me here<br>
                             <input type="checkbox" name="emailUploads" checked> Notify me through email<br>
@@ -106,11 +99,8 @@
                             <input type="checkbox" name="notifyUploads"> Notify me here<br>
                             <input type="checkbox" name="emailUploads"> Notify me through email<br>
                         {% endif %}
-                        <br><br>
                     </span>
-
-                    <span>
-                        <b>When someone comment on my videos:</b><br>
+                    <span class="effectWrapper" style="width: 49%">
                         {% if user.profile.notifyComments and user.profile.emailComments %}
                             <input type="checkbox" name="notifyComments" checked> Notify me here<br>
                             <input type="checkbox" name="emailComments" checked> Notify me through email<br>
@@ -124,11 +114,15 @@
                             <input type="checkbox" name="notifyComments" > Notify me here<br>
                             <input type="checkbox" name="emailComments" > Notify me through email<br>
                         {% endif %}
-                        <br><br>
                     </span>
 
-                    <span>
-                        <b>When someone starts to follow me:</b><br>
+                    <br><br><br><br>
+
+
+                    <label style="width: 49%">When someone starts to follow me</label>
+                    <label style="width: 49%">When someone mentions me on a post or comment</label>
+
+                    <span class="effectWrapper" style="width: 49%">
                         {% if user.profile.notifyFollows and user.profile.emailFollows %}
                             <input type="checkbox" name="notifyFollows" checked> Notify me here<br>
                             <input type="checkbox" name="emailFollows" checked> Notify me through email<br>
@@ -142,13 +136,9 @@
                             <input type="checkbox" name="notifyFollows" > Notify me here<br>
                             <input type="checkbox" name="emailFollows" > Notify me through email<br>
                         {% endif %}
-                        <br><br>
                     </span>
-
-
-                    <span>
-                        <b>When someone mentions me on a post or comment:</b><br>
-                        {% if user.profile.notifyMentions and user.profile.emailMentions %}
+                    <span class="effectWrapper" style="width: 49%">
+                         {% if user.profile.notifyMentions and user.profile.emailMentions %}
                            <input type="checkbox" name="notifyMentions"  checked> Notify me here<br>
                             <input type="checkbox" name="emailMentions"  checked> Notify me through email<br>
                         {% elif user.profile.notifyMentions %}
@@ -161,15 +151,13 @@
                             <input type="checkbox" name="notifyMentions" > Notify me here<br>
                             <input type="checkbox" name="emailMentions" > Notify me through email<br>
                         {% endif %}
-                        <br><br>
                     </span>
 
-                    <br>
+                    <br><br><br><br><br>
 
-                    <span>
-                        <button type="submit" name="save">Save</button>
-                        <button type="submit" name="cancel" formnovalidate>Cancel</button><br><br>
-                    </span>
+                    <button type="submit" name="save">Save</button>
+                    <button type="submit" name="cancel" formnovalidate>Cancel</button>
+                    <br><br>
                 </div>
             </form>
         {% else %}
@@ -181,8 +169,6 @@
 
     <div class="rightbar">
         {% if user.is_authenticated %}
-
-
             <h3>Notes</h3>
             <div class="textContent">
                 <li>Username is case-sensitive</li>

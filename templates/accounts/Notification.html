@@ -3,9 +3,9 @@
 {% block content%}
     <div class="content">
         {% if user.is_authenticated %}
-            <a href="{% url 'profile' %}"><img class="profilePic" src={{ user.profile.picture }}></a>
+            <a href="{% url 'profile' %}"><img class="profile-picture" src={{ user.profile.picture }}></a>
 
-            <br>
+            <br><br>
 
             {% if msgs %}
                 {% for msg in msgs %}

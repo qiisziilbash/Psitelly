@@ -11,7 +11,7 @@
             <div class="textContent">
                 <label for="emailText"> Email</label><br>
                 <span class="effectWrapper">
-                    <input id="emailText" type="text" name="email">
+                    <input id="emailText" type="text" name="email" required>
                     <span class="focus-border"></span>
                 </span>
                 <br><br><br>
@@ -33,7 +33,7 @@
                 </span>
                 <br><br><br><br>
 
-                <p id="verificationContent"></p>
+                <p id="verificationContent" style="display: none"></p>
 
                 <button id="verifyBtn" type="submit" name="sendCode">Send Code</button><br><br><br>
             </div>
@@ -83,6 +83,7 @@
                           $('#emailText').attr('disabled',true);
                           $('#secAnswerText').attr('disabled',true);
                           $('#secQuestionText').attr('disabled',true);
+                          $('#verificationContent').style.display = "inline";
                           $('#verificationContent').append(
                               "<label> Verification Code:</label> <br>" +
                               "<input id=\"codeText\" type=\"text\" name=\"code\" class=\"form-control\"  placeholder=\"Verification Code\">" +

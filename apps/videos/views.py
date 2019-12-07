@@ -87,9 +87,8 @@ def upload_video(request):
 
 def edit_video(request):
     if request.user.is_authenticated:
-        videoPK = request.GET.get('videoPK', '')
-
         if request.method == 'GET':
+            videoPK = request.GET.get('videoPK', '')
             context = {
                 'newses': News.objects.order_by('-time')[:5],
                 'Statistics': True,
@@ -110,38 +109,8 @@ def edit_video(request):
             return render(request, 'videos/Edit_Video.html', context)
 
         if request.method == 'POST':
+            videoPK = request.POST.get('videoPK', ' ')
             video = Video.objects.get(pk=videoPK)
-
-            if 'videoFile' in request.FILES and video.isProcessed:
-                fs = FileSystemStorage()
-
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
-
-                myFile = request.FILES['videoFile']
-
-                fileName = os.path.splitext(myFile.name)[0]
-                videoSuffix = os.path.splitext(myFile.name)[1]
-                randomSuffix = '_' + str(random.randint(1, 1000000))
-
-                videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
-                thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
-
-                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(150, 250))
-                clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
-
-                video.videoFile = fs.url(videoName)
-                video.thumbnail = fs.url(thumbnailName)
-                video.duration = datetime.timedelta(seconds=round(clip.duration))
-                video.publishDate = datetime.datetime.now()
-                video.isProcessed = False
-
-                video.save()
-
-                create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
 
             focus = request.POST.get('focus', '')
             topic = request.POST.get('topic', '')
@@ -225,9 +194,40 @@ def edit_video(request):
                                                     description=request.POST.get('description', ''),
                                                     gsLink=request.POST.get('gs', ''),
                                                     pdfLink=request.POST.get('link', ''))
+            video = Video.objects.get(pk=videoPK)
             video.tags.clear()
-            video.save()
             add_tags(video)
+
+            if 'videoFile' in request.FILES and video.isProcessed:
+                fs = FileSystemStorage()
+
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
+                fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
+
+                myFile = request.FILES['videoFile']
+
+                fileName = os.path.splitext(myFile.name)[0]
+                videoSuffix = os.path.splitext(myFile.name)[1]
+                randomSuffix = '_' + str(random.randint(1, 1000000))
+
+                videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
+                thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
+
+                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(150, 250))
+                clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
+
+                video.videoFile = fs.url(videoName)
+                video.thumbnail = fs.url(thumbnailName)
+                video.duration = datetime.timedelta(seconds=round(clip.duration))
+                video.publishDate = datetime.datetime.now()
+                video.isProcessed = False
+
+                video.save()
+
+                create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
 
             return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:
@@ -387,7 +387,6 @@ def add_tags(video):
     for word in title_words:
         if word not in stopwords:
             video.tags.add(word)
-
     video.save()
 
 
@@ -404,28 +403,35 @@ def start_new_thread(function):
 def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix):
     output_suffix = '.mp4'
     fs = FileSystemStorage()
+    error = False
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(360, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix,
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
+    try:
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                             target_resolution=(360, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix,
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
 
-    video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
+        video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(480, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix,
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                             target_resolution=(480, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix,
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
 
-    video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
+        video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(720, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix,
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                             target_resolution=(720, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix,
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264')
 
-    video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
+        video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
+    except:
+        error = True
 
     video.isProcessed = True
 
     video.save()
 
-    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
-
+    if not error:
+        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
