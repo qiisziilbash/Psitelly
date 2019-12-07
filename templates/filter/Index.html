@@ -10,16 +10,25 @@
 
         {% if customUser %}
             <div class="profile-info">
-                <img alt="" src={{ customUser.profile.picture}}>
+
+
+                <img id="userIcon" alt="" src={{ customUser.profile.picture}}>
+
+
+
                 {% if customUser.username != user.username %}
-                        {% if following == 1 %}
-                            <input type="image" alt="unFollow" src="/static/images/Following.png"
-                                onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
-                        {% elif following == 0 %}
-                            <input type="image" alt="follow" src="/static/images/Following_.png"
-                                 onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to follow">
-                        {% endif %}
+                    {% if following == 1 %}
+                        <input type="image" alt="unFollow" src="/static/images/Following.png"
+                            onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to un-follow">
+                    {% elif following == 0 %}
+                        <input type="image" alt="follow" src="/static/images/Following_.png"
+                             onclick="return follow(this, 'user', '_', '{{ customUser.username }}')" data-toggle="tooltip" data-placement="right" title="Click to follow">
+                    {% endif %}
                 {% endif %}
+
+
+
+
                 <br>
                 <hr>
 

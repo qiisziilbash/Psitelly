@@ -5,7 +5,11 @@
         {% if user.is_authenticated %}
             <a href="{% url 'profile' %}"><img class="profile-picture" src={{ user.profile.picture }}></a>
 
-            <br><br>
+            <br>
+
+            <h1>
+                <u>Notifications</u>
+            </h1>
 
             {% if msgs %}
                 {% for msg in msgs %}
@@ -15,6 +19,7 @@
             {% endif %}
 
              <br><br>
+
             {% if notificaations %}
                 {% for notification in notificaations %}
                     <span id="{{ notification.pk }}">
