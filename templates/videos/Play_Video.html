@@ -218,7 +218,7 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <div class="rightbar">
-        {% if videosList %}
+       {% if videosList %}
             {% for videos in videosList %}
                 <h1>{{ videos.0 }}</h1>
                 <div class="video-gallery">
@@ -248,59 +248,65 @@
                                     <img src="/static/images/Play.png" id="hitPlayImage"  alt=""
                                          data-toggle="tooltip" data-placement="right" title="Play Video">
                                 </a>
-
-                                <span id="duration">
-                                        {{ video.0.formatted_duration}}
-                                </span>
-
-                                <span class="video-item-info" >
-                                    <span style="float: right; cursor: pointer">
-                                        {% if user.is_authenticated and videos.0 != "Watch Later"%}
-                                            {% if video.1 %}
-                                                <img alt="unWatchLater" src="/static/images/WatchLater.png"
-                                                     onclick="return watchLater(this, {{ video.0.pk }})"
-                                                     data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
-                                            {% else %}
-                                                <img alt="watchLater" src="/static/images/Plus.png"
-                                                     onclick="return watchLater(this, {{ video.0.pk }})"
-                                                     data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span>
-
-                                    <span style="float: right; cursor: default">{{ video.0.likes}}</span>
-                                    <span style="float: right;"><img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes"></span>
-
-                                    <span style="float: right; cursor: default">{{ video.0.comments }}</span>
-                                    <span style="float: right;"><img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments"></span>
-
-                                    <span style="float: right; cursor: default">{{ video.0.views }}</span>
-                                    <span style="float: right;"><img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views"></span>
-                                </span>
                             </div>
 
-                            <div class="video-item-info">
+
+                            <span class="video-item-info">
+                                <span id="duration">
+                                    {{ video.0.formatted_duration}}
+                                </span>
+
+                                <span style="float: right; cursor: pointer; margin-right: 8px">
+                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
+                                        {% if video.1 %}
+                                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
+                                        {% else %}
+                                            <img alt="watchLater" src="/static/images/Plus.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+
+                                <span style="float: right; cursor: default">{{ video.0.likes}}</span>
+                                <span style="float: right;"><img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes"></span>
+
+                                <span style="float: right; cursor: default">{{ video.0.comments }}</span>
+                                <span style="float: right;"><img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments"></span>
+
+                                <span style="float: right; cursor: default">{{ video.0.views }}</span>
+                                <span style="float: right;"><img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views"></span>
+                            </span>
+
+                            <br><br>
+
+                            <span class="video-item-info">
                                 <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
                                     <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="padding-left: 5px">{{ video.0.title }}</a>
                                 </label>
+                                <br>
 
-                                <label data-toggle="tooltip" data-placement="right" title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
+                                <label data-toggle="tooltip" class="video-item-info-label" data-placement="right"
+                                       title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
                                     <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
-                                        <img src="/static/images/Author.png">
+                                        <img class="video-item-info-img" src="/static/images/Author.png">
                                         {{ video.0.author.lastName }} ({{ video.0.year }})
                                     </a>
                                 </label>
+                                <br>
 
                                 <label>
                                     <a href="{% url 'index' %}?customUser={{ video.0.user.username }}"
                                        data-toggle="tooltip" data-placement="right"
                                        title="Uploaded by {{ video.0.user.username }} at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}">
-                                        <img alt="" src="{{ video.0.user.profile.picture }}">
+                                        <img class="video-item-info-img" alt="" src="{{ video.0.user.profile.picture }}">
                                         {{ video.0.user.username }}
                                     </a>
                                     at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
                                 </label>
-                            </div>
+                            </span>
                         </div>
                     {% endfor %}
                 </div>
