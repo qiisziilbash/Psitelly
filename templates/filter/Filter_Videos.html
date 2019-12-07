@@ -6,13 +6,32 @@
         <form method="post" enctype="multipart/form-data" >
             {% csrf_token %}
             <div class="textContent">
-                <label style="width: 49%"> Title</label><br>
+                <label style="width: 49%"> Title</label>
+
+
+                <span style="width: 49%">
+                    <label class="radio-container">"And" Search
+                        <input type="radio" id="andSearch" name="searchType" value="and" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                </span>
+
+                <br>
+
                 <span class="effectWrapper" style="width: 49%">
                     <textarea rows="2" spellcheck="true" placeholder="Title " name="title"></textarea>
                     <span class="focus-border"></span>
                 </span>
 
-                <br><br><br><br><br>
+                <span style="width: 49%">
+                    <br>
+                    <label class="radio-container">"Or" Search
+                        <input type="radio" id="orSearch" name="searchType" value="or">
+                        <span class="checkmark"></span>
+                    </label>
+                </span>
+
+                <br><br><br>
 
                 <label style="width: 49%"> Author</label>
                 <label style="width: 49%"> Journal</label><br>
@@ -75,9 +94,11 @@
                 <br><br><br>
 
 
-                <input type="radio" id="andSearch" name="searchType" value="and" checked>"And" Search<br>
-                <input type="radio" id="orSearch" name="searchType" value="or"> "Or" Search<br>
-                <input type="checkbox" name="PisA" style="margin-left: 5px"> Publisher is the same as author<br>
+
+                <input type="checkbox" name="PisA" style="margin-left: 5px; display: none">
+                <span style="display: none">Publisher is the same as author</span>
+
+
 
                 <button type="submit" id="filterBtn">Search</button>
                 <br><br>

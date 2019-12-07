@@ -85,36 +85,69 @@
                     <label style="width: 49%">When my followees upload a video</label>
                     <label style="width: 49%">When someone comment on my videos</label>
 
-                    <span class="effectWrapper" style="width: 49%">
-                        {% if user.profile.notifyUploads and user.profile.emailUploads %}
-                            <input type="checkbox" name="notifyUploads" checked> Notify me here<br>
-                            <input type="checkbox" name="emailUploads" checked> Notify me through email<br>
-                        {% elif user.profile.notifyUploads %}
-                            <input type="checkbox" name="notifyUploads" checked> Notify me here<br>
-                            <input type="checkbox" name="emailUploads"> Notify me through email<br>
-                        {% elif user.profile.emailUploads %}
-                            <input type="checkbox" name="notifyUploads"> Notify me here<br>
-                            <input type="checkbox" name="emailUploads"checked> Notify me through email<br>
+                    <span class="effectWrapper" style="width: 45%; margin-left: 1%">
+                        <br>
+                        {% if user.profile.notifyUploads %}
+                             <label class="check-container"> Notify me here
+                              <input type="checkbox" name="notifyUploads" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% else %}
-                            <input type="checkbox" name="notifyUploads"> Notify me here<br>
-                            <input type="checkbox" name="emailUploads"> Notify me through email<br>
+                             <label class="check-container"> Notify me here
+                              <input type="checkbox" name="notifyUploads">
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% endif %}
                     </span>
-                    <span class="effectWrapper" style="width: 49%">
-                        {% if user.profile.notifyComments and user.profile.emailComments %}
-                            <input type="checkbox" name="notifyComments" checked> Notify me here<br>
-                            <input type="checkbox" name="emailComments" checked> Notify me through email<br>
-                        {% elif user.profile.notifyComments %}
-                            <input type="checkbox" name="notifyComments" checked> Notify me here<br>
-                            <input type="checkbox" name="emailComments" > Notify me through email<br>
-                        {% elif user.profile.emailComments %}
-                            <input type="checkbox" name="notifyComments" > Notify me here<br>
-                            <input type="checkbox" name="emailComments" checked> Notify me through email<br>
+
+                    <span class="effectWrapper" style="width: 45%; margin-left: 4%">
+                        <br>
+                        {% if user.profile.notifyComments %}
+                            <label class="check-container">Notify me here
+                              <input type="checkbox" name="notifyComments" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% else %}
-                            <input type="checkbox" name="notifyComments" > Notify me here<br>
-                            <input type="checkbox" name="emailComments" > Notify me through email<br>
+                            <label class="check-container">Notify me here
+                              <input type="checkbox" name="notifyComments">
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% endif %}
                     </span>
+
+                    <br><br>
+
+                    <span class="effectWrapper" style="width: 45%;margin-left: 1%">
+                        <br>
+                        {% if user.profile.emailUploads %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailUploads" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% else %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailUploads">
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% endif %}
+                    </span>
+
+                    <span class="effectWrapper" style="width: 45%;margin-left: 4%">
+                        <br>
+                        {% if user.profile.emailComments %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailComments" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% else  %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailComments" >
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% endif %}
+                    </span>
+
+
 
                     <br><br><br><br>
 
@@ -122,38 +155,73 @@
                     <label style="width: 49%">When someone starts to follow me</label>
                     <label style="width: 49%">When someone mentions me on a post or comment</label>
 
-                    <span class="effectWrapper" style="width: 49%">
-                        {% if user.profile.notifyFollows and user.profile.emailFollows %}
-                            <input type="checkbox" name="notifyFollows" checked> Notify me here<br>
-                            <input type="checkbox" name="emailFollows" checked> Notify me through email<br>
-                        {% elif user.profile.notifyFollows %}
-                            <input type="checkbox" name="notifyFollows" checked> Notify me here<br>
-                            <input type="checkbox" name="emailFollows" > Notify me through email<br>
-                        {% elif user.profile.emailFollows %}
-                            <input type="checkbox" name="notifyFollows" > Notify me here<br>
-                            <input type="checkbox" name="emailFollows"  checked> Notify me through email<br>
+                    <span class="effectWrapper" style="width: 45%; margin-left: 1%">
+                        <br>
+                        {% if user.profile.notifyFollows %}
+                             <label class="check-container"> Notify me here
+                              <input type="checkbox" name="notifyFollows" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% else %}
-                            <input type="checkbox" name="notifyFollows" > Notify me here<br>
-                            <input type="checkbox" name="emailFollows" > Notify me through email<br>
-                        {% endif %}
-                    </span>
-                    <span class="effectWrapper" style="width: 49%">
-                         {% if user.profile.notifyMentions and user.profile.emailMentions %}
-                           <input type="checkbox" name="notifyMentions"  checked> Notify me here<br>
-                            <input type="checkbox" name="emailMentions"  checked> Notify me through email<br>
-                        {% elif user.profile.notifyMentions %}
-                            <input type="checkbox" name="notifyMentions"  checked> Notify me here<br>
-                            <input type="checkbox" name="emailMentions"  > Notify me through email<br>
-                        {% elif user.profile.emailMentions %}
-                            <input type="checkbox" name="notifyMentions" > Notify me here<br>
-                            <input type="checkbox" name="emailMentions" checked> Notify me through email<br>
-                        {% else %}
-                            <input type="checkbox" name="notifyMentions" > Notify me here<br>
-                            <input type="checkbox" name="emailMentions" > Notify me through email<br>
+                             <label class="check-container"> Notify me here
+                              <input type="checkbox" name="notifyFollows">
+                              <span class="check-checkmark"></span>
+                            </label>
                         {% endif %}
                     </span>
 
+                    <span class="effectWrapper" style="width: 45%; margin-left: 4%">
+                        <br>
+                        {% if user.profile.notifyMentions %}
+                            <label class="check-container">Notify me here
+                              <input type="checkbox" name="notifyMentions" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% else %}
+                            <label class="check-container">Notify me here
+                              <input type="checkbox" name="notifyMentions">
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% endif %}
+                    </span>
+
+                    <br><br>
+
+                    <span class="effectWrapper" style="width: 45%;margin-left: 1%">
+                        <br>
+                        {% if user.profile.emailFollows%}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailFollows" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% else %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailFollows">
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% endif %}
+                    </span>
+
+                    <span class="effectWrapper" style="width: 45%;margin-left: 4%">
+                        <br>
+                        {% if user.profile.emailMentions %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailMentions" checked>
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% else  %}
+                            <label class="check-container">Notify me through email
+                              <input type="checkbox" name="emailMentions" >
+                              <span class="check-checkmark"></span>
+                            </label>
+                        {% endif %}
+                    </span>
+
+
+
                     <br><br><br><br><br>
+
+
 
                     <button type="submit" name="save">Save</button>
                     <button type="submit" name="cancel" formnovalidate>Cancel</button>
