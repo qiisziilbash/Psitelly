@@ -149,6 +149,7 @@ h1{
     display: grid;
     grid-template-rows: repeat(auto-fill,700px);
     overflow-y: scroll;
+    border-radius: 0 !important;
 }
 
 .rightbar{
@@ -188,6 +189,7 @@ h1{
     grid-area: content;
     background-color: var(--backgroundColor1);
     object-fit: fill;
+    border-radius: 0 !important;
 }
 
 .textContent{
