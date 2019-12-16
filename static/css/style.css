@@ -163,10 +163,16 @@ h1{
     height: 60px;
 }
 
-.filter img, .profile img, .upload img, .donate img, .dashboard-compact img{
+.filter img, .profile img, .upload img, .donate img{
     width: var(--optionsIconWidth);
     height: var(--optionsIconHeight);
     border-radius: 50%;
+}
+
+.dashboard-compact img{
+        width: var(--optionsIconWidth);
+    height: var(--optionsIconHeight);
+    border-radius: 10%;
 }
 
 /********************************************************************************/

@@ -38,7 +38,7 @@
 
                 <div class="dashboard-compact">
                     <div class="nav-item-wrapper">
-                        <img src="/static/images/Filter.png" data-toggle="tooltip" data-placement="right" title="Dashboard"
+                        <img src="/static/images/Filter-2.png" data-toggle="tooltip" data-placement="right" title="Dashboard"
                         onclick="showMenu()">
                     </div>
                 </div>
@@ -99,11 +99,15 @@
                     </h2>
 
                     <span id="menu" style="display: inline">
-                        <h3>Dashboard
-                            <span id="dashboardExpand" style="float: right; display: none">
-                                <a href="javascript:void(0);" onclick="showDashboard()">☰</a>
-                            </span>
-                        </h3>
+
+                            <h3>Dashboard
+                                <span id="dashboardExpand" style="float: right; display: none">
+                                    <a href="javascript:void(0);" onclick="showDashboard()">
+                                    <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                    </a>
+                                </span>
+                            </h3>
+
 
                         <span id="dashboard" style="display: inline">
                             {% if user.is_authenticated %}
@@ -125,7 +129,9 @@
                         <h3>
                             Psitelly Links
                             <span id="linksExpand" style="float: right; display: none">
-                                <a href="javascript:void(0);" onclick="showLinks()">☰</a>
+                                 <a href="javascript:void(0);" onclick="showLinks()">
+                                <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                 </a>
                             </span>
                         </h3>
 
@@ -140,12 +146,16 @@
                         </span>
 
                         {% if Statistics %}
+
                             <h3>
                                 Psitelly Statistics
                                 <span id="statsExpand" style="float: right; display: none">
-                                    <a href="javascript:void(0);"  onclick="showStats()">☰</a>
+                                    <a href="javascript:void(0);"  onclick="showStats()">
+                                        <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                    </a>
                                 </span>
                             </h3>
+
                             <span id="stats" style="display: inline">
                                 <div class="textContent">
                                     <label>Members </label><label style="float: right">{{ usersCount }}</label><br>
@@ -165,9 +175,12 @@
                             <h3>
                                 Recent News
                                 <span id="newsExpand" style="float: right;display: none">
-                                    <a href="javascript:void(0);" onclick="showNews()">☰</a>
+                                    <a href="javascript:void(0);" onclick="showNews()">
+                                        <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                    </a>
                                 </span>
                             </h3>
+
 
                             <span id="newss" style="display: inline">
                                 {% for news in newses %}
