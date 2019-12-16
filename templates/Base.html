@@ -11,52 +11,68 @@
     </head>
 
     <body>
+        <div class="navbar">
+                <div class="logo">
+                    <div class="nav-item-wrapper">
+                        <a href="{% url 'index' %}">
+                            <img src="/static/images/LogoText.png" alt="" data-toggle="tooltip" data-placement="right" title="Home">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="search">
+                    <div class="nav-item-wrapper">
+                        <form method="GET" action="{% url 'index'%}">
+                            <input type="text" placeholder="Search an author, article, journal, topic, focus, or a username " name="search">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="filter">
+                    <div class="nav-item-wrapper">
+                        <a href="{% url 'filter' %}">
+                            <img src="/static/images/Filter.png" data-toggle="tooltip" data-placement="right" title="Advanced search">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="upload">
+                    <div class="nav-item-wrapper">
+                         <a href="{% url 'upload' %}">
+                            <img src="/static/images/Upload.png" data-toggle="tooltip" data-placement="right" title="Upload a video">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="donate">
+                    <div class="nav-item-wrapper">
+                        <a href="{%  url 'donate' %}">
+                            <img src="/static/images/Donation.png" data-toggle="tooltip" data-placement="right" title="Donation">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="profile">
+                    <div class="nav-item-wrapper">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}">
+                                <img src="{{ user.profile.picture }}" alt=" " data-toggle="tooltip" data-placement="right" title="Profile">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}">
+                                <img src="/static/images/Profile_.png" data-toggle="tooltip" data-placement="right" title="Not logged in">
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+        </div>
+
         {% if isIndex %}
             <div class="main-wrapper">
         {% else %}
             <div class="basic-wrapper">
         {% endif %}
-                <div class="logo">
-                    <a href="{% url 'index' %}">
-                        <img src="/static/images/LogoText.png" alt="" data-toggle="tooltip" data-placement="right" title="Home">
-                    </a>
-                </div>
-
-                <div class="search">
-                    <form method="GET" action="{% url 'index'%}">
-                        <input type="text" placeholder="Search an author, article, journal, topic, focus, or a username " name="search">
-                    </form>
-                </div>
-
-                <div class="filter">
-                    <a href="{% url 'filter' %}">
-                        <img src="/static/images/Filter.png" data-toggle="tooltip" data-placement="right" title="Advanced search">
-                    </a>
-                </div>
-
-                <div class="upload">
-                    <a href="{% url 'upload' %}">
-                        <img src="/static/images/Upload.png" data-toggle="tooltip" data-placement="right" title="Upload a video">
-                    </a>
-                </div>
-
-                <div class="donate">
-                    <a href="{%  url 'donate' %}">
-                        <img src="/static/images/Donation.png" data-toggle="tooltip" data-placement="right" title="Donation">
-                    </a>
-                </div>
-
-                <div class="profile">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'profile' %}">
-                            <img src="{{ user.profile.picture }}" alt=" " data-toggle="tooltip" data-placement="right" title="Profile">
-                        </a>
-                    {% else %}
-                        <a href="{% url 'login' %}">
-                            <img src="/static/images/Profile_.png" data-toggle="tooltip" data-placement="right" title="Not logged in">
-                        </a>
-                    {% endif %}
-                </div>
 
                 <div class="sidebar">
                     <h2 id="menuTitle" style="display: none">
@@ -157,17 +173,7 @@
                 <!--------------------------------->
                 {% block content %}{% endblock %}
                 <!--------------------------------->
-                <div class="footline">
-                    <h3>
-                        Powered by
-                        <a href="https://www.linkedin.com/in/mahdishafiei0423/" target="_blank">Qiisziilbash</a> and
-                        <a href="https://www.djangoproject.com/" target="_blank">Django</a>  and hosted by
-                        <a href="http://usu.edu" target="_blank">Utah State University</a>
-                        <span style="float: right">
-                            February 2019
-                        </span>
-                    </h3>
-                </div>
+
             </div>
         <!--------------------------------->
         <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -253,7 +259,7 @@
 
         <script>
         function showNews() {
-            if (window.getComputedStyle(document.getElementById('news')).display === "none") {
+            if (window.getComputedStyle(document.getElementById('newss')).display === "none") {
                 document.getElementById("newss").style.display = "inline";
             } else {
                 document.getElementById("newss").style.display = "none";

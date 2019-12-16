@@ -1,7 +1,8 @@
 :root{
     --optionsIconWidth: 60px;
     --optionsIconHeight: 60px;
-    --logoIconWidth: 300px;
+
+    --logoIconWidth: 260px;
     --logoIconHeight: 60px;
 
     --backgroundColor1: gray;
@@ -9,6 +10,7 @@
     --backgroundColor3: white;
     --backgroundColor4: green;
     --backgroundColor5: black ;
+    --backgroundColor6: #787878;
 
     --animationTime: .6s;
 
@@ -20,6 +22,12 @@
 
     --border-radius1: 5px;
     --border-radius2: 10px;
+
+    --fixed-hieght1: 95px;
+    --fixed-hieght2: 100px;
+
+    --top-offset: 100px;
+    --top-offset1: 300px ;
 }
 
 @font-face {
@@ -33,7 +41,8 @@
 	outline: none;
     font-family: var(--font1);
 }
-body::-webkit-scrollbar { width: 0 !important}
+
+*::-webkit-scrollbar { width: 0 !important}
 
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -51,7 +60,10 @@ body::-webkit-scrollbar { width: 0 !important}
 
 a{text-decoration: none;}
 
-body{background: black;}
+body{
+    background: black;
+    margin: 0;
+}
 
 button::-moz-focus-inner {border: 0;}
 
@@ -79,54 +91,61 @@ h1{
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
-.search {
-    grid-area: search;
-    display: grid;
-    background-color: var(--backgroundColor1);
-    grid-template-columns: 1fr;
+.nav-item-wrapper{
+    background-color: var(--backgroundColor2);
+    border-radius: var(--border-radius2);
+    padding: 10px;
+    height: 80px;
 }
-
+/********************************************************************************/
+/********************************************************************************/
+/********************************************************************************/
+.search{
+    grid-area: search;
+}
 .search input{
     font-size: var(--fontSize3);
-    border-radius: var(--border-radius2);
+    border-radius: var(--border-radius1);
     padding: 1em;
-    background-color: var(--backgroundColor2);
+
+    background-color: white;
     border: none;
     border-bottom: 2px solid var(--backgroundColor5);
     height: 100%;
     width: 100%;
 }
-/********************************************************************************/
-/********************************************************************************/
-/********************************************************************************/
+
 .logo{
     grid-area: logo;
-}
-
-.logo img{
-    width: var(--logoIconWidth);
-    height: var(--logoIconHeight);
-}
-
-.donate{
-    grid-area: donate;
-}
-
-.upload{
-    grid-area: upload;
-}
-
-.profile{
-    grid-area: profile;
 }
 
 .filter{
     grid-area: filter;
 }
 
-.filter, .profile, .upload, .donate, .logo{
-    background-color: var(--backgroundColor1);
+.upload{
+    grid-area: upload;
+}
+
+.donate{
+    grid-area: donate;
+}
+
+.profile{
+    grid-area: profile;
+}
+
+.logo, .search, .filter, .upload, .donate, .profile{
+    background-color: var(--backgroundColor6);
+    height: var(--fixed-hieght1);
+    border-bottom: 2px solid black;
+    padding: 5px;
     text-align: center;
+}
+
+.logo img{
+    width: var(--logoIconWidth);
+    height: var(--logoIconHeight);
 }
 
 .filter img, .profile img, .upload img, .donate img{
@@ -135,24 +154,24 @@ h1{
     border-radius: 50%;
 }
 
-.footline{
-    grid-area: footline;
-    background-color: var(--backgroundColor1);
-    text-align: left;
-}
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
 .sidebar {
     grid-area: sidebar;
+    overflow-y: scroll;
+    border-right: 2px solid black;
+    padding: 5px;
 }
 
 .rightbar{
     grid-area: rightbar;
+    border-left: 2px solid black;
 }
 
 .sidebar, .rightbar{
-    background-color: var(--backgroundColor1);
+    background-color: var(--backgroundColor6);
+    padding-top: var(--top-offset) !important;
 }
 
 .sidebar ul, .rightbar ul{
@@ -182,7 +201,10 @@ h1{
 .content {
     grid-area: content;
     background-color: var(--backgroundColor1);
-    object-fit: fill;
+    overflow-y: scroll;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: var(--top-offset) !important;
 }
 
 .textContent{
@@ -309,6 +331,7 @@ h1{
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
+    border-radius: var(--border-radius1);
     grid-template-columns: repeat(auto-fill, minmax(330px,1fr));
 }
 
@@ -579,16 +602,16 @@ h1{
 /********************************************************************************/
 /********************************************************************************/
 .check-container {
-  display: block;
-  position: relative;
-  padding-left: 25px;
-  cursor: pointer;
-  font-size: 14px;
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    font-size: 14px;
     font-weight: normal !important;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
@@ -700,78 +723,88 @@ h1{
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
+.navbar{
+    position: fixed;
+    width: 100%;
+    height: 95px;
+    z-index: 4;
+
+    background-color: var(--backgroundColor6);
+
+    display: grid;
+    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
+
+    grid-template-areas:
+        "logo search filter upload  donate profile"
+}
+
+/********************************************************************************/
+/********************************************************************************/
+
 .main-wrapper div, .basic-wrapper div {
-    border-radius: 10px;
-    padding:10px;
+    padding:5px;
 }
 
 .main-wrapper {
     background-color: black;
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto minmax(85vh, 1fr) auto;
-
+    grid-template-columns: minmax(290px, 3fr) 16fr;
+    grid-template-rows: 100vh;
     grid-template-areas:
-        "logo search filter upload donate   profile"
-        "sidebar content content content content content"
-        "footline footline footline footline footline footline";
+        "sidebar content"
 }
 
 
 .basic-wrapper{
     background-color: black;
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto minmax(85vh,1fr) auto;
+    grid-template-columns: minmax(290px, 3fr) 12fr minmax(360px, 4fr) ;
+    grid-template-rows: 100vh;
     grid-template-areas:
-        "logo search filter upload donate   profile"
-        "sidebar content rightbar rightbar rightbar rightbar"
-        "footline footline footline footline footline footline";
+        "sidebar content rightbar"
 }
 
 
 
 @media only screen and (max-width: 1100px) {
-    .main-wrapper {
+    .navbar{
+        position: fixed;
+        width: 100%;
+        height: 285px;
+        z-index: 4;
+
+        background-color: var(--backgroundColor6);
+
+        display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: auto auto auto auto minmax(85vh,1fr) auto;
+        grid-auto-rows: 95px 95px 95px;
+
         grid-template-areas:
             "logo logo logo logo"
-            "filter upload donate   profile"
+            "filter upload donate profile"
             "search search search search"
+    }
+
+    .content, .rightbar{
+            padding-top: 0 !important;
+    }
+    .sidebar{
+        padding-top: 300px !important;
+    }
+
+
+    .main-wrapper {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows:  auto minmax(100vh,1fr);
+        grid-template-areas:
             "sidebar sidebar sidebar sidebar"
             "content content content content"
-            "footline footline footline footline"
     }
-}
-
-
-
-@media only screen and (max-width: 1500px){
-    .basic-wrapper{
-    background-color: black;
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 3fr 12fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto minmax(85vh,1fr) auto;
-    grid-template-areas:
-        "logo search filter upload donate   profile"
-        "sidebar content content content content content"
-        "rightbar rightbar rightbar rightbar rightbar rightbar"
-        "footline footline footline footline footline footline";
-    }
-}
-
-
-@media only screen and (max-width: 1100px){
     .basic-wrapper{
         background-color: black;
         display: grid;
-        grid-gap: 10px;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: auto auto auto auto minmax(55vh,1fr) auto auto;
+        grid-template-rows: auto auto auto auto minmax(55vh,1fr) auto;
         grid-template-areas:
                 "logo logo logo logo"
                 "filter upload donate profile"
@@ -779,9 +812,20 @@ h1{
                 "sidebar sidebar sidebar sidebar"
                 "content content content content"
                 "rightbar rightbar rightbar rightbar"
-                "footline footline footline footline"
+    }
+    .sidebar{
+        border-right: none;
+        border-bottom: 2px solid black;
+    }
+    .rightbar{
+        border-left: none;
+        border-top: 2px solid black;
     }
 }
+
+
+
+
 
 
 
