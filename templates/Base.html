@@ -20,6 +20,14 @@
                     </div>
                 </div>
 
+                <div class="logo-impact">
+                    <div class="nav-item-wrapper">
+                        <a href="{% url 'index' %}">
+                            <img src="/static/images/Logo.png" alt="" data-toggle="tooltip" data-placement="right" title="Home">
+                        </a>
+                    </div>
+                </div>
+
                 <div class="search">
                     <div class="nav-item-wrapper">
                         <form method="GET" action="{% url 'index'%}">
@@ -65,7 +73,6 @@
                         {% endif %}
                     </div>
                 </div>
-
         </div>
 
         {% if isIndex %}
