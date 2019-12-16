@@ -119,8 +119,13 @@ h1{
     grid-area: logo;
 }
 
-.logo-impact{
-    grid-area: logo-impact;
+.logo-compact{
+    grid-area: logo-compact;
+    display: none;
+}
+
+.dashboard-compact{
+    grid-area: dashboard-compact;
     display: none;
 }
 
@@ -140,7 +145,7 @@ h1{
     grid-area: profile;
 }
 
-.logo, .search, .filter, .upload, .donate, .profile, .logo-impact{
+.logo, .search, .filter, .upload, .donate, .profile, .logo-compact, .dashboard-compact{
     background-color: var(--backgroundColor6);
     height: var(--fixed-hieght1);
     border-bottom: 2px solid black;
@@ -153,12 +158,12 @@ h1{
     height: var(--logoIconHeight);
 }
 
-.logo-impact img{
+.logo-compact img{
     width: 100px;
     height: 60px;
 }
 
-.filter img, .profile img, .upload img, .donate img{
+.filter img, .profile img, .upload img, .donate img, .dashboard-compact img{
     width: var(--optionsIconWidth);
     height: var(--optionsIconHeight);
     border-radius: 50%;
@@ -780,7 +785,10 @@ h1{
     .logo{
         display: none;
     }
-    .logo-impact{
+    .logo-compact{
+        display: inline;
+    }
+    .dashboard-compact{
         display: inline;
     }
     .navbar{
@@ -796,15 +804,15 @@ h1{
         grid-auto-rows: 95px 95px;
 
         grid-template-areas:
-            "logo-impact filter upload donate profile"
-            "search search search search search"
+            "logo-compact filter upload donate profile"
+            "search search search search dashboard-compact"
     }
 
     .content, .rightbar{
-            padding-top: 0 !important;
+            padding-top: 10px !important;
     }
     .sidebar{
-        padding-top: 200px !important;
+        padding-top: 160px !important;
     }
 
 

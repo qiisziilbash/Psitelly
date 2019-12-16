@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="logo-impact">
+                <div class="logo-compact">
                     <div class="nav-item-wrapper">
                         <a href="{% url 'index' %}">
                             <img src="/static/images/Logo.png" alt="" data-toggle="tooltip" data-placement="right" title="Home">
@@ -33,6 +33,13 @@
                         <form method="GET" action="{% url 'index'%}">
                             <input type="text" placeholder="Search an author, article, journal, topic, focus, or a username " name="search">
                         </form>
+                    </div>
+                </div>
+
+                <div class="dashboard-compact">
+                    <div class="nav-item-wrapper">
+                        <img src="/static/images/Filter.png" data-toggle="tooltip" data-placement="right" title="Dashboard"
+                        onclick="showMenu()">
                     </div>
                 </div>
 
@@ -226,10 +233,16 @@
 
         <script>
             function showMenu() {
-                if (window.getComputedStyle(document.getElementById('menu')).display === "none") {
+                if($(document).scrollTop() === 0){
+                    if (window.getComputedStyle(document.getElementById('menu')).display === "none") {
                         document.getElementById("menu").style.display = "inline";
-                } else {
-                        document.getElementById("menu").style.display = "none";
+
+                    } else {
+                            document.getElementById("menu").style.display = "none";
+                    }
+                }else{
+                    $("html, body").animate({ scrollTop: 0 }, "slow");
+                    document.getElementById("menu").style.display = "inline";
                 }
             }
         </script>
