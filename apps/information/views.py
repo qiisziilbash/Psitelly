@@ -4,6 +4,7 @@ from urllib.request import Request
 import json
 
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from Psitelly import settings
@@ -23,6 +24,43 @@ def donate(request):
                    'focusCount': Focus.objects.filter().count(),
                    }
         return render(request, 'information/Donate.html', context)
+
+
+def tag_cloud(request):
+    if request.method == "GET":
+        context = {'newses': News.objects.order_by('-time')[:5],
+                   'Statistics': True,
+                   'usersCount': User.objects.filter().count(),
+                   'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
+                   }
+
+        return render(request, 'information/Tag_Cloud.html', context)
+
+
+def get_tags(request):
+    tags_dict = {}
+    tags = []
+    videos = Video.objects.all()
+
+    for video in videos:
+        for tag in video.tags.all():
+            if tag.name[-2] == '@' or tag.name[-2] == '#' or tag.name[-2] == '$':
+                tag_name = tag.name[0:-2]
+            else:
+                tag_name = tag.name
+            if tag_name in tags_dict:
+                tags_dict[tag_name] = tags_dict[tag_name]+1
+            else:
+                tags_dict[tag_name] = 1
+
+    for tag in tags_dict:
+        tags.append({"tag": tag, 'count': tags_dict[tag]})
+
+    return JsonResponse(tags, safe=False)
 
 
 def contact(request):
