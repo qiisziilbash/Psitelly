@@ -803,7 +803,7 @@ h1{
         height: 190px;
         z-index: 4;
 
-        background-color: var(--backgroundColor6);
+        background-color: var(--backgroundColor4);
 
         display: grid;
         grid-template-columns: 15fr 10fr 10fr 10fr 10fr;
@@ -818,7 +818,7 @@ h1{
             padding-top: 10px !important;
     }
     .sidebar{
-        padding-top: 160px !important;
+        padding-top: 185px !important;
     }
 
 
