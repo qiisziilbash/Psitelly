@@ -2,6 +2,7 @@
 
 
 {% block content%}
+
     <div class="content">
 
     <div id="chartdiv"></div>
@@ -10,10 +11,16 @@
     </div>
 
     <div class="rightbar">
-        <h3>Notes</h3>
-        <div class="textContent">
-            If you have any technical problem to contact us, email directly to this address: psitelly@gmail.com
-        </div>
+        <ul>
+            <a href="{% url 'tagCloud' %}?type=general"><input type="button" value="Popular keywords at Psitelly"></a><br>
+        </ul>
+        <h3>Popular keywords by categories</h3>
+        <ul>
+            <a href="{% url 'tagCloud' %}?type=journals"><input type="button" value="Popular Journals"></a><br>
+            <a href="{% url 'tagCloud' %}?type=topics"><input type="button" value="Popular Topics"></a><br>
+            <a href="{% url 'tagCloud' %}?type=focuses"><input type="button" value="Popular Focuses"></a><br>
+            <a href="{% url 'tagCloud' %}?type=authors"><input type="button" value="Popular Authors"></a><br>
+        </ul>
     </div>
 
 {% endblock %}
@@ -42,7 +49,7 @@
     $.ajax({
       type: "GET",
       url:'/ajax/getTags/',
-      data: {'videoPK': 'jj'},
+      data: {'type': "{{tag_cloud_ype}}" },
       dataType: 'json',
 
       success: function (data) {
@@ -71,7 +78,18 @@
 
 
     var title = chart.titles.create();
-    title.text = "Most Popular Keywords at Psitelly";
+    if("{{ tag_cloud_ype }}" === "general"){
+        title.text = "Most Popular Keywords at Psitelly";
+    }else if("{{ tag_cloud_ype }}" === "journals"){
+        title.text = "Most Popular Journals at Psitelly";
+    }else if("{{ tag_cloud_ype }}" === "topics"){
+        title.text = "Most Popular Topics at Psitelly";
+    }else if("{{ tag_cloud_ype }}" === "authors"){
+        title.text = "Most Popular Authors at Psitelly";
+    }else{
+        title.text = "Most Popular Focuses at Psitelly";
+    }
+
     title.fontSize = 20;
     title.fontWeight = "800";
 

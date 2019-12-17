@@ -36,26 +36,65 @@ def tag_cloud(request):
                    'authorCount': Author.objects.filter().count(),
                    'topicCount': Topic.objects.filter().count(),
                    'focusCount': Focus.objects.filter().count(),
+                   'tag_cloud_ype': request.GET.get('type', 'general')
                    }
 
         return render(request, 'information/Tag_Cloud.html', context)
 
 
 def get_tags(request):
+    type = request.GET.get('type', 'general')
     tags_dict = {}
     tags = []
     videos = Video.objects.all()
 
-    for video in videos:
-        for tag in video.tags.all():
-            if tag.name[-2] == '@' or tag.name[-2] == '#' or tag.name[-2] == '$':
-                tag_name = tag.name[0:-2]
-            else:
-                tag_name = tag.name
-            if tag_name in tags_dict:
-                tags_dict[tag_name] = tags_dict[tag_name]+1
-            else:
-                tags_dict[tag_name] = 1
+    if type == 'authors':
+        for video in videos:
+            for tag in video.tags.all():
+                if tag.name[-2:] == '#a' or tag.name[-2:] == '@a':
+                    tag_name = tag.name[0:-2]
+                    if tag_name in tags_dict:
+                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    else:
+                        tags_dict[tag_name] = 1
+    elif type == 'journals':
+        for video in videos:
+            for tag in video.tags.all():
+                if tag.name[-2:] == '#j':
+                    tag_name = tag.name[0:-2]
+                    if tag_name in tags_dict:
+                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    else:
+                        tags_dict[tag_name] = 1
+    elif type == 'focuses':
+        for video in videos:
+            for tag in video.tags.all():
+                if tag.name[-2:] == '#f':
+                    tag_name = tag.name[0:-2]
+                    if tag_name in tags_dict:
+                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    else:
+                        tags_dict[tag_name] = 1
+    elif type == 'topics':
+        for video in videos:
+            for tag in video.tags.all():
+                if tag.name[-2:] == '#t' or tag.name[-2:] == '@t' or tag.name[-2:] == '$t':
+                    tag_name = tag.name[0:-2]
+                    if tag_name in tags_dict:
+                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    else:
+                        tags_dict[tag_name] = 1
+    else:
+        for video in videos:
+            for tag in video.tags.all():
+                if tag.name[-2] == '@' or tag.name[-2] == '#' or tag.name[-2] == '$':
+                    tag_name = tag.name[0:-2]
+                else:
+                    tag_name = tag.name
+                if tag_name in tags_dict:
+                    tags_dict[tag_name] = tags_dict[tag_name] + 1
+                else:
+                    tags_dict[tag_name] = 1
 
     for tag in tags_dict:
         tags.append({"tag": tag, 'count': tags_dict[tag]})
