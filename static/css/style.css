@@ -46,12 +46,16 @@
 
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #67605b;
-  opacity: 1; /* Firefox */
+    color: #67605b;
+    opacity: 1; /* Firefox */
+    text-overflow: ellipsis !important;
+
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
   color: #67605b;
+
+
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
@@ -818,7 +822,7 @@ h1{
             padding-top: 10px !important;
     }
     .sidebar{
-        padding-top: 185px !important;
+        padding-top: 183px !important;
     }
 
 
