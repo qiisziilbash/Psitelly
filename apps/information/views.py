@@ -57,6 +57,7 @@ def get_tags(request):
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
                     else:
                         tags_dict[tag_name] = 1
+                    break
     elif type == 'journals':
         for video in videos:
             for tag in video.tags.all():
@@ -66,6 +67,7 @@ def get_tags(request):
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
                     else:
                         tags_dict[tag_name] = 1
+
     elif type == 'focuses':
         for video in videos:
             for tag in video.tags.all():
@@ -84,6 +86,7 @@ def get_tags(request):
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
                     else:
                         tags_dict[tag_name] = 1
+                    break
     else:
         for video in videos:
             for tag in video.tags.all():
