@@ -1,71 +1,11 @@
 {% extends "Base.html" %}
 
-{% block head %}
-    <!-- Resources -->
-<script src="https://www.amcharts.com/lib/4/core.js"></script>
-<script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-var chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
-chart.fontFamily = "Courier New";
-var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
-series.randomness = .1;
-series.rotationThreshold = 0.5;
-
-$.ajax({
-  type: "GET",
-  url:'/ajax/getTags/',
-  data: {'videoPK': 'jj'},
-  dataType: 'json',
-
-  success: function (data) {
-    series.data = data;
-  }
-});
-
-
-series.dataFields.word = "tag";
-series.dataFields.value = "count";
-
-series.heatRules.push({
- "target": series.labels.template,
- "property": "fill",
- "min": am4core.color("#0000CC"),
- "max": am4core.color("#b7284f"),
- "dataField": "value"
-});
-
-series.labels.template.url = "https://stackoverflow.com/questions/tagged/{word}";
-series.labels.template.urlTarget = "_blank";
-series.labels.template.tooltipText = "{word}: {value}";
-
-var hoverState = series.labels.template.states.create("hover");
-hoverState.properties.fill = am4core.color("#FF0000");
-
-
-var title = chart.titles.create();
-title.text = "Most Popular Keywords at Psitelly";
-title.fontSize = 20;
-title.fontWeight = "800";
-
-}); // end am4core.ready()
-</script>
-{% endblock%}
 
 {% block content%}
     <div class="content">
 
     <div id="chartdiv"></div>
-    Created by amCharts
+    Powered by amCharts
 
     </div>
 
@@ -79,26 +19,63 @@ title.fontWeight = "800";
 {% endblock %}
 
 {% block scripts %}
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- Chart code -->
     <script>
-    function checkCaptcha() {
+    am4core.ready(function() {
 
-        if (document.getElementById('smartQ').value === "8") {
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
 
-        } else if( document.getElementById('smartQ').value === "eight") {
+    var chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
+    chart.fontFamily = "Courier New";
+    var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+    series.randomness = .1;
+    series.rotationThreshold = 0.5;
 
-        } else if(document.getElementById('smartQ').value === "Eight") {
+    $.ajax({
+      type: "GET",
+      url:'/ajax/getTags/',
+      data: {'videoPK': 'jj'},
+      dataType: 'json',
 
-        }else{
-            alert("Please check your answer for the last question and try again.");
-            return false;
-        }
+      success: function (data) {
+        series.data = data;
+      }
+    });
 
-        if (grecaptcha.getResponse() === '') {
-          alert('Please check the recaptcha');
-          return false;
-        }
-    }
+
+    series.dataFields.word = "tag";
+    series.dataFields.value = "count";
+
+    series.heatRules.push({
+     "target": series.labels.template,
+     "property": "fill",
+     "min": am4core.color("#0000CC"),
+     "max": am4core.color("#b7284f"),
+     "dataField": "value"
+    });
+
+    series.labels.template.url = "http://psitelly.com/?search={word}";
+    series.labels.template.urlTarget = "_blank";
+    series.labels.template.tooltipText = "{word}: {value}";
+
+    var hoverState = series.labels.template.states.create("hover");
+    hoverState.properties.fill = am4core.color("#FF0000");
+
+
+    var title = chart.titles.create();
+    title.text = "Most Popular Keywords at Psitelly";
+    title.fontSize = 20;
+    title.fontWeight = "800";
+
+    });
     </script>
 {% endblock %}
 
