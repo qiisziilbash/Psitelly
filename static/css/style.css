@@ -512,7 +512,9 @@ h1{
 
 .indentedComments{
     background-color: var(--backgroundColor2);
-    margin-left: 10px;
+    margin-left: 30px;
+    padding-left: 20px !important;
+    border-radius: var(--border-radius2);
 }
 /********************************************************************************/
 /********************************************************************************/
