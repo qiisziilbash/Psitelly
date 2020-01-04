@@ -7,31 +7,33 @@
             {% csrf_token %}
             <div class="textContent">
                 <label style="width: 49%"> Title</label>
-
-
-                <span style="width: 49%">
-                    <label class="radio-container">"And" Search
-                        <input type="radio" id="andSearch" name="searchType" value="and" checked>
-                        <span class="checkmark"></span>
-                    </label>
-                </span>
+                <label style="width: 49%"> Search Type</label>
 
                 <br>
 
                 <span class="effectWrapper" style="width: 49%">
-                    <textarea rows="2" spellcheck="true" placeholder="Title " name="title"></textarea>
+                    <textarea rows="3" spellcheck="true" placeholder="Title " name="title"></textarea>
                     <span class="focus-border"></span>
                 </span>
 
+             <br>
                 <span style="width: 49%">
+                    <label class="radio-container" style="margin-left: 1%">"And" Search
+                        <input type="radio" id="andSearch" name="searchType" value="and" checked>
+                        <span class="radio-checkmark"></span>
+                    </label>
+                </span>
+                <br>
+
+                <span style="width: 49%; margin-left: 5% ">
                     <br>
-                    <label class="radio-container">"Or" Search
+                    <label class="radio-container" style="margin-left: 1%">"Or" Search
                         <input type="radio" id="orSearch" name="searchType" value="or">
-                        <span class="checkmark"></span>
+                        <span class="radio-checkmark"></span>
                     </label>
                 </span>
 
-                <br><br><br>
+                <br><br>
 
                 <label style="width: 49%"> Author</label>
                 <label style="width: 49%"> Journal</label><br>
@@ -99,7 +101,7 @@
                 <span style="display: none">Publisher is the same as author</span>
 
 
-
+                <br>
                 <button type="submit" id="filterBtn">Search</button>
                 <br><br>
             </div>
