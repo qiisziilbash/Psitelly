@@ -128,27 +128,8 @@
                             {% endif %}
                         </span>
 
-                        <h3>
-                            Psitelly Links
-                            <span id="linksExpand" style="float: right; display: none">
-                                 <a href="javascript:void(0);" onclick="showLinks()">
-                                <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
-                                 </a>
-                            </span>
-                        </h3>
-
-                        <span id="links" style="display: inline">
-                            <ul>
-                                <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
-                                <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
-                                   target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
-                                <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
-                                   target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
-                            </ul>
-                        </span>
 
                         {% if Statistics %}
-
                             <h3>
                                 Psitelly Statistics
                                 <span id="statsExpand" style="float: right; display: none">
@@ -174,6 +155,26 @@
                                 </div>
                             </span>
                         {% endif %}
+
+                        <h3>
+                            Psitelly Links
+                            <span id="linksExpand" style="float: right; display: none">
+                                 <a href="javascript:void(0);" onclick="showLinks()">
+                                <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                 </a>
+                            </span>
+                        </h3>
+
+                        <span id="links" style="display: inline">
+                            <ul>
+                                <a href="{% url 'contact' %}"><input type="button" value="Contact us"></a>
+                                <a href="https://docs.google.com/document/d/1oE5tIvAMCzvtnFtx9TPyZYs290lvojkHjHP8RB8vUZY/edit?usp=sharing"
+                                   target="_blank"><input type="button" value="Quick guide for Psitelly (Google Doc)"></a>
+                                <a href="https://docs.google.com/document/d/1zNpqcffpTIE_VGCgQxNOGh53qSKXRDfy4i8DurXdUI4/edit?usp=sharing"
+                                   target="_blank"><input type="button" value="Quick guide for testers (Google Doc)"></a>
+                                <a href="{% url 'terms' %}"><input type="button" value="Terms of Service"></a>
+                            </ul>
+                        </span>
 
 
                         {% if newses %}

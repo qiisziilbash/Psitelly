@@ -50,7 +50,7 @@
     $.ajax({
       type: "GET",
       url:'/ajax/getTags/',
-      data: {'type': "{{tag_cloud_ype}}" },
+      data: {'type': "{{tag_cloud_type}}" },
       dataType: 'json',
 
       success: function (data) {
@@ -79,13 +79,13 @@
 
 
     var title = chart.titles.create();
-    if("{{ tag_cloud_ype }}" === "general"){
+    if("{{ tag_cloud_type }}" === "general"){
         title.text = "Most Popular Keywords at Psitelly";
-    }else if("{{ tag_cloud_ype }}" === "journals"){
+    }else if("{{ tag_cloud_type }}" === "journals"){
         title.text = "Most Popular Journals at Psitelly";
-    }else if("{{ tag_cloud_ype }}" === "topics"){
+    }else if("{{ tag_cloud_type }}" === "topics"){
         title.text = "Most Popular Topics at Psitelly";
-    }else if("{{ tag_cloud_ype }}" === "authors"){
+    }else if("{{ tag_cloud_type }}" === "authors"){
         title.text = "Most Popular Authors at Psitelly";
     }else{
         title.text = "Most Popular Focuses at Psitelly";
