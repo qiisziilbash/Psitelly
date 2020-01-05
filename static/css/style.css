@@ -173,9 +173,16 @@ h1{
 }
 
 .dashboard-compact img{
-        width: var(--optionsIconWidth);
+    width: var(--optionsIconWidth);
     height: var(--optionsIconHeight);
     border-radius: 10%;
+}
+
+.dashboard-compact-small{
+    width: 60px;
+    height: 45px;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
 /********************************************************************************/

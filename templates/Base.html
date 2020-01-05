@@ -102,14 +102,15 @@
 
                     <span id="menu" style="display: inline">
 
-                            <h3>Dashboard
-                                <span id="dashboardExpand" style="float: right; display: none">
-                                    <a href="javascript:void(0);" onclick="showDashboard()">
-                                    <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
-                                    </a>
-                                </span>
-                            </h3>
+                        <h3>Dashboard
+                            <span id="dashboardExpand" style="float: right; display: none">
+                                <a href="javascript:void(0);" onclick="showDashboard()">
+                                    <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
+                                </a>
+                            </span>
+                        </h3>
 
+                        <br>
 
                         <span id="dashboard" style="display: inline">
                             {% if user.is_authenticated %}
@@ -134,10 +135,12 @@
                                 Psitelly Statistics
                                 <span id="statsExpand" style="float: right; display: none">
                                     <a href="javascript:void(0);"  onclick="showStats()">
-                                        <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                        <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                     </a>
                                 </span>
                             </h3>
+
+                            <br>
 
                             <span id="stats" style="display: inline">
                                 <ul>
@@ -160,10 +163,12 @@
                             Psitelly Links
                             <span id="linksExpand" style="float: right; display: none">
                                  <a href="javascript:void(0);" onclick="showLinks()">
-                                <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                     <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                  </a>
                             </span>
                         </h3>
+
+                        <br>
 
                         <span id="links" style="display: inline">
                             <ul>
@@ -182,13 +187,14 @@
                                 Recent News
                                 <span id="newsExpand" style="float: right;display: none">
                                     <a href="javascript:void(0);" onclick="showNews()">
-                                        <img src="/static/images/Filter-2.png" style="width: 25px; height: 25px; border-radius: 20%">
+                                        <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                     </a>
                                 </span>
                             </h3>
 
 
                             <span id="newss" style="display: inline">
+                                <br>
                                 {% for news in newses %}
                                     <div class="textContent">
                                         <label><u>{{ news.title }}</u></label><br><br>
