@@ -102,15 +102,15 @@
 
                     <span id="menu" style="display: inline">
 
-                        <h3>Dashboard
+                        <h1>Dashboard
                             <span id="dashboardExpand" style="float: right; display: none">
                                 <a href="javascript:void(0);" onclick="showDashboard()">
                                     <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                 </a>
                             </span>
-                        </h3>
+                        </h1>
 
-                        <br>
+
 
                         <span id="dashboard" style="display: inline">
                             {% if user.is_authenticated %}
@@ -131,16 +131,14 @@
 
 
                         {% if Statistics %}
-                            <h3>
+                            <h1>
                                 Psitelly Statistics
                                 <span id="statsExpand" style="float: right; display: none">
                                     <a href="javascript:void(0);"  onclick="showStats()">
                                         <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                     </a>
                                 </span>
-                            </h3>
-
-                            <br>
+                            </h1>
 
                             <span id="stats" style="display: inline">
                                 <ul>
@@ -159,16 +157,15 @@
                             </span>
                         {% endif %}
 
-                        <h3>
+                        <h1>
                             Psitelly Links
                             <span id="linksExpand" style="float: right; display: none">
                                  <a href="javascript:void(0);" onclick="showLinks()">
                                      <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                  </a>
                             </span>
-                        </h3>
+                        </h1>
 
-                        <br>
 
                         <span id="links" style="display: inline">
                             <ul>
@@ -183,14 +180,14 @@
 
 
                         {% if newses %}
-                            <h3>
+                            <h1>
                                 Recent News
                                 <span id="newsExpand" style="float: right;display: none">
                                     <a href="javascript:void(0);" onclick="showNews()">
                                         <img src="/static/images/Filter-2.png" class="dashboard-compact-small">
                                     </a>
                                 </span>
-                            </h3>
+                            </h1>
 
 
                             <span id="newss" style="display: inline">
