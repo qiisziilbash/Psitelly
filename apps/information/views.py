@@ -36,7 +36,7 @@ def tag_cloud(request):
                    'authorCount': Author.objects.filter().count(),
                    'topicCount': Topic.objects.filter().count(),
                    'focusCount': Focus.objects.filter().count(),
-                   'tag_cloud_ype': request.GET.get('type', 'general')
+                   'tag_cloud_type': request.GET.get('type', 'general')
                    }
 
         return render(request, 'information/Tag_Cloud.html', context)
