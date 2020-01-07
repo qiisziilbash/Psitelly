@@ -45,7 +45,7 @@ def upload_video(request):
             videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
             thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
 
-            clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(720, None))
+            clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
             clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
 
             focus = request.POST.get('focus', '')
@@ -216,7 +216,7 @@ def edit_video(request):
                 videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
                 thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
 
-                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(720, None))
+                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
                 clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
 
                 video.videoFile = fs.url(videoName)
