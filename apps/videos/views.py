@@ -36,9 +36,9 @@ def upload_video(request):
         if 'videoFile' in request.FILES:
             myFile = request.FILES['videoFile']
 
-            fileName = os.path.splitext(myFile.name)[0]
+            fileName = 'Video'
             videoSuffix = os.path.splitext(myFile.name)[1]
-            randomSuffix = '_' + str(random.randint(1, 1000000))
+            randomSuffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
 
             fs = FileSystemStorage()
 
@@ -209,9 +209,9 @@ def edit_video(request):
 
                 myFile = request.FILES['videoFile']
 
-                fileName = os.path.splitext(myFile.name)[0]
+                fileName = 'Video'
                 videoSuffix = os.path.splitext(myFile.name)[1]
-                randomSuffix = '_' + str(random.randint(1, 1000000))
+                randomSuffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
 
                 videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
                 thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
