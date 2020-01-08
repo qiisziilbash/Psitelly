@@ -144,11 +144,14 @@ def increase_videos(sender, instance, created, **kwargs):
 def decrease_videos(sender, instance, *args, **kwargs):
     fs = FileSystemStorage()
 
-    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile.name))))
-    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile720.name))))
-    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile480.name))))
-    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile360.name))))
-    fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(instance.thumbnail.name))))
+    try:
+        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile.name))))
+        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile720.name))))
+        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile480.name))))
+        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile360.name))))
+        fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(instance.thumbnail.name))))
+    except:
+        pass
 
     instance.focus.nVideos -= 1
     instance.topic.nVideos -= 1

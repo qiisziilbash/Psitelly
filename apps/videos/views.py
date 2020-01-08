@@ -423,29 +423,26 @@ def create_different_video_qualities(video, randomSuffix, videoSuffix):
     fs = FileSystemStorage()
     error = False
 
-    try:
-        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                             target_resolution=(360, None))
-        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix,
-                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libfdk_aac')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(360, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix,
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libmp3lame')
 
-        video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
+    video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
 
-        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                             target_resolution=(480, None))
-        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix,
-                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libfdk_aac')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(480, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix,
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libmp3lame')
 
-        video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
+    video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
 
-        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                             target_resolution=(720, None))
-        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix,
-                             temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libfdk_aac')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(720, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix,
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp.mp3', codec='libx264', audio_codec='libmp3lame')
 
-        video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
-    except:
-        error = True
+    video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
 
     video.isProcessed = True
 
