@@ -1,6 +1,7 @@
 import random
 from urllib.parse import urlencode
 
+import moviepy.editor as mp
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -423,18 +424,24 @@ def create_different_video_qualities(video, randomSuffix, videoSuffix):
     fs = FileSystemStorage()
     error = False
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(360, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix, codec='libx264')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(360, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix, codec='libx264',
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
     video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(480, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix, codec='libx264')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(480, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix, codec='libx264',
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
     video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix, target_resolution=(720, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix, codec='libx264')
+    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
+                         target_resolution=(720, None))
+    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix, codec='libx264',
+                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
     video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
 
