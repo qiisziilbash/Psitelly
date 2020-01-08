@@ -30,7 +30,7 @@ def index(request):
 
         elif 'content' in request.GET and request.user.is_authenticated:
             if request.GET.get('content', '') == 'My Videos':
-                videos = Video.objects.filter(user=request.user)
+                videos = Video.objects.filter(user=request.user).order_by('-publishDate')
 
                 if videos:
                     context['videosList'] = zip(['My Videos'],
@@ -57,7 +57,7 @@ def index(request):
                 return render(request, 'filter/Index.html', context)
 
             if request.GET.get('content', '') == 'Watch History':
-                histories = WatchHistory.objects.filter(user=request.user, invisible=False)
+                histories = WatchHistory.objects.filter(user=request.user, invisible=False).order_by('-time')
 
                 videos = []
                 for item in histories:
@@ -72,7 +72,7 @@ def index(request):
                 return render(request, 'filter/Index.html', context)
 
             if request.GET.get('content', '') == 'Watch Later':
-                watchLaters = WatchLater.objects.filter(user=request.user)
+                watchLaters = WatchLater.objects.filter(user=request.user).order_by('-time')
 
                 videos = []
                 for item in watchLaters:
@@ -87,7 +87,7 @@ def index(request):
                 return render(request, 'filter/Index.html', context)
 
             if request.GET.get('content', '') == 'Followers':
-                followings = UserFollowing.objects.filter(followee=request.user.profile)
+                followings = UserFollowing.objects.filter(followee=request.user.profile).order_by('-time')
 
                 followeeProfiles = []
                 for following in followings:
@@ -102,7 +102,7 @@ def index(request):
                 return render(request, 'filter/Index.html', context)
 
             if request.GET.get('content', '') == 'Following':
-                followings = UserFollowing.objects.filter(follower=request.user.profile)
+                followings = UserFollowing.objects.filter(follower=request.user.profile).order_by('-time')
 
                 followingProfiles = []
                 for following in followings:
@@ -112,25 +112,25 @@ def index(request):
                 types = []
                 categories = []
 
-                followings = FocusFollowing.objects.filter(user=request.user)
+                followings = FocusFollowing.objects.filter(user=request.user).order_by('-time')
                 if followings:
                     for item in followings:
                         types.append('Focus')
                         categories.append(item.focus.title)
 
-                followings = JournalFollowing.objects.filter(user=request.user)
+                followings = JournalFollowing.objects.filter(user=request.user).order_by('-time')
                 if followings:
                     for item in followings:
                         types.append('Journal')
                         categories.append(item.journal.title)
 
-                followings = TopicFollowing.objects.filter(user=request.user)
+                followings = TopicFollowing.objects.filter(user=request.user).order_by('-time')
                 if followings:
                     for item in followings:
                         types.append('Topic')
                         categories.append(item.topic.title)
 
-                followings = AuthorFollowing.objects.filter(user=request.user)
+                followings = AuthorFollowing.objects.filter(user=request.user).order_by('-time')
                 if followings:
                     for item in followings:
                         types.append('Author')
