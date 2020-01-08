@@ -12,7 +12,7 @@
     <div>
         {% if video.videoFile720 == '' %}
             {% if video.videoFile.name|default:""|slice:"-4:" == ".mp4"%}
-                <video id="playerrrr"  controls  playsinline>
+                <video id="main-video-player"  controls  playsinline>
                     <source src="{{ video.videoFile }}" type="video/mp4">
                 </video>
             {% else %}
@@ -20,7 +20,7 @@
                 <br>
             {% endif %}
         {% else %}
-            <video class="js-player" controls playsinline id="playerrrr"
+            <video class="js-player" controls playsinline id="main-video-player"
                    data-plyr-config='{ "resetOnEnd": true, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
                 <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
                 <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
@@ -334,7 +334,7 @@
 
 {% block scripts %}
 <!------------------------------------------------------------------------------------->
-    <script> const player = new Plyr('#playerrrr');</script>
+    <script> const player = new Plyr('#main-video-player');</script>
 <!------------------------------------------------------------------------------------->
     <script>
         function aLike() {alert("Please log in order to like!");}
