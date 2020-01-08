@@ -34,57 +34,43 @@ def upload_video(request):
 
     if request.method == "POST":
         if 'videoFile' in request.FILES:
-            myFile = request.FILES['videoFile']
+            file = request.FILES['videoFile']
 
-            fileName = 'Video'
-            videoSuffix = os.path.splitext(myFile.name)[1]
-            randomSuffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
+            video_suffix = os.path.splitext(file.name)[1]
+            random_suffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
 
-            fs = FileSystemStorage()
+            videoFile, thumbnailFile, duration, err = save_video(file, random_suffix, video_suffix)
 
-            videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
-            thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
+            if not err:
+                focus = request.POST.get('focus', '')
+                topic = request.POST.get('topic', '')
+                journal = request.POST.get('journal', '')
+                author = request.POST.get('author', '')
 
-            clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
+                if not Focus.objects.filter(title=focus).exists():
+                    Focus.objects.create(title=focus)
 
-            if round(clip.duration) > 2:
-                clip.save_frame(MEDIA_ROOT + thumbnailName, t=1)
-            else:
-                clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
+                if not Topic.objects.filter(title=topic).exists():
+                    Topic.objects.create(title=topic)
 
-            focus = request.POST.get('focus', '')
-            topic = request.POST.get('topic', '')
-            journal = request.POST.get('journal', '')
-            author = request.POST.get('author', '')
+                if not Journal.objects.filter(title=journal).exists():
+                    Journal.objects.create(title=journal)
 
-            if not Focus.objects.filter(title=focus).exists():
-                Focus.objects.create(title=focus)
+                if not Author.objects.filter(title=author).exists():
+                    Author.objects.create(title=author, lastName=author.split(" ")[-1])
 
-            if not Topic.objects.filter(title=topic).exists():
-                Topic.objects.create(title=topic)
+                video = Video.objects.create(user=request.user, videoFile=videoFile, thumbnail=thumbnailFile,
+                                             duration=datetime.timedelta(seconds=duration),
+                                             publishDate=datetime.datetime.now(), title=request.POST.get('title', ''),
+                                             description=request.POST.get('description', ''),
+                                             gsLink=request.POST.get('gs', ''), pdfLink=request.POST.get('link', ''),
+                                             author=Author.objects.get(title=author), year=request.POST.get('year', 0),
+                                             journal=Journal.objects.get(title=journal),
+                                             focus=Focus.objects.get(title=focus), topic=Topic.objects.get(title=topic))
 
-            if not Journal.objects.filter(title=journal).exists():
-                Journal.objects.create(title=journal)
+                add_tags(video)
 
-            if not Author.objects.filter(title=author).exists():
-                Author.objects.create(title=author, lastName=author.split(" ")[-1])
-
-            video = Video.objects.create(user=request.user, videoFile=fs.url(videoName),
-                                         thumbnail=fs.url(thumbnailName),
-                                         duration=datetime.timedelta(seconds=round(clip.duration)),
-                                         publishDate=datetime.datetime.now(), title=request.POST.get('title', ''),
-                                         description=request.POST.get('description', ''),
-                                         gsLink=request.POST.get('gs', ''),
-                                         pdfLink=request.POST.get('link', ''),
-                                         author=Author.objects.get(title=author),
-                                         year=request.POST.get('year', 0),
-                                         journal=Journal.objects.get(title=journal),
-                                         focus=Focus.objects.get(title=focus),
-                                         topic=Topic.objects.get(title=topic))
-
-            add_tags(video)
-
-            create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
+                create_different_video_qualities(video, random_suffix, video_suffix)
 
         return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
 
@@ -203,40 +189,26 @@ def edit_video(request):
             add_tags(video)
 
             if 'videoFile' in request.FILES and video.isProcessed:
-                fs = FileSystemStorage()
+                file = request.FILES['videoFile']
 
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
-                fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
+                video_suffix = os.path.splitext(file.name)[1]
+                random_suffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
 
-                myFile = request.FILES['videoFile']
+                v, t, d, err = save_video(file, random_suffix, video_suffix)
 
-                fileName = 'Video'
-                videoSuffix = os.path.splitext(myFile.name)[1]
-                randomSuffix = '_' + str(random.randint(1, 100000000)) + str(random.randint(1, 100000000))
+                if not err:
+                    delete_old_videos(video)
 
-                videoName = fs.save('videos/' + fileName + randomSuffix + videoSuffix, myFile)
-                thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
-
-                clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
-
-                if round(clip.duration) > 2:
-                    clip.save_frame(MEDIA_ROOT + thumbnailName, t=1)
-                else:
-                    clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
-
-                video.videoFile = fs.url(videoName)
-                video.thumbnail = fs.url(thumbnailName)
-                video.duration = datetime.timedelta(seconds=round(clip.duration))
+                video.videoFile = v
+                video.thumbnail = t
+                video.duration = datetime.timedelta(seconds=d)
                 video.publishDate = datetime.datetime.now()
                 video.videoFile720 = ''
                 video.isProcessed = False
 
                 video.save()
 
-                create_different_video_qualities(video, fileName, randomSuffix, videoSuffix)
+                create_different_video_qualities(video, random_suffix, video_suffix)
 
             return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:
@@ -399,6 +371,39 @@ def add_tags(video):
     video.save()
 
 
+def delete_old_videos(video):
+    fs = FileSystemStorage()
+
+    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
+    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
+    fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
+    fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
+
+
+def save_video(file, random_suffix, video_suffix):
+    error = False
+    fs = FileSystemStorage()
+
+    videoName = fs.save('videos/' + 'Video' + random_suffix + video_suffix, file)
+    thumbnailName = 'thumbnails/' + 'Video' + random_suffix + '.png'
+
+    try:
+        clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
+        clip.save_frame(MEDIA_ROOT + thumbnailName, t=random.randint(0, round(clip.duration)))
+
+        videoFile = fs.url(videoName)
+        thumbnailFile = fs.url(thumbnailName)
+        duration = round(clip.duration)
+    except:
+        error = True
+        videoFile = None
+        thumbnailFile = None
+        duration = -1
+
+    return videoFile, thumbnailFile, duration, error
+
+
 def start_new_thread(function):
     def decorator(*args, **kwargs):
         t = Thread(target=function, args=args, kwargs=kwargs)
@@ -409,7 +414,8 @@ def start_new_thread(function):
 
 
 @start_new_thread
-def create_different_video_qualities(video, fileName, randomSuffix, videoSuffix):
+def create_different_video_qualities(video, randomSuffix, videoSuffix):
+    fileName = 'Video'
     output_suffix = '.mp4'
     fs = FileSystemStorage()
     error = False
