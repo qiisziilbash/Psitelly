@@ -389,7 +389,7 @@ def save_video(file, random_suffix, video_suffix):
     thumbnailName = 'thumbnails/' + 'Video' + random_suffix + '.png'
 
     try:
-        clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
+        clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(480, 360))
         clip.save_frame(MEDIA_ROOT + thumbnailName, t=random.randint(0, round(clip.duration)))
 
         videoFile = fs.url(videoName)
