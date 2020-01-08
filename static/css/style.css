@@ -64,7 +64,7 @@ a {
 }
 
 body{
-    background: black;
+    background: var(--backgroundColor1);
     margin: 0;
 }
 
