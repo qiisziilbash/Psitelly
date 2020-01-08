@@ -10,23 +10,12 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <div>
-        {% if video.videoFile720 == '' %}
-            {% if video.videoFile.name|default:""|slice:"-4:" == ".mp4"%}
-                <video id="player"  controls  playsinline>
-                    <source src="{{ video.videoFile }}" type="video/mp4">
-                </video>
-            {% else %}
-                <img src="/static/images/Info.jpg" style="width: 100%; height: 600px; border-radius: 10px">
-                <br>
-            {% endif %}
-        {% else %}
             <video class="js-player" controls playsinline id="player"
                    data-plyr-config='{ "resetOnEnd": true, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
                 <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
                 <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
                 <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
              </video>
-        {% endif %}
     </div>
 
     <!------------------------------------------------------------------------------------->
