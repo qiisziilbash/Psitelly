@@ -10,12 +10,23 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <div>
+        {% if video.videoFile720 == '' %}
+            {% if video.videoFile.name|default:""|slice:"-4:" == ".mp4"%}
+                <video id="playerrrr"  controls  playsinline>
+                    <source src="{{ video.videoFile }}" type="video/mp4">
+                </video>
+            {% else %}
+                <img src="/static/images/Info.jpg" style="width: 100%; height: 600px; border-radius: 10px">
+                <br>
+            {% endif %}
+        {% else %}
             <video class="js-player" controls playsinline id="playerrrr"
                    data-plyr-config='{ "resetOnEnd": true, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
                 <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
                 <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
                 <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
              </video>
+        {% endif %}
     </div>
 
     <!------------------------------------------------------------------------------------->
@@ -212,7 +223,109 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
+    <div class="rightbar">
+        {% if videosList %}
+            {% for videos in videosList %}
+                <h1>{{ videos.0 }}</h1>
+                <div class="video-gallery">
+                    {% for video in videos.1 %}
+                        <div class="video-item" id="{{ video.0.pk }}">
+                            <div class="image-box">
+                                <img src='{{ video.0.thumbnail }}' id="thumbnailImage" alt="">
+                                <div class="hover-box">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.journal.title }}&type=Journal"  data-toggle="tooltip" data-placement="right" title="Journal: {{ video.0.journal.title  }}">
+                                        <img src="/static/images/Journal.png" alt="">
+                                        {{ video.0.journal.title }}
+                                    </a><br>
 
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.topic.title }}&type=Topic" data-toggle="tooltip" data-placement="right" title="Topic: {{ video.0.topic.title  }}" >
+                                        <img src="/static/images/Topic.png" alt="">
+                                        {{ video.0.topic.title }}
+                                    </a><br>
+
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.focus.title }}&type=Focus" data-toggle="tooltip" data-placement="right" title="Focus: {{ video.0.focus.title  }}">
+                                        <img src="/static/images/Focus.png" alt="">
+                                        {{ video.0.focus.title }}
+                                    </a><br>
+                                </div>
+                                <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}">
+                                    <img src="/static/images/Play.png" id="hitPlayImage"  alt=""
+                                         data-toggle="tooltip" data-placement="right" title="Play Video">
+                                </a>
+                            </div>
+
+                            <span class="video-item-info">
+                                <span id="duration">
+                                    ⏱ {{ video.0.formatted_duration}}
+                                </span>
+
+                                <span style="float: right; cursor: pointer; margin-right: 8px">
+                                    {% if user.is_authenticated and videos.0 != "Watch Later"%}
+                                        {% if video.1 %}
+                                            <img alt="unWatchLater" src="/static/images/WatchLater.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Remove from your 'Watch Later' list">
+                                        {% else %}
+                                            <img alt="watchLater" src="/static/images/Plus.png"
+                                                 onclick="return watchLater(this, {{ video.0.pk }})"
+                                                 data-toggle="tooltip" data-placement="right" title="Add to your 'Watch Later' list">
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+
+                                <span style="float: right; cursor: default">{{ video.0.likes}}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Like_.png" data-toggle="tooltip" data-placement="right" title="Upvotes">
+                                </span>
+
+                                <span style="float: right; cursor: default">{{ video.0.comments }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/Comment_.png" data-toggle="tooltip" data-placement="right" title="Comments">
+                                </span>
+
+                                <span style="float: right; cursor: default">{{ video.0.views }}</span>
+                                <span style="float: right;">
+                                    <img src="/static/images/View_.png" data-toggle="tooltip" data-placement="right" title="Views">
+                                </span>
+                            </span>
+
+                            <br><br>
+
+                            <span class="video-item-info">
+                                <label data-toggle="tooltip" data-placement="right" title="Title: {{ video.0.title }}">
+                                    <a href="{%  url 'playVideo' %}?videoPK={{ video.0.pk }}" style="padding-left: 5px">
+                                        {{ video.0.title }}
+                                    </a>
+                                </label>
+
+                                <br>
+
+                                <label data-toggle="tooltip" class="video-item-info-label" data-placement="right"
+                                       title="Author: {{ video.0.author.lastName }} ({{ video.0.year }})">
+                                    <a href="{% url 'index' %}?customCategory={{ video.0.author.title }}&type=Author">
+                                        <img class="video-item-info-img" src="/static/images/Author.png">
+                                        {{ video.0.author.lastName }} ({{ video.0.year }})
+                                    </a>
+                                </label>
+
+                                <br>
+
+                                <label>
+                                    <a href="{% url 'index' %}?customUser={{ video.0.user.username }}"
+                                       data-toggle="tooltip" data-placement="right"
+                                       title="Uploaded by {{ video.0.user.username }} at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}">
+                                        <img class="video-item-info-img" alt="" src="{{ video.0.user.profile.picture }}">
+                                        {{ video.0.user.username }}
+                                    </a>
+                                    at {{ video.0.publishDate|time:'H:i'}} - {{ video.0.publishDate|date:'d M Y'}}
+                                </label>
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
