@@ -46,8 +46,12 @@ def upload_video(request):
             thumbnailName = 'thumbnails/' + fileName + randomSuffix + '.png'
 
             clip = VideoFileClip(MEDIA_ROOT + videoName, target_resolution=(360, None))
-            clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
 
+            if round(clip.duration) > 2:
+                clip.save_frame(MEDIA_ROOT + thumbnailName, t=1)
+            else:
+                clip.save_frame(MEDIA_ROOT + thumbnailName, t=0)
+                
             focus = request.POST.get('focus', '')
             topic = request.POST.get('topic', '')
             journal = request.POST.get('journal', '')
