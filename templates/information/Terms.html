@@ -1,9 +1,15 @@
 {% extends "Base.html" %}
+{% block head %}
+        <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
+         <script src="/static/js/http_cdn.plyr.io_3.5.3_plyr.js"></script>
+{% endblock %}
 
 
 {% block content%}
 
     <div class="content">
+
+
 
         <h1>Terms of Service</h1>
         <div class="textContent">
@@ -43,7 +49,26 @@
                 <b>☉</b> These terms might get updated in the future. We will notify our users of any change in advance.
 
             </p>
+
+            <br>
+
+        <br>
+
         </div>
+
+        <hr>
+        This is a test
+        <br>
+
+            <div>
+
+            <video id="playerr" controls  playsinline >
+                <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
+                <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
+                <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
+             </video>
+
+    </div>
 
     </div>
 
@@ -56,4 +81,10 @@
 
     </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const player = new Plyr('#playerr');
+    </script>
 {% endblock %}
