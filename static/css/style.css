@@ -197,7 +197,9 @@ h1{
 
 .rightbar{
     grid-area: rightbar;
+    overflow-y: scroll;
     border-left: 2px solid black;
+    padding: 5px;
 }
 
 .sidebar, .rightbar{
