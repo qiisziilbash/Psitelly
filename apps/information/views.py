@@ -52,7 +52,7 @@ def show_terms(request):
                    'authorCount': Author.objects.filter().count(),
                    'topicCount': Topic.objects.filter().count(),
                    'focusCount': Focus.objects.filter().count(),
-                   'video': Video.objects.all()[2]
+                   'video': Video.objects.all()[1]
                    }
 
         return render(request, 'information/Terms.html', context)
