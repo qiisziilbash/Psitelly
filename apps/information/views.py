@@ -103,12 +103,19 @@ def get_tags(request):
                         tags_dict[tag_name] = 1
                     break
     else:
-        tags_dict['ahmad'] = 10
+        for video in videos:
+            for tag in video.tags.all():
+                if '@' in tag.name or '#' in tag.name or '$' in tag.name:
+                    tag_name = tag.name[0:-2]
+                else:
+                    tag_name = tag.name
+                if tag_name in tags_dict:
+                    tags_dict[tag_name] = tags_dict[tag_name] + 1
+                else:
+                    tags_dict[tag_name] = 1
 
     for tag in tags_dict:
         tags.append({"tag": tag, 'count': tags_dict[tag]})
-
-    
 
     return JsonResponse(tags, safe=False)
 
