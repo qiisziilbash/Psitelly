@@ -116,6 +116,8 @@ def get_tags(request):
 
     for tag in tags_dict:
         tags.append({"tag": tag, 'count': tags_dict[tag]})
+    
+    tags.append({'tag': 'ahmad', 'count': tags.count()})
 
     return JsonResponse(tags, safe=False)
 
