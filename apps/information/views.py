@@ -66,7 +66,7 @@ def get_tags(request):
     if type == 'authors':
         for video in videos:
             for tag in video.tags.all():
-                if tag.name[-2:] == '#a' or tag.name[-2:] == '@a':
+                if tag.name.endswith('#a') or tag.name.endswith('@a'):
                     tag_name = tag.name[0:-2]
                     if tag_name in tags_dict:
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
@@ -76,7 +76,7 @@ def get_tags(request):
     elif type == 'journals':
         for video in videos:
             for tag in video.tags.all():
-                if tag.name[-2:] == '#j':
+                if tag.name.endswith('#j'):
                     tag_name = tag.name[0:-2]
                     if tag_name in tags_dict:
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
@@ -86,7 +86,7 @@ def get_tags(request):
     elif type == 'focuses':
         for video in videos:
             for tag in video.tags.all():
-                if tag.name[-2:] == '#f':
+                if tag.name.endswith('#f'):
                     tag_name = tag.name[0:-2]
                     if tag_name in tags_dict:
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
@@ -95,7 +95,7 @@ def get_tags(request):
     elif type == 'topics':
         for video in videos:
             for tag in video.tags.all():
-                if tag.name[-2:] == '#t' or tag.name[-2:] == '@t' or tag.name[-2:] == '$t':
+                if tag.name.endswith('#t') or tag.name.endswith('@t') or tag.name.endswith('$t'):
                     tag_name = tag.name[0:-2]
                     if tag_name in tags_dict:
                         tags_dict[tag_name] = tags_dict[tag_name] + 1
