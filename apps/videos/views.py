@@ -365,7 +365,9 @@ def add_tags(video):
                  'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'against',
                  'only', 'same', 'so', 'than', 'too', 'as', 'many', 'can', 'could', 'just', 'should', 'into']
 
-    title_words = video.title.split()
+    words = video.title.split()
+    title_words = [w.lower() for w in words]
+    
     for word in title_words:
         if word not in stopwords:
             video.tags.add(word)
