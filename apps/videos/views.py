@@ -246,10 +246,8 @@ def play_video(request):
 
             titles = ['Related Videos']
 
-            try:
-                videos = video.tags.similar_objects()
-            except:
-                videos = []
+            videos = video.tags.similar_objects()
+
 
             if videos:
                 videoList = zip(videos, get_watch_later_videos(request.user, videos))
