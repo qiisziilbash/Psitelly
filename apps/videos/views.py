@@ -246,7 +246,10 @@ def play_video(request):
             context['comments'] = zip(comments, get_liked_comments(request.user, comments))
 
             titles = ['Related Videos']
-            videos = video.tags.similar_objects()
+            try:
+                videos = video.tags.similar_objects()
+            except:
+                videos = []
 
             if videos:
                 videoList = zip(videos, get_watch_later_videos(request.user, videos))
