@@ -1,7 +1,6 @@
 import random
 from urllib.parse import urlencode
 
-import moviepy.editor as mp
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -246,6 +245,7 @@ def play_video(request):
             context['comments'] = zip(comments, get_liked_comments(request.user, comments))
 
             titles = ['Related Videos']
+
             try:
                 videos = video.tags.similar_objects()
             except:
