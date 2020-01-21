@@ -246,7 +246,10 @@ def play_video(request):
 
             titles = ['Related Videos']
 
-            videos = video.tags.similar_objects()
+            try:
+                videos = video.tags.similar_objects()
+            except:
+                videos = []
 
 
             if videos:
