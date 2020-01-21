@@ -268,7 +268,7 @@ def index(request):
 
                 return render(request, 'filter/Index.html', context)
 
-        titles = ['Recent videos', 'Popular videos']
+        titles = ['Recent Videos', 'Popular Videos']
 
         recentVideos = Video.objects.order_by('-publishDate')[:4]
         popularVideos = Video.objects.order_by('-likes')[:4]

@@ -224,9 +224,9 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <div class="rightbar">
+        <h1>Related Videos</h1>
         {% if videosList %}
             {% for videos in videosList %}
-                <h1>{{ videos.0 }}</h1>
                 <div class="video-gallery">
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
