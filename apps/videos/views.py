@@ -251,7 +251,6 @@ def play_video(request):
             except:
                 videos = []
 
-
             if videos:
                 videoList = zip(videos, get_watch_later_videos(request.user, videos))
                 context['videosList'] = zip(titles, [videoList])
