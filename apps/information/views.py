@@ -26,6 +26,20 @@ def donate(request):
         return render(request, 'information/Donate.html', context)
 
 
+def about(request):
+    if request.method == "GET":
+        context = {'newses': News.objects.order_by('-time')[:5],
+                   'Statistics': True,
+                   'usersCount': User.objects.filter().count(),
+                   'videosCount': Video.objects.filter().count(),
+                   'journalCount': Journal.objects.filter().count(),
+                   'authorCount': Author.objects.filter().count(),
+                   'topicCount': Topic.objects.filter().count(),
+                   'focusCount': Focus.objects.filter().count(),
+                   }
+        return render(request, 'information/About.html', context)
+
+
 def tag_cloud(request):
     if request.method == "GET":
         context = {'newses': News.objects.order_by('-time')[:5],
