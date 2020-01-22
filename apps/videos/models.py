@@ -153,6 +153,8 @@ def decrease_videos(sender, instance, *args, **kwargs):
     except:
         pass
 
+    instance.tags.clear()
+
     instance.focus.nVideos -= 1
     instance.topic.nVideos -= 1
     instance.journal.nVideos -= 1

@@ -369,11 +369,11 @@ def add_tags(video):
                  'only', 'same', 'so', 'than', 'too', 'as', 'many', 'can', 'could', 'just', 'should', 'into']
 
     words = video.title.split()
-    title_words = [w.lower() for w in words]
 
-    for word in title_words:
-        if word not in stopwords:
+    for word in words:
+        if word.lower() not in stopwords:
             video.tags.add(word)
+            
     video.save()
 
 
