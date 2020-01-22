@@ -373,7 +373,7 @@ def add_tags(video):
     for word in words:
         if word.lower() not in stopwords:
             video.tags.add(word)
-            
+
     video.save()
 
 
