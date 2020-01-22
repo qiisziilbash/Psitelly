@@ -7,11 +7,7 @@
 {% block content%}
     <div class="content">
         {% if user.is_authenticated %}
-            {% if video.isProcessed %}
-                <h1>Edit Video</h1>
-            {% else %}
-                <h3>Video file is still being processed; wait a few minutes before editing.</h3>
-            {% endif %}
+            <h1>Edit Video</h1>
             <form method="post" enctype="multipart/form-data" autocomplete="off" id="editVideoForm">
                 {% csrf_token %}
                 <div class="textContent">
@@ -94,7 +90,11 @@
                     <br><br><br><br>
 
                     <label style="width: 49%"> Focus *</label>
-                    <label style="width: 49%"> Pick a Different Video (Optional)</label>
+                    {% if video.isProcessed %}
+                        <label style="width: 49%"> Pick a Different Video (Optional)</label>
+                    {% else %}
+                        <label style="width: 49%"> Video file is still being processed</label>
+                    {% endif %}
                     <span class="effectWrapper" style="width: 49%">
                         <input type="text" id="focusID" name="focus" value="{{ video.focus.title}}"
                                placeholder="e.g. Methods, Commentary, Simplified, Results, Figures ..." list="focuses" required>
@@ -106,22 +106,32 @@
                         {% endfor %}
                     </datalist>
 
+
+
                     <span class="effectWrapper" style="width: 49%">
-                        <input type="file" id="videoID" name="videoFile"
-                               accept="video/*, video/x-ms-wmv, video/x-ms-asf,
-                                video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
-                                video/x-msvideo, video/mp4, video/x-m4v">
+                        {% if video.isProcessed %}
+                            <input type="file" id="videoID" name="videoFile"
+                                   accept="video/*, video/x-ms-wmv, video/x-ms-asf,
+                                    video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
+                                    video/x-msvideo, video/mp4, video/x-m4v">
+                        {% else %}
+                            <input type="file" id="videoID" name="videoFile"
+                                   accept="video/*, video/x-ms-wmv, video/x-ms-asf,
+                                    video/quicktime, video/x-quicktime, video/avi, video/ogg, video/msvideo,
+                                    video/x-msvideo, video/mp4, video/x-m4v" disabled >
+                        {% endif %}
                         <span class="focus-border"></span>
                     </span>
 
+
                     <br><br><br><br><br>
+
                     <input name="videoPK" value="{{ video.pk }}" style="display: none">
 
-                    {% if video.isProcessed %}
-                        <button type="submit" id="saveBtn" name="saveReq" value="{{ video.pk }}">Save</button>
-                        <button  id="deleteBtn" class="dangerButton" formnovalidate  onclick="return deleteVideo({{ video.pk }})"> Delete</button>
-                    {% endif %}
+                    <button type="submit" id="saveBtn" name="saveReq" value="{{ video.pk }}">Save</button>
+                    <button  id="deleteBtn" class="dangerButton" formnovalidate  onclick="return deleteVideo({{ video.pk }})"> Delete</button>
                     <button  id="cancelBtn"  onclick="return cancelEdit()" > Cancel</button>
+
                     <br><br>
                 </div>
             </form>

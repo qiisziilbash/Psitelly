@@ -450,9 +450,9 @@ def create_different_video_qualities(video, randomSuffix, videoSuffix):
 
     video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
 
-    video.isProcessed = True
-
     video.save()
+
+    video.isProcessed = True
 
     if not error:
         fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
