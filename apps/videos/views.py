@@ -463,4 +463,7 @@ def create_different_video_qualities(video, random_suffix, video_suffix):
         silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
 
     except:
-        video.isCrashed  = True
+        silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
+        silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
+        silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
+        video.isCrashed = True
