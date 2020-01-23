@@ -22,10 +22,15 @@
                 <h3> <u> Be with us</u></h3>
                 We always need support and feedback
 
+
                 <ul>
                     <li> <a href="{% url 'register' %}">Become a member</a> </li>
                     <li> <a href="{% url 'upload' %}">Upload a video</a></li>
                     <li> Tell a friend about Psitelly</li>
+
+                    {% post_to_telegram "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share in Telegram"%}
+                    {% send_email object.title "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share via email" %}
+
                     <li> <a href="{% url 'contact' %}">Tell us your ideas to improve the Psitelly</a></li>
                     <li> <a href="{% url 'contact' %}">Report a problem</a> </li>
                 </ul>
