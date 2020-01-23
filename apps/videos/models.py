@@ -68,6 +68,7 @@ class Video(models.Model):
     thumbnail = models.ImageField(null=True)
 
     isProcessed = models.BooleanField(default=False)
+    isCrashed = models.BooleanField(default=False)
 
     tags = TaggableManager()
 
@@ -142,16 +143,11 @@ def increase_videos(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Video)
 def decrease_videos(sender, instance, *args, **kwargs):
-    fs = FileSystemStorage()
-
-    try:
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile720.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile480.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile360.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(instance.thumbnail.name))))
-    except:
-        pass
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile720.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile480.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(instance.videoFile360.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(instance.thumbnail.name))))
 
     instance.tags.clear()
 
@@ -286,6 +282,14 @@ def decrease_video_like(sender, instance, *args, **kwargs):
 
     instance.user.profile.nVideoUpVotesGiven -= 1
     instance.user.profile.save()
+
+
+def silent_delete(name):
+    fs = FileSystemStorage()
+    try:
+        fs.delete(name)
+    except OSError:
+        pass
 
 
 def start_new_thread(function):

@@ -1,6 +1,7 @@
 import random
 from urllib.parse import urlencode
 
+from django.core.files.storage import FileSystemStorage
 from moviepy.editor import *
 
 from apps.comments.models import Comment
@@ -199,16 +200,16 @@ def edit_video(request):
                 if not err:
                     delete_old_videos(video)
 
-                video.videoFile = v
-                video.thumbnail = t
-                video.duration = datetime.timedelta(seconds=d)
-                video.publishDate = datetime.datetime.now()
-                video.videoFile720 = ''
-                video.isProcessed = False
+                    video.videoFile = v
+                    video.thumbnail = t
+                    video.duration = datetime.timedelta(seconds=d)
+                    video.publishDate = datetime.datetime.now()
+                    video.videoFile720 = ''
+                    video.isProcessed = False
 
-                video.save()
+                    video.save()
 
-                create_different_video_qualities(video, random_suffix, video_suffix)
+                    create_different_video_qualities(video, random_suffix, video_suffix)
 
             return redirect('{}?{}'.format(reverse('index'), urlencode({'content': 'My Videos'})))
     else:
@@ -378,16 +379,19 @@ def add_tags(video):
 
 
 def delete_old_videos(video):
-    try:
-        fs = FileSystemStorage()
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
+    silent_delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
 
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile720.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
-        fs.delete(os.path.join(MEDIA_ROOT, 'thumbnails/{0}'.format(os.path.basename(video.thumbnail.name))))
-    except:
-        return None
+
+def silent_delete(name):
+    fs = FileSystemStorage()
+    try:
+        fs.delete(name)
+    except OSError:
+        pass
 
 
 def save_video(file, random_suffix, video_suffix):
@@ -405,6 +409,8 @@ def save_video(file, random_suffix, video_suffix):
         thumbnailFile = fs.url(thumbnailName)
         duration = round(clip.duration)
     except:
+        silent_delete(os.path.join(MEDIA_ROOT, 'videos/' + 'Video' + random_suffix + video_suffix))
+        silent_delete(os.path.join(MEDIA_ROOT, 'thumbnails/' + 'Video' + random_suffix + '.png'))
         error = True
         videoFile = None
         thumbnailFile = None
@@ -423,36 +429,38 @@ def start_new_thread(function):
 
 
 @start_new_thread
-def create_different_video_qualities(video, randomSuffix, videoSuffix):
+def create_different_video_qualities(video, random_suffix, video_suffix):
     fileName = 'Video'
     output_suffix = '.mp4'
     fs = FileSystemStorage()
-    error = False
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                         target_resolution=(360, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_360' + output_suffix, codec='libx264',
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
+    try:
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + random_suffix + video_suffix,
+                             target_resolution=(360, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_360' + output_suffix, codec='libx264',
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
-    video.videoFile360 = fs.url('videos/' + fileName + randomSuffix + '_360' + output_suffix)
+        video.videoFile360 = fs.url('videos/' + fileName + random_suffix + '_360' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                         target_resolution=(480, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_480' + output_suffix, codec='libx264',
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + random_suffix + video_suffix,
+                             target_resolution=(480, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_480' + output_suffix, codec='libx264',
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
-    video.videoFile480 = fs.url('videos/' + fileName + randomSuffix + '_480' + output_suffix)
+        video.videoFile480 = fs.url('videos/' + fileName + random_suffix + '_480' + output_suffix)
 
-    clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + videoSuffix,
-                         target_resolution=(720, None))
-    clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + randomSuffix + '_720' + output_suffix, codec='libx264',
-                         temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
+        clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + random_suffix + video_suffix,
+                             target_resolution=(720, None))
+        clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_720' + output_suffix, codec='libx264',
+                             temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
-    video.videoFile720 = fs.url('videos/' + fileName + randomSuffix + '_720' + output_suffix)
+        video.videoFile720 = fs.url('videos/' + fileName + random_suffix + '_720' + output_suffix)
 
-    video.save()
+        video.save()
 
-    video.isProcessed = True
+        video.isProcessed = True
 
-    if not error:
-        fs.delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+        silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
+
+    except:
+        video.isCrashed  = True
