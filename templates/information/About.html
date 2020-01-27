@@ -1,4 +1,8 @@
 {% extends "Base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
+    <script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
+{% endblock %}
 
 {% block content%}
 
@@ -23,8 +27,21 @@
                 </div>
                 <a  href="javascript:void(0);" id="read" onclick="readMore()"> Read more</a><br>
             </p>
+
+        </div>
+
+
+        <br>
+        <h1>A quick tour to features of Psitelly</h1>
+        <div >
+            <p>
+                <video class="js-player" controls playsinline id="main-video-player-1">
+                    <source src="/static/videos/Help.mp4" type="video/mp4">
+                 </video>
+            </p>
         </div>
     </div>
+
 
     <div class="rightbar">
         <h3>Powered By</h3>
@@ -51,6 +68,7 @@
 {% endblock %}
 
 {% block scripts %}
+    <script> const player = new Plyr('#main-video-player-1');</script>
     <script>
         function readMore() {
             var dots = document.getElementById("dots");
