@@ -44,7 +44,13 @@
 
 
     <div class="rightbar">
-        <h3>Powered By</h3>
+        <h3>Related Links</h3>
+        <ul>
+            <a href="{% url 'help' %}"><input type="button" value="How to make your first video?"></a>
+            <a href="{% url 'donate' %}"><input type="button" value="Donate to Psitelly"></a><br>
+        </ul>
+
+        <h3>Psitelly is powered by</h3>
         <div class="textContent">
             <li>Mahdi Shafiei (qiisziilbash)</li>
             <ol style="list-style-type: circle; padding-bottom: 0;">
@@ -55,13 +61,8 @@
             <li>Django</li>
         </div>
 
-        <h3>My Power Is Powered By</h3>
-        <div class="textContent"><li>Ruth Campos</li></div>
 
-        <h3>Related Links</h3>
-        <ul>
-            <a href="{% url 'donate' %}"><input type="button" value="Donate to Psitelly"></a><br>
-        </ul>
+
 
     </div>
 
