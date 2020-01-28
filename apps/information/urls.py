@@ -6,6 +6,7 @@ urlpatterns = [
     path('contact/',    views.contact,  name='contact'),
     path('donate/',     views.donate,   name='donate'),
     path('about/',      views.about, name='about'),
+    path('help/',       views.help, name='help'),
     path('tagCloud/',   views.tag_cloud,   name='tagCloud'),
     path('terms/',      views.show_terms, name='terms'),
     path('ajax/getTags/', views.get_tags,     name='getTags'),
