@@ -28,8 +28,9 @@
                     <li> <a href="{% url 'upload' %}">Upload a video</a></li>
                     <li> Tell a friend about Psitelly</li>
 
+                    {% post_to_linkedin "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share in Linkedin" %}
                     {% post_to_telegram "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share in Telegram"%}
-                    {% send_email object.title "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share via email" %}
+                    {% send_email "Check Psitelly.com out!" "http://psitelly.com/" "<b>☉</b> Share via email" %}
 
 
                     <li> <a href="{% url 'contact' %}">Tell us your ideas to improve the Psitelly</a></li>
