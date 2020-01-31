@@ -394,6 +394,10 @@ def pre_register(request):
                         user = User.objects.create(username=username, email=email, password=password)
                         user.profile.secAnswer = secAnswer
                         user.profile.secQuestion = secQuestion
+                        user.profile.notifyComments = True
+                        user.profile.notifyFollows = True
+                        user.profile.notifyUploads = True
+                        user.profile.notifyMentions = True
                         user.profile.save()
 
                         send_code(user)
