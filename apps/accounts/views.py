@@ -398,6 +398,9 @@ def pre_register(request):
                         user.profile.notifyFollows = True
                         user.profile.notifyUploads = True
                         user.profile.notifyMentions = True
+                        user.profile.emailComments = True
+                        user.profile.emailUploads = True
+                        user.profile.emailFollows = True
                         user.profile.save()
 
                         send_code(user)
