@@ -23,7 +23,6 @@ def index(request):
 
         if 'search' in request.GET and request.GET.get('search', '') != '':
             keyword = request.GET.get('search', '')
-            print(keyword)
             if '>>' in keyword:
                 return render(request, 'filter/Index.html', search_videos(context, request))
             else:
@@ -350,34 +349,35 @@ def search_videos(context, request):
                 else:
                     videos = Video.objects.all()
                 if author != '':
-                    videos = videos.filter(author__name__icontains=author)
+                    videos = videos.filter(author__title__icontains=author)
                 if journal != '':
-                    videos = videos.filter(journal__name__icontains=journal)
+                    videos = videos.filter(journal__title__icontains=journal)
                 if yearFrom != '':
                     videos = videos.filter(year__gte=yearFrom)
                 if yearTo != '':
                     videos = videos.filter(year__lte=yearTo)
                 if topic != '':
-                    videos = videos.filter(topic__text__icontains=topic)
+                    videos = videos.filter(topic__title__icontains=topic)
                 if focus != '':
-                    videos = videos.filter(focus__text__icontains=focus)
+                    videos = videos.filter(focus__title__icontains=focus)
         else:
             if title != '':
                 videos = Video.objects.filter(title__icontains=title)
             else:
                 videos = Video.objects.none()
+
             if author != '':
-                videos = videos | Video.objects.filter(author__name__icontains=author)
+                videos = videos | Video.objects.filter(author__title__icontains=author)
             if journal != '':
-                videos = videos | Video.objects.filter(journal__name__icontains=journal)
+                videos = videos | Video.objects.filter(journal__title__icontains=journal)
             if yearFrom != '':
                 videos = videos | Video.objects.filter(year__gte=yearFrom)
             if yearTo != '':
                 videos = videos | Video.objects.filter(year__lte=yearTo)
             if topic != '':
-                videos = videos | Video.objects.filter(topic__text__icontains=topic)
+                videos = videos | Video.objects.filter(topic__title__icontains=topic)
             if focus != '':
-                videos = videos | Video.objects.filter(focus__text__icontains=focus)
+                videos = videos | Video.objects.filter(focus__title__icontains=focus)
     except:
         titles = ['Search query was not in a right format']
         videos = Video.objects.none()
