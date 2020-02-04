@@ -439,6 +439,11 @@ def search_general(context, keyword, user):
     # videos
     videos = Video.objects.filter(title__icontains=keyword)
     videos = videos | Video.objects.filter(description__contains=keyword)
+    videos = videos | Video.objects.filter(author__title__contains=keyword)
+    videos = videos | Video.objects.filter(journal__title__icontains=keyword)
+    videos = videos | Video.objects.filter(topic__title__icontains=keyword)
+    videos = videos | Video.objects.filter(focus__title__icontains=keyword)
+    videos = videos | Video.objects.filter(user__username__icontains=keyword)
 
     if videos:
         titles = ['Videos']
