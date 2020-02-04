@@ -23,7 +23,8 @@ def index(request):
 
         if 'search' in request.GET and request.GET.get('search', '') != '':
             keyword = request.GET.get('search', '')
-            if '#' in keyword:
+            print(keyword)
+            if '>>' in keyword:
                 return render(request, 'filter/Index.html', search_videos(context, request))
             else:
                 return render(request, 'filter/Index.html', search_general(context, keyword, request.user))
@@ -314,7 +315,7 @@ def filter_videos(request):
         else:
             PisA = 'no'
 
-        return redirect('{}?{}'.format(reverse('index'), urlencode({'search': '#',
+        return redirect('{}?{}'.format(reverse('index'), urlencode({'search': '>>',
                                                                     'title': title,
                                                                     'author': author,
                                                                     'yearFrom': yearFrom,
@@ -437,6 +438,7 @@ def search_general(context, keyword, user):
 
     # videos
     videos = Video.objects.filter(title__icontains=keyword)
+    videos = videos | Video.objects.filter(description__contains=keyword)
 
     if videos:
         titles = ['Videos']
