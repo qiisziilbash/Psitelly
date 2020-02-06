@@ -11,12 +11,10 @@
     <!------------------------------------------------------------------------------------->
     <div>
         {% if video.videoFile720 == '' %}
-
-                <video class="js-player" controls playsinline id="main-video-player"
-                    data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
-                    <source src="{{ video.videoFile }}" >
-                </video>
-
+            <video class="js-player" controls playsinline id="main-video-player"
+                data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
+                <source src="{{ video.videoFile }}" >
+            </video>
         {% else %}
             <video class="js-player" controls playsinline id="main-video-player"
                    data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
