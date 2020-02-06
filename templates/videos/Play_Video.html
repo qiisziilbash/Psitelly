@@ -11,15 +11,12 @@
     <!------------------------------------------------------------------------------------->
     <div>
         {% if video.videoFile720 == '' %}
-            {% if video.videoFile.name|default:""|slice:"-4:" == ".mp4"%}
+
                 <video class="js-player" controls playsinline id="main-video-player"
                     data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
-                    <source src="{{ video.videoFile }}" type="video/mp4">
+                    <source src="{{ video.videoFile }}" >
                 </video>
-            {% else %}
-                <img src="/static/images/Info.jpg" style="width: 100%; height: 600px; border-radius: 10px">
-                <br>
-            {% endif %}
+
         {% else %}
             <video class="js-player" controls playsinline id="main-video-player"
                    data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
