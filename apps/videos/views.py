@@ -456,9 +456,9 @@ def create_different_video_qualities(video, random_suffix, video_suffix):
 
         video.videoFile720 = fs.url('videos/' + fileName + random_suffix + '_720' + output_suffix)
 
-        video.save()
-
         video.isProcessed = True
+
+        video.save()
 
         silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile.name))))
 
@@ -467,3 +467,4 @@ def create_different_video_qualities(video, random_suffix, video_suffix):
         silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile480.name))))
         silent_delete(os.path.join(MEDIA_ROOT, 'videos/{0}'.format(os.path.basename(video.videoFile360.name))))
         video.isCrashed = True
+        video.save()
