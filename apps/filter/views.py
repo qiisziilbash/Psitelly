@@ -294,13 +294,13 @@ def index(request):
                 types.append('Focus')
                 categories.append(focus.title)
 
-        journals = Journal.objects.order_by('-nVideos')[:2]
+        journals = Journal.objects.order_by('-nVideos')[:3]
         if journals:
             for journal in journals:
                 types.append('Journal')
                 categories.append(journal.title)
 
-        topics = Topic.objects.order_by('-nVideos')[:2]
+        topics = Topic.objects.order_by('-nVideos')[:3]
         if topics:
             for topic in topics:
                 types.append('Topic')
@@ -317,7 +317,7 @@ def index(request):
             context['categories'] = zip(types, categories)
 
         # active users
-        profiles = Profile.objects.order_by('-nVideos')[:8]
+        profiles = Profile.objects.order_by('-nVideos')[:10]
         if profiles:
             context['profilesTitle'] = 'Active Users'
             context['profiles'] = profiles
