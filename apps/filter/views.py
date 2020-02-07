@@ -268,6 +268,8 @@ def index(request):
 
                 return render(request, 'filter/Index.html', context)
 
+        # homepage content
+        # Videos
         titles = ['Recent Videos', 'Popular Videos', 'Upvoted Videos', 'Random Videos']
 
         recentVideos = Video.objects.order_by('-publishDate')[:4]
@@ -281,6 +283,38 @@ def index(request):
         randomVideoList = zip(randomVideos, get_watch_later_videos(request.user, randomVideos))
 
         context['videosList'] = zip(titles, [recentVideoList, popularVideoList, upvotedVideoList, randomVideoList])
+
+        # Categories
+        types = []
+        categories = []
+
+        focuses = Focus.objects.order_by('-nVideos')[:2]
+        if focuses:
+            for focus in focuses:
+                types.append('Focus')
+                categories.append(focus.title)
+
+        journals = Journal.objects.order_by('-nVideos')[:2]
+        if journals:
+            for journal in journals:
+                types.append('Journal')
+                categories.append(journal.title)
+
+        topics = Topic.objects.order_by('-nVideos')[:2]
+        if topics:
+            for topic in topics:
+                types.append('Topic')
+                categories.append(topic.title)
+
+        authors = Author.objects.order_by('-nVideos')[:2]
+        if authors:
+            for author in authors:
+                types.append('Author')
+                categories.append(author.title)
+
+        if categories:
+            context['categoryTitles'] = 'Popular Categories'
+            context['categories'] = zip(types, categories)
 
         return render(request, 'filter/Index.html', context)
 

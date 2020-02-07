@@ -271,6 +271,7 @@ h1{
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
+    border-radius: var(--border-radius1);
     grid-template-columns: repeat(auto-fill,150px);
     grid-template-rows: repeat(auto-fill,1fr);
     text-align: center;

@@ -102,31 +102,6 @@
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
         <!------------------------------------------------------------------------------------->
-        {% if categories %}
-            <h1>{{ categoryTitles }}</h1>
-            <div class="profile-gallery">
-                {% for category in categories %}
-                    <div class="profile-item">
-                        <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">
-                            {% if category.0  == "Focus" %}
-                                <img alt="" src="/static/images/Focus_.png">
-                            {% elif category.0 == "Topic" %}
-                                <img alt="" src="/static/images/Topic_.png">
-                            {% elif category.0 == "Journal" %}
-                                <img alt="" src="/static/images/Journal_.png">
-                            {% elif category.0 == "Author" %}
-                                <img alt="" src="/static/images/Author.png">
-                            {% endif %}
-                            <br>
-                            <label data-toggle="tooltip" data-placement="right" title="{{category.1}}">{{category.1}}</label>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div><br>
-        {% endif %}
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
         {% if videosList %}
             {% for videos in videosList %}
                 <h1>{{ videos.0 }}</h1>
@@ -258,10 +233,36 @@
             {% endfor %}
 
         {% endif %}
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        {% if categories %}
+            <h1>{{ categoryTitles }}</h1>
+            <hr>
+            <div class="profile-gallery">
+                {% for category in categories %}
+                    <div class="profile-item">
+                        <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">
+                            {% if category.0  == "Focus" %}
+                                <img alt="" src="/static/images/Focus_.png">
+                            {% elif category.0 == "Topic" %}
+                                <img alt="" src="/static/images/Topic_.png">
+                            {% elif category.0 == "Journal" %}
+                                <img alt="" src="/static/images/Journal_.png">
+                            {% elif category.0 == "Author" %}
+                                <img alt="" src="/static/images/Author.png">
+                            {% endif %}
+                            <br>
+                            <label data-toggle="tooltip" data-placement="right" title="{{category.1}}">{{category.1}}</label>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div><br>
+        {% endif %}
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
+        <!------------------------------------------------------------------------------------->
 
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
-        <!------------------------------------------------------------------------------------->
     </div>
 {% endblock %}
 
