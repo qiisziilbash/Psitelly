@@ -95,25 +95,28 @@
             <b><u>Description</u></b><br>
             {{ video.description|linebreaks }}
 
-            <li style="font-weight: bold">Google Scholar Link:
-                <span style="font-weight: normal">
-                    {% if video.gsLink == '' or video.gsLink == None %}
-                        Link is not provided
-                    {% else %}
-                        <a href="{{ video.gsLink }}" target="_blank">Click here</a>
-                    {% endif %}
-                </span>
-            </li>
+            <b> ☉ Google Scholar Link >> </b>
 
-            <li style="font-weight: bold">Article Link:
-                <span style="font-weight: normal">
-                    {% if video.pdfLink == '' or video.pdfLink == None %}
-                        Link is not provided
-                    {% else %}
-                        <a href="{{ video.pdfLink }}" target="_blank">Click here</a>
-                    {% endif %}
-                </span>
-            </li><br>
+            <span style="font-weight: normal">
+                {% if video.gsLink == '' or video.gsLink == None %}
+                    Link is not provided
+                {% else %}
+                    <a href="{{ video.gsLink }}" target="_blank">Click here</a>
+                {% endif %}
+            </span>
+            <br>
+
+
+            <b> ☉ Article Link >> </b>
+
+            <span style="font-weight: normal">
+                {% if video.pdfLink == '' or video.pdfLink == None %}
+                    Link is not provided
+                {% else %}
+                    <a href="{{ video.pdfLink }}" target="_blank">Click here</a>
+                {% endif %}
+            </span>
+            <br><br>
 
             <label>
                 <a href="{% url 'index' %}?customCategory={{ video.author.title }}&type=Author"
