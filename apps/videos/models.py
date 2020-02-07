@@ -50,8 +50,8 @@ class Video(models.Model):
     journal = models.ForeignKey(Journal, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
-    pdfLink = models.CharField(max_length=200, null=True)
-    gsLink = models.CharField(max_length=200, null=True)
+    pdfLink = models.CharField(max_length=200, null=True, blank=True)
+    gsLink = models.CharField(max_length=200, null=True, blank=True)
     description = models.CharField(max_length=1000, null=True)
 
     duration = models.DurationField(null=True)
@@ -61,9 +61,9 @@ class Video(models.Model):
     publishDate = models.DateTimeField(null=True)
 
     videoFile = models.FileField()
-    videoFile720 = models.FileField(null=True)
-    videoFile480 = models.FileField(null=True)
-    videoFile360 = models.FileField(null=True)
+    videoFile720 = models.FileField(null=True, blank=True)
+    videoFile480 = models.FileField(null=True, blank=True)
+    videoFile360 = models.FileField(null=True, blank=True)
 
     thumbnail = models.ImageField(null=True)
 
