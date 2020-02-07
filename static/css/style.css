@@ -368,7 +368,7 @@ h1{
     grid-gap: 10px;
     border-radius: var(--border-radius1);
 
-    grid-template-columns: repeat(10, minmax(350px,1fr));
+    grid-template-columns: repeat(12, minmax(350px,1fr));
 
     overflow-x: scroll;
     scroll-snap-type: x proximity;
