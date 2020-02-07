@@ -1,6 +1,6 @@
 {% extends "Base.html" %}
 {% block head %}
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
+    <link rel="stylesheet" href="/static/css/plyr.css">
     <script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
 {% endblock %}
 
@@ -9,7 +9,7 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
-    <div >
+    <div>
         {% if video.videoFile720 == '' %}
             <video class="js-player" controls playsinline id="main-video-player" style="height: 660px"
                 data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
