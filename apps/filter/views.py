@@ -268,15 +268,19 @@ def index(request):
 
                 return render(request, 'filter/Index.html', context)
 
-        titles = ['Recent Videos', 'Popular Videos']
+        titles = ['Recent Videos', 'Popular Videos', 'Upvoted Videos', 'Random Videos']
 
         recentVideos = Video.objects.order_by('-publishDate')[:4]
-        popularVideos = Video.objects.order_by('-likes')[:4]
+        popularVideos = Video.objects.order_by('-views')[:4]
+        upvotedVideos = Video.objects.order_by('-likes')[:4]
+        randomVideos = Video.objects.order_by('?')[:4]
 
         recentVideoList = zip(recentVideos, get_watch_later_videos(request.user, recentVideos))
         popularVideoList = zip(popularVideos, get_watch_later_videos(request.user, popularVideos))
+        upvotedVideoList = zip(upvotedVideos, get_watch_later_videos(request.user, upvotedVideos))
+        randomVideoList = zip(randomVideos, get_watch_later_videos(request.user, randomVideos))
 
-        context['videosList'] = zip(titles, [recentVideoList, popularVideoList])
+        context['videosList'] = zip(titles, [recentVideoList, popularVideoList, upvotedVideoList, randomVideoList])
 
         return render(request, 'filter/Index.html', context)
 
