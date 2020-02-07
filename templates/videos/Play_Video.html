@@ -9,14 +9,14 @@
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
     <!------------------------------------------------------------------------------------->
-    <div>
+    <div >
         {% if video.videoFile720 == '' %}
-            <video class="js-player" controls playsinline id="main-video-player"
+            <video class="js-player" controls playsinline id="main-video-player" style="height: 660px"
                 data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
                 <source src="{{ video.videoFile }}" >
             </video>
         {% else %}
-            <video class="js-player" controls playsinline id="main-video-player"
+            <video class="js-player" controls playsinline id="main-video-player" style="height: 660px"
                    data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 720 } }'>
                 <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
                 <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
