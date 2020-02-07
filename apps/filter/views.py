@@ -316,6 +316,12 @@ def index(request):
             context['categoryTitles'] = 'Popular Categories'
             context['categories'] = zip(types, categories)
 
+        # active users
+        profiles = Profile.objects.order_by('-nVideos')[:8]
+        if profiles:
+            context['profilesTitle'] = 'Active Users'
+            context['profiles'] = profiles
+
         return render(request, 'filter/Index.html', context)
 
 
