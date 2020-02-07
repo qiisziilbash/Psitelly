@@ -223,7 +223,7 @@
         <h1>Related Videos</h1>
         {% if videosList %}
             {% for videos in videosList %}
-                <div class="video-gallery">
+                <div class="side-video-gallery">
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
                             <div class="image-box">

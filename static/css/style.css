@@ -271,14 +271,17 @@ h1{
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
+
     border-radius: var(--border-radius1);
-    grid-template-columns: repeat(auto-fill,150px);
-    grid-template-rows: repeat(auto-fill,1fr);
-    text-align: center;
+    grid-template-columns: repeat(12,160px);
+
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
 }
 
 .profile-item{
     position: relative;
+    text-align: center;
 }
 
 .profile-item label{
@@ -364,6 +367,19 @@ h1{
     display: grid;
     grid-gap: 10px;
     border-radius: var(--border-radius1);
+
+    grid-template-columns: repeat(10, minmax(350px,1fr));
+
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+}
+
+.side-video-gallery {
+    background-color: var(--backgroundColor2);
+    display: grid;
+    grid-gap: 10px;
+    border-radius: var(--border-radius1);
+
     grid-template-columns: repeat(auto-fill, minmax(330px,1fr));
 }
 

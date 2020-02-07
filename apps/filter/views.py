@@ -272,10 +272,10 @@ def index(request):
         # Videos
         titles = ['Recent Videos', 'Popular Videos', 'Upvoted Videos', 'Random Videos']
 
-        recentVideos = Video.objects.order_by('-publishDate')[:4]
-        popularVideos = Video.objects.order_by('-views')[:4]
-        upvotedVideos = Video.objects.order_by('-likes')[:4]
-        randomVideos = Video.objects.order_by('?')[:4]
+        recentVideos = Video.objects.order_by('-publishDate')[:8]
+        popularVideos = Video.objects.order_by('-views')[:8]
+        upvotedVideos = Video.objects.order_by('-likes')[:8]
+        randomVideos = Video.objects.order_by('?')[:12]
 
         recentVideoList = zip(recentVideos, get_watch_later_videos(request.user, recentVideos))
         popularVideoList = zip(popularVideos, get_watch_later_videos(request.user, popularVideos))
@@ -288,13 +288,13 @@ def index(request):
         types = []
         categories = []
 
-        focuses = Focus.objects.order_by('-nVideos')[:2]
+        focuses = Focus.objects.order_by('-nVideos')[:3]
         if focuses:
             for focus in focuses:
                 types.append('Focus')
                 categories.append(focus.title)
 
-        journals = Journal.objects.order_by('-nVideos')[:2]
+        journals = Journal.objects.order_by('-nVideos')[:3]
         if journals:
             for journal in journals:
                 types.append('Journal')
@@ -306,7 +306,7 @@ def index(request):
                 types.append('Topic')
                 categories.append(topic.title)
 
-        authors = Author.objects.order_by('-nVideos')[:2]
+        authors = Author.objects.order_by('-nVideos')[:3]
         if authors:
             for author in authors:
                 types.append('Author')
@@ -317,7 +317,7 @@ def index(request):
             context['categories'] = zip(types, categories)
 
         # active users
-        profiles = Profile.objects.order_by('-nVideos')[:9]
+        profiles = Profile.objects.order_by('-nVideos')[:12]
         if profiles:
             context['profilesTitle'] = 'Active Users'
             context['profiles'] = profiles
