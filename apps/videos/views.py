@@ -440,20 +440,20 @@ def create_different_video_qualities(video, random_suffix, video_suffix):
         clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_360' + output_suffix, codec='libx264',
                              temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
-        video.videoFile360 = fs.url('videos/' + fileName + random_suffix + '_360' + output_suffix)
-
         clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + random_suffix + video_suffix,
                              target_resolution=(480, None))
         clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_480' + output_suffix, codec='libx264',
                              temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
-
-        video.videoFile480 = fs.url('videos/' + fileName + random_suffix + '_480' + output_suffix)
 
         clip = VideoFileClip(MEDIA_ROOT + 'videos/' + fileName + random_suffix + video_suffix,
                              target_resolution=(720, None))
         clip.write_videofile(MEDIA_ROOT + 'videos/' + fileName + random_suffix + '_720' + output_suffix, codec='libx264',
                              temp_audiofile=MEDIA_ROOT + 'videos/temp-audio.m4a', audio_codec='aac')
 
+        video = Video.objects.get(pk=video.pk)
+
+        video.videoFile360 = fs.url('videos/' + fileName + random_suffix + '_360' + output_suffix)
+        video.videoFile480 = fs.url('videos/' + fileName + random_suffix + '_480' + output_suffix)
         video.videoFile720 = fs.url('videos/' + fileName + random_suffix + '_720' + output_suffix)
 
         video.isProcessed = True
