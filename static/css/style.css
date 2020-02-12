@@ -660,7 +660,15 @@ h1{
     grid-template-columns: minmax(300px, 1100px) ;
     justify-content: center;
 }
-    
+
+.plyr .plyr__video-wrapper {
+  height: 650px;
+}
+
+.plyr video {
+  height: 100% !important;
+  width: 100%;
+}
 
 /********************************************************************************/
 /********************************************************************************/

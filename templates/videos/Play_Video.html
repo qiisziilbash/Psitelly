@@ -11,7 +11,7 @@
     <!------------------------------------------------------------------------------------->
     <div>
         {% if video.videoFile720 == '' %}
-            <video class="js-player" controls playsinline id="main-video-player" 
+            <video class="js-player" controls playsinline id="main-video-player"
                 data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
                 <source src="{{ video.videoFile }}" >
             </video>
