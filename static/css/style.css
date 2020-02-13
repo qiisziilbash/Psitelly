@@ -42,7 +42,11 @@
     font-family: var(--font1);
 }
 
-*::-webkit-scrollbar { width: 0 !important}
+@-moz-document url-prefix() {
+    .sidebar{ scrollbar-width: none !important;}
+    .content{ scrollbar-width: none !important;}
+}
+
 
 
 ::placeholder {
@@ -195,12 +199,16 @@ h1{
     padding: 5px;
 }
 
+.sidebar::-webkit-scrollbar { width: 0 !important;}
+
 .rightbar{
     grid-area: rightbar;
     overflow-y: scroll;
     border-left: 2px solid black;
     padding: 5px;
 }
+
+.rightbar::-webkit-scrollbar { width: 0 !important;}
 
 .sidebar, .rightbar{
     background-color: var(--backgroundColor6);
@@ -240,6 +248,8 @@ h1{
     padding-right: 10px !important;
     padding-top: var(--top-offset) !important;
 }
+
+.content::-webkit-scrollbar { width: 0}
 
 .textContent{
     border-radius: var(--border-radius1);
