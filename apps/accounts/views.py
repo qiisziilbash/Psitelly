@@ -302,8 +302,13 @@ def sign_in(request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
 
-        if User.objects.filter(username=username).exists():
-            user = User.objects.get(username=username)
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=username):
+            if User.objects.filter(username=username).exists():
+                user = User.objects.get(username=username)
+            else:
+                user = User.objects.get(email=username)
+                username = user.username
+
             if user.profile.emailVerified:
                 user = authenticate(username=username, password=password)
                 if user:
@@ -314,7 +319,7 @@ def sign_in(request):
             else:
                 msg = 'Your email is not verified'
         else:
-            msg = 'This username does not exist'
+            msg = 'This username or email does not exist in our database'
 
         context['msgs'] = [msg]
 
