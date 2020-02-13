@@ -10,21 +10,24 @@
                 {% csrf_token %}
                 <div class="textContent">
                     <p id="formContent">
-                        <label for="usernameText">Username</label><br>
-                        <span class="effectWrapper">
-                            <input type="text" id="usernameText" name="username" placeholder="4 Characters at least; username is case-sensitive" required pattern=".{4,100}">
+                        <label for="usernameText" style="width: 49%">Username *</label>
+                        <label for="emailText" style="width: 49%"> Email *</label>
+
+                        <br>
+                        <span class="effectWrapper" style="width: 49%">
+                            <input type="text" id="usernameText" name="username" placeholder="At least 4 characters; username is case-sensitive" required pattern=".{4,100}">
                             <span class="focus-border"></span>
                         </span>
-                        <br><br><br>
 
-                        <label for="emailText"> Email</label><br>
-                        <span class="effectWrapper">
+
+                        <span class="effectWrapper" style="width: 49%">
                             <input type="email" id="emailText" placeholder="Your email will be used for verification" name="email" pattern=".{,100}" required>
                             <span class="focus-border"></span>
                         </span>
                         <br><br><br>
 
 
+                        <!---
                         <label for="secQuestionText"> Security Question</label><br>
                         <select name="secQuestion" required>
                             <option value="What is your security phrase?">What is your security phrase?</option>
@@ -41,17 +44,29 @@
                             <span class="focus-border"></span>
                         </span>
                         <br><br><br>
+                        --->
 
-                        <label for="passwordText">Password</label><br>
-                        <span class="effectWrapper">
+                        <label for="passwordText" style="width: 49%">Password *</label>
+                        <label for="confirmPasswordText" style="width: 49%">Confirm Password *</label><br>
+                        <span class="effectWrapper" style="width: 49%">
                             <input type="password" id="passwordText" name="password"
-                                   placeholder="4 Characters at least (Should include at least 1 upper-case letter, 1 lower case, and 1 number)"
-                                   required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                                   placeholder="At least 1 upper-case letter, 1 lower case, and 1 number"
+                                   required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,}$">
                             <span class="focus-border"></span>
                         </span>
 
-                        <br>
-                        <br>
+
+                        <span class="effectWrapper" style="width: 49%">
+                            <input type="password" id="confirmPasswordText" name="confirmPassword"
+                                   placeholder="At least 1 upper-case letter, 1 lower case, and 1 number"
+                                   required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,}$">
+                            <span class="focus-border"></span>
+                        </span>
+
+                        <br><br><br>
+
+                        <!--- local: 6LfNB8UUAAAAALcAwEJN-WVMTw24ifIoHeFKBBP0 --->
+                        <!--- server: 6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY --->
 
                         <p class="g-recaptcha" data-sitekey="6LdxtsUUAAAAABThyLECKr75gQLM5wJrxhLgilTY"></p><br><br>
                     </p>
@@ -69,7 +84,7 @@
             <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
             <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
             <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
-            <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+            <a href="{% url 'verifyAccount' %}"><input type="button" value="Want to verify your email?"></a><br>
             <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
         </ul>
 
@@ -82,7 +97,6 @@
             <li>Username is case-sensitive</li>
             <li>Username should be at least 4 characters</li>
             <hr>
-            <li>Password should be at least 4 characters</li>
             <li>Password should have at least 1 uppercase</li>
             <li>Password should have at least 1 lowercase</li>
             <li>Password should have at least 1 number</li>
@@ -99,10 +113,19 @@
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
+            if($('#passwordText').val() != $('#confirmPasswordText').val()){
+                alert('Password confirmation does not match the password, please try again.')
+                return false;
+            }
+
             if (grecaptcha.getResponse() === '') {
               alert('Please check the recaptcha');
               return false;
             }
+
+
+
+
 
             if ($('#registerBtn').attr('name') === 'preRegister'){
 
@@ -116,8 +139,6 @@
                          username: $('#usernameText').val(),
                          password: $('#passwordText').val(),
                          email: $('#emailText').val(),
-                         secQuestion: $('#secQuestionText').val(),
-                         secAnswer: $('#secAnswerText').val(),
                          recaptcha:grecaptcha.getResponse(),
                          csrfmiddlewaretoken: '{{ csrf_token }}',
                     },
@@ -139,8 +160,6 @@
                             $('#usernameText').attr('disabled',true);
                             $('#emailText').attr('disabled',true);
                             $('#passwordText').attr('disabled',true);
-                            $('#secAnswerText').attr('disabled', true);
-                            $('#secQuestionText').attr('disabled', true);
 
                         }else{
                             $('#registerBtn').html( 'Register');
@@ -159,8 +178,6 @@
                          password: $('#passwordText').val(),
                          email: $('#emailText').val(),
                          code: $('#verificationCode').val(),
-                         secQuestion: $('#secQuestionText').val(),
-                         secAnswer: $('#secAnswerText').val(),
                          csrfmiddlewaretoken: '{{ csrf_token }}',
                     },
                     dataType: 'json',

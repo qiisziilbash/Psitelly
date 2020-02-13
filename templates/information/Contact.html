@@ -7,11 +7,11 @@
                 <li style="font-weight: bold">{{ msg }}</li>
             {% endfor %}
         {% endif %}
-        <h1>Contact Us</h1>
+        <h1>Contact us</h1>
         <div class="textContent">
             <form id="contactUsForm" method="POST" enctype="multipart/form-data" autocomplete="off" >
                 {% csrf_token %}
-                <label>Subject</label><br>
+                <label>Subject *</label><br>
                 <span class="effectWrapper">
                     <input list="subjects" name="subject" id="subjectID" required>
                     <span class="focus-border"></span>
@@ -35,7 +35,7 @@
                 <br><br><br>
 
 
-                <label for="contentID">Content </label><br><br>
+                <label for="contentID">Content *</label><br><br>
                 <span class="effectWrapper">
                     <textarea rows="4" spellcheck="true" id="contentID" name="content" required></textarea>
                     <span class="focus-border"></span>

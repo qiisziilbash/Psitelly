@@ -5,7 +5,6 @@ import json
 
 import random
 import re
-import string
 
 from pytz import utc
 
@@ -64,9 +63,6 @@ def edit_profile(request):
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
 
-            secQuestion = request.POST.get('secQuestion', '')
-            secAnswer = request.POST.get('secAnswer', '')
-
             newPass1 = request.POST.get('newPass1', '')
             newPass2 = request.POST.get('newPass2', '')
 
@@ -84,6 +80,7 @@ def edit_profile(request):
             if not username == request.user.username:
                 if not User.objects.filter(username=username).exists():
                     request.user.username = username
+                    request.user.save()
                     msgs.append('Your username is updated')
                 else:
                     msgs.append('Entered username already exists; pick another username')
@@ -91,26 +88,26 @@ def edit_profile(request):
             if not email == request.user.email:
                 if not User.objects.filter(email=email).exists():
                     request.user.email = email
+                    request.user.profile.emailVerified = False
+                    request.user.save()
                     msgs.append('Your email is updated')
+                    context['verify'] = True
                 else:
                     msgs.append('Entered email address already exists; pick another email')
 
-            if not request.user.profile.secQuestion == secQuestion:
-                request.user.profile.secQuestion = secQuestion
-                msgs.append('Your security question is updated')
-
-            if not request.user.profile.secAnswer == secAnswer:
-                request.user.profile.secAnswer = secAnswer
-                msgs.append('Your security answer is updated')
-
             if not newPass1 == '':
-                if newPass1 == newPass2:
-                    request.user.set_password(newPass1)
-                    user = authenticate(username=username, password=newPass1)
-                    login(request, user)
-                    msgs.append('Your password is updated')
+                if len(newPass1) > 2:
+                    if newPass1 == newPass2:
+                        request.user.set_password(newPass1)
+                        request.user.save()
+                        user = authenticate(username=username, password=newPass1)
+                        login(request, user)
+                        msgs.append('Your password is updated')
+                    else:
+                        msgs.append('Entered passwords do not match')
                 else:
-                    msgs.append('Entered passwords do not match')
+                    msgs.append('Password format is invalid. Password should have at least 1 digit, 1 uppercase and' +
+                                '1 lowercase character ')
 
             notificationsIsUpdated = False
 
@@ -227,11 +224,11 @@ def delete_notifications(request):
 
 def follow(request):
     if request.user.is_authenticated:
-        followType = request.GET.get('followType', None)
-        customCategory = request.GET.get('customCategory', None)
+        followType = request.GET.get('followType', '')
+        customCategory = request.GET.get('customCategory', '')
 
         if followType == 'user':
-            followee = User.objects.get(username=request.GET.get('username', None))
+            followee = User.objects.get(username=request.GET.get('username', ''))
             UserFollowing.objects.create(follower=request.user.profile, followee=followee.profile)
 
         elif followType == 'Focus':
@@ -258,11 +255,11 @@ def follow(request):
 def unfollow(request):
     if request.user.is_authenticated:
 
-        followType = request.GET.get('followType', None)
-        customCategory = request.GET.get('customCategory', None)
+        followType = request.GET.get('followType', '')
+        customCategory = request.GET.get('customCategory', '')
 
         if followType == 'user':
-            followee = User.objects.get(username=request.GET.get('username', None))
+            followee = User.objects.get(username=request.GET.get('username', ''))
             UserFollowing.objects.get(follower=request.user.profile, followee=followee.profile).delete()
 
         elif followType == 'Focus':
@@ -302,19 +299,20 @@ def sign_in(request):
         return render(request, 'accounts/Login.html', context)
 
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
 
         if User.objects.filter(username=username).exists():
-            user = authenticate(username=username, password=password)
-            if user:
-                if user.profile.emailVerified:
+            user = User.objects.get(username=username)
+            if user.profile.emailVerified:
+                user = authenticate(username=username, password=password)
+                if user:
                     login(request, user)
                     return redirect('index')
                 else:
-                    msg = 'Your email is not verified'
+                    msg = 'Password is not correct'
             else:
-                msg = 'Password is not correct'
+                msg = 'Your email is not verified'
         else:
             msg = 'This username does not exist'
 
@@ -368,63 +366,68 @@ def forgot(request):
 ########################################################################################################################
 def pre_register(request):
     if request.method == "POST":
+        try:
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': request.POST.get('recaptcha', None)
+            }
 
-        url = 'https://www.google.com/recaptcha/api/siteverify'
-        values = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-            'response': request.POST.get('recaptcha', None)
-        }
+            data = urlencode(values).encode("utf-8")
+            req = Request(url, data)
+            response = urlopen(req)
+            result = json.load(response)
 
-        data = urlencode(values).encode("utf-8")
-        req = Request(url, data)
-        response = urlopen(req)
-        result = json.load(response)
+            if result['success']:
+                username = request.POST.get('username', '')
+                email = request.POST.get('email', '')
 
-        if result['success']:
-            username = request.POST.get('username', None)
-            email = request.POST.get('email', None)
+                if not User.objects.filter(username=username).exists():
+                    if not User.objects.filter(email=email).exists():
+                        try:
+                            password = request.POST.get('password', '')
+                            if len(password) > 2:
+                                password = make_password(password)
+                            else:
+                                return JsonResponse({'msg': 'Password format is invalid'})
 
-            if not User.objects.filter(username=username).exists():
-                if not User.objects.filter(email=email).exists():
-                    try:
-                        password = make_password(request.POST.get('password', None))
-                        secQuestion = request.POST.get('secQuestion', None)
-                        secAnswer = request.POST.get('secAnswer', None)
+                            user = User.objects.create(username=username, email=email, password=password)
 
-                        user = User.objects.create(username=username, email=email, password=password)
-                        user.profile.secAnswer = secAnswer
-                        user.profile.secQuestion = secQuestion
-                        user.profile.notifyComments = True
-                        user.profile.notifyFollows = True
-                        user.profile.notifyUploads = True
-                        user.profile.notifyMentions = True
-                        user.profile.emailComments = True
-                        user.profile.emailUploads = True
-                        user.profile.emailFollows = True
-                        user.profile.save()
+                            user.profile.notifyComments = True
+                            user.profile.notifyFollows = True
+                            user.profile.notifyUploads = True
+                            user.profile.notifyMentions = True
+                            user.profile.emailComments = True
+                            user.profile.emailUploads = True
+                            user.profile.emailFollows = True
+                            user.profile.emailMentions = True
+                            user.profile.save()
 
-                        send_code(user)
+                            send_code(user, 'verifyEmail')
 
-                        return JsonResponse({'msg': 'Success'})
-                    except:
-                        return JsonResponse({'msg': 'We could not register this account since entered email is not valid'})
+                            return JsonResponse({'msg': 'Success'})
+                        except:
+                            User.objects.get(username=username).delete()
+                            return JsonResponse({'msg': 'Registration failed probably due to an invalid email address'})
+                    else:
+                        return JsonResponse({'msg': 'This email is already used'})
                 else:
-                    return JsonResponse({'msg': 'This email is already used'})
+                    return JsonResponse({'msg': 'This username is already picked'})
             else:
-                return JsonResponse({'msg': 'This username is already picked'})
-        else:
-            return JsonResponse({'msg': 'Invalid reCAPTCHA. Please try again.'})
+                return JsonResponse({'msg': 'Invalid reCAPTCHA. Please try again.'})
+        except:
+            return JsonResponse({'msg': 'reChaptcha evaluation failed.'})
 
 
 def post_register(request):
     if request.method == "POST":
-        username = request.POST.get('username', None)
-        email = request.POST.get('email', None)
-        password = request.POST.get('password', None)
+        username = request.POST.get('username', '')
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
 
         if User.objects.filter(username=username, email=email).exists():
             user = User.objects.get(username=username, email=email)
-            code = request.POST.get('code', None)
+            code = request.POST.get('code', '')
 
             codeRequestTime = user.profile.codeRequestTime.replace(tzinfo=utc)
             now = datetime.datetime.now().replace(tzinfo=utc)
@@ -460,49 +463,76 @@ def change_password(request):
 
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
-            secQuestion = request.POST.get('secQuestion', None)
-            secAnswer = request.POST.get('secAnswer', None)
+            password = request.POST.get('newPassword', '')
+            code = request.POST.get('code', '')
 
-            if user.profile.secQuestion == secQuestion and user.profile.secAnswer == secAnswer:
-                try:
-                    send_password(user)
-                    return JsonResponse({'msg': 'Success'})
-                except:
-                    return JsonResponse({'msg': 'We could not send password since entered email is not valid'})
+            codeRequestTime = user.profile.codeRequestTime.replace(tzinfo=utc)
+
+            now = datetime.datetime.now().replace(tzinfo=utc)
+
+            if not codeRequestTime + datetime.timedelta(minutes=5) < now:
+
+                if len(password) > 2:
+                    if str(user.profile.code) == code:
+                        user.set_password(password)
+                        user.save()
+
+                        user = authenticate(username=user.username, password=password)
+
+                        if user:
+                            login(request, user)
+                            return JsonResponse({'msg': 'Success'})
+                        else:
+                            return JsonResponse({'msg': 'Password change failed'})
+                    else:
+                        return JsonResponse({'msg': 'Entered code is not correct; please try again'})
+                else:
+                    return JsonResponse({'msg': 'Entered password does not follow the specified format'})
+
             else:
-                return JsonResponse({'msg': 'Your security question or answer does not match the records'})
-
+                try:
+                    send_code(user, 'passwordChange')
+                    return JsonResponse(
+                        {'msg': 'Entered code is expired; another code has been sent. Check your email again.'})
+                except:
+                    return JsonResponse(
+                        {'msg': 'Entered code is expired. Contact us for more detail.'})
         else:
             return JsonResponse({'msg': 'This email does not exist in our database'})
 
 
 def send_verification_code(request):
     if request.method == "POST":
-        email = request.POST.get('email', None)
+        email = request.POST.get('email', '')
+        type = request.POST.get('type', '')
 
         if User.objects.filter(email=email).exists():
-            user = User.objects.get(email=request.POST.get('email', None))
-            secQuestion = request.POST.get('secQuestion', None)
-            secAnswer = request.POST.get('secAnswer', None)
+            user = User.objects.get(email=email)
 
-            if user.profile.secQuestion == secQuestion and user.profile.secAnswer == secAnswer:
+            if type == 'emailVerification':
                 if not user.profile.emailVerified:
                     try:
-                        send_code(user)
+                        send_code(user, type)
                         return JsonResponse({'msg': 'Success'})
                     except:
-                        return JsonResponse({'msg': 'We could not verify your account since your email is not valid.'})
+                        return JsonResponse({'msg': 'Sending email to this address failed; please try again'})
                 else:
                     return JsonResponse({'msg': 'This email is already verified'})
+            elif type == 'passwordChange':
+                try:
+                    send_code(user, type)
+                    return JsonResponse({'msg': 'Success'})
+                except:
+                    return JsonResponse({'msg': 'Sending email to this address failed; please try again'})
             else:
-                return JsonResponse({'msg': 'Your security question or answer does not match the records'})
+                return JsonResponse({'msg': 'Verification type is not identified'})
         else:
             return JsonResponse({'msg': 'This email does not exist in our database'})
 
 
 def verify_code(request):
     if request.method == "POST":
-        email = request.POST.get('email', None)
+        email = request.POST.get('email', '')
 
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
@@ -512,7 +542,7 @@ def verify_code(request):
 
             if not codeRequestTime + datetime.timedelta(minutes=5) < now:
 
-                if str(user.profile.code) == request.POST.get('code', None):
+                if str(user.profile.code) == request.POST.get('code', ''):
                     user.profile.emailVerified = True
                     user.save()
 
@@ -521,7 +551,7 @@ def verify_code(request):
                     return JsonResponse({'msg': 'Entered code is not correct; please try again'})
             else:
                 try:
-                    send_code(user)
+                    send_code(user, 'emailVerification')
                     return JsonResponse(
                         {'msg': 'Entered code is expired; another code has been sent. Check your email again.'})
                 except:
@@ -532,40 +562,24 @@ def verify_code(request):
 
 
 ########################################################################################################################
-def send_code(user):
-    user.profile.code = random.randint(1, 1000000)
+def send_code(user, type):
+    user.profile.code = random.randint(10000, 10000000)
     user.profile.codeRequestTime = datetime.datetime.now()
-    user.profile.emailVerified = False
+
+    if type == 'emailVerification':
+        user.profile.emailVerified = False
 
     user.save()
 
-    subject = 'Confirmation code for Psitelly Registration'
-    msg = 'Dear %s\n\nYou are receiving this email because your email address is used to register in psitelly.com.' \
-          '\nThis is your confirmation code for registration: %d\n\nThanks,\n Psitelly' % (
+    subject = 'Verification code for Psitelly'
+    msg = 'Dear %s\n\nYou are receiving this email because your email address is used to verify an account ' \
+          'in psitelly.com.' \
+          '\nThis is your verification code: %d\n\nThanks,\n Psitelly' % (
               user.username, user.profile.code)
 
     send_mail(subject, msg, 'psitelly@gmail.com', [user.email], fail_silently=True)
 
     return 0
-
-
-def send_password(user):
-    newPassword = generate_password(12)
-    user.set_password(newPassword)
-    user.save()
-
-    subject = 'New Password for Psitelly Account'
-    msg = 'Dear %s\n\nYou are receiving this email because your email address is used to reset password in ' \
-          'psitelly.com.' \
-          '\nThis is your new password: %s\n Please delete this email after reading for the security purposes.\n\n ' \
-          'Thanks,\n Psitelly' % (user.username, newPassword)
-
-    send_mail(subject, msg, 'psitelly@gmail.com', [user.email], fail_silently=True)
-    return 0
-
-
-def generate_password(size, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
 
 
 def purge_file(directory, pattern):

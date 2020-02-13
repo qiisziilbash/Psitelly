@@ -2,43 +2,23 @@
 
 {% block content%}
     <div class="content">
-        {% if user.is_authenticated %}
-            <li style="font-weight: bold">You are already Logged in.</li>
-        {% else %}
         <form id="verificationForm">
             {% csrf_token %}
-            <h1> Verify your account</h1>
+            <h1> Verify your email address</h1>
             <div class="textContent">
+                <p id="formContent">
                 <label for="emailText"> Email</label><br>
                 <span class="effectWrapper">
                     <input id="emailText" type="text" name="email" required>
                     <span class="focus-border"></span>
                 </span>
-                <br><br><br>
-
-                <label for="secQuestionText"> Security Question</label><br>
-                <select id="secQuestionText" name="secQuestion" required>
-                    <option value="What is your security phrase?">What is your security phrase?</option>
-                    <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
-                    <option value="Who was your first kiss?">Who was your first kiss?</option>
-                    <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
-                </select>
-
-                <br><br><br>
-
-                <label for="secAnswerText"> Your Answer</label><br>
-                <span class="effectWrapper">
-                    <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required>
-                    <span class="focus-border"></span>
-                </span>
                 <br><br><br><br>
 
-                <p id="verificationContent" style="display: none"></p>
-
+                </p>
                 <button id="verifyBtn" type="submit" name="sendCode">Send Code</button><br><br><br>
             </div>
         </form>
-    {% endif %}
+
     </div>
 
     <div class="rightbar">
@@ -47,7 +27,7 @@
             <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
             <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
             <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
-            <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+            <a href="{% url 'verifyAccount' %}"><input type="button" value="Want to verify your email?"></a><br>
             <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
         </ul>
     </div>
@@ -68,8 +48,7 @@
                   url:  '/ajax/sendVerificationCode/',
                   data: {
                       email:  $('#emailText').val(),
-                      secQuestion: $('#secQuestionText').val(),
-                      secAnswer: $('#secAnswerText').val(),
+                      type: 'emailVerification',
                       csrfmiddlewaretoken: '{{ csrf_token }}',
                   },
                   dataType: 'json',
@@ -81,13 +60,12 @@
                           $('#verifyBtn').attr('name','verify');
                           $('#verifyBtn').html('Verify');
                           $('#emailText').attr('disabled',true);
-                          $('#secAnswerText').attr('disabled',true);
-                          $('#secQuestionText').attr('disabled',true);
-                          $('#verificationContent').style.display = "inline";
-                          $('#verificationContent').append(
-                              "<label> Verification Code:</label> <br>" +
-                              "<input id=\"codeText\" type=\"text\" name=\"code\" class=\"form-control\"  placeholder=\"Verification Code\">" +
+
+                          $('#formContent').append(
+                              "<label> Verification Code</label> <br>" +
+                              "<input id=\"codeText\" type=\"text\" name=\"code\"  placeholder=\"Verification Code\">" +
                               "<br/>  <br/>");
+
                       }else{
                           $('#verifyBtn').html('Send Code');
                           alert(data.msg)
@@ -112,7 +90,7 @@
                   success: function (data) {
                       if(data.msg == "Success"){
                           alert('Your email is verified.')
-                          window.location.href = '/accounts/login';
+                          window.location.href = '/accounts/profile';
                       }else{
                           $('#verifyBtn').attr("disabled", false);
                           $('#verifyBtn').html('Verify');

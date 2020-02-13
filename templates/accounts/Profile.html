@@ -30,6 +30,9 @@
                 <br><br>
 
                 <div class="textContent">
+                    <b style="font-size: large">General</b>
+                    <hr>
+                    <br>
                     <label style="width: 49%">Username</label>
                     <label style="width: 49%">Email</label><br>
                     <label style="width: 49%; font-weight: normal">
@@ -38,19 +41,11 @@
                     <label style="width: 49%; font-weight: normal">
                         {{ user.email }}
                     </label>
-                    <br><br>
+                    <br><br><br>
 
-                    <label style="width: 49%">Security question</label>
-                    <label style="width: 49%">Security answer</label><br>
-                    <label style="width: 49%; font-weight: normal">
-                        {{ user.profile.secQuestion }}
-                    </label>
-                    <label style="width: 49%; font-weight: normal">
-                        {{ user.profile.secAnswer }}
-                    </label>
-                    <br><br>
 
-                    <h3><u>Notifications</u></h3>
+                    <b style="font-size: large;">Notifications</b>
+                    <hr><br>
 
 
                     <label style="width: 45%">When my followees upload a video</label>
@@ -143,7 +138,7 @@
                 <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
                 <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
                 <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
-                <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+                <a href="{% url 'verifyAccount' %}"><input type="button" value="Want to verify your email?"></a><br>
                 <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
             </ul>
         {% endif %}

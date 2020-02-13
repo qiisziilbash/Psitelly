@@ -6,8 +6,13 @@
             {% for msg in msgs %}
                 <li style="font-weight: bold">{{ msg }}</li>
             {% endfor %}
+            {% if verify %}
+                <li style="font-weight: bold">Important: You have to verify your email address in order to login next time.
+                    Click <a href="{% url 'verifyAccount' %}">here</a> to verify your email address.</li>
+            {% endif %}
             <li style="font-weight: bold"><a href="{% url 'profile' %}"> Back to your profile</a></li><br><br>
         {% endif %}
+
 
         {% if user.is_authenticated %}
             <form enctype="multipart/form-data" method="POST" action="{% url 'editProfile' %}">
@@ -16,12 +21,15 @@
 
                 <div class="textContent">
 
-                    <label style="width: 49%">Profile Picture</label><br>
+                    <b style="font-size: large">Profile Picture</b><br>
                     <span class="effectWrapper" style="width: 49%">
                         <input type="file" name="profilePicture" accept="image/png, image/jpeg" >
                         <span class="focus-border"></span>
                     </span>
-                    <br><br><br>
+                    <br><br><br><br><br>
+
+                    <b style="font-size: large ">General</b>
+                    <hr><br>
 
                     <label style="width: 49%">Username</label>
                     <label style="width: 49%">Email</label>
@@ -38,26 +46,6 @@
                     <br><br><br><br>
 
 
-                    <label style="width: 49%">Security Question</label>
-                    <label style="width: 49%">Security Answer</label>
-
-                    <span class="effectWrapper" style="width: 49%;">
-                        <select id="secQuestionText" name="secQuestion" required>
-                            <option value="What is your security phrase?">What is your security phrase?</option>
-                            <option value="Who was your favorite childhood hero?">Who was your favorite childhood hero?</option>
-                            <option value="Who was your first kiss?">Who was your first kiss?</option>
-                            <option value="Where were you when you had your first kiss?">Where were you when you had your first kiss?</option>
-                        </select>
-                        <span class="focus-border"></span>
-                    </span>
-
-
-                    <span class="effectWrapper" style="width: 49%;">
-                        <input type="text" id="secAnswerText" name="secAnswer" pattern=".{,100}" required value={{ user.profile.secAnswer }}>
-                        <span class="focus-border"></span>
-                    </span>
-
-                    <br><br><br><br>
 
 
                     <label style="width: 49%">New Password</label>
@@ -68,18 +56,21 @@
 
                     <span class="effectWrapper" style="width: 49%">
                         <input type="password" id="newPass1Text" name="newPass1"
-                               class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,}$">
                         <span class="focus-border"></span>
                     </span>
 
                     <span class="effectWrapper" style="width: 49%">
-                        <input type="password" id="newPass2Text" name="newPass2" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$">
+                        <input type="password" id="newPass2Text" name="newPass2"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,}$">
                         <span class="focus-border"></span>
                     </span>
-                    <br><br><br><br>
+                    <br><br><br><br><br><br>
 
 
-                    <h3><u>Notifications</u></h3>
+                    <b style="font-size: large">Notifications</b>
+                    <hr>
+                    <br>
 
 
                     <label style="width: 45%">When my followees upload a video</label>
@@ -220,13 +211,13 @@
                     <br><br><br><br><br>
 
                     <button type="submit" name="save">Save</button>
-                    <button type="submit" name="cancel" formnovalidate>Cancel</button>
+                    <button type="submit" name="cancel" formnovalidate>Back</button>
                     <br><br>
                 </div>
             </form>
         {% else %}
             <span style="font-weight: bold">
-                You are not logged in yet. Please <a href="{% url 'register' %}"> Log in </a> first.
+                You are not logged in yet. Please <a href="{% url 'login' %}"> Log in </a> first.
             </span>
         {% endif %}
     </div>
@@ -238,18 +229,22 @@
                 <li>Username is case-sensitive</li>
                 <li>Username should be at least 4 characters</li>
                 <hr>
-                <li>Password should be at least 4 characters</li>
                 <li>Password should have at least 1 uppercase</li>
                 <li>Password should have at least 1 lowercase</li>
                 <li>Password should have at least 1 number</li>
             </div>
+            <h3>Related Links</h3>
+            <ul>
+                <a href="{% url 'verifyAccount' %}"><input type="button" value="Want to verify your email?"></a><br>
+                <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
+            </ul>
         {% else %}
             <h3>Related Links</h3>
             <ul>
                 <a href="{% url 'login' %}"><input type="button" value="Log in"></a><br>
                 <a href="{% url 'register' %}"><input type="button" value="Not a member yet?"></a><br>
                 <a href="{% url 'forgot' %}"><input type="button" value="Forgot your password?"></a><br>
-                <a href="{% url 'verifyAccount' %}"><input type="button" value="Registered but not verified your email?"></a><br>
+                <a href="{% url 'verifyAccount' %}"><input type="button" value="Want to verify your email?"></a><br>
                 <a href="{% url 'contact' %}"><input type="button" value="Do you have any technical problem?"></a><br>
             </ul>
         {% endif %}
