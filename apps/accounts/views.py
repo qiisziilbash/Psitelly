@@ -387,7 +387,7 @@ def pre_register(request):
                 username = request.POST.get('username', '')
                 email = request.POST.get('email', '')
 
-                if not User.objects.filter(username=username).exists():
+                if not User.objects.filter(username__iexact=username).exists():
                     if not User.objects.filter(email=email).exists():
                         try:
                             password = request.POST.get('password', '')
