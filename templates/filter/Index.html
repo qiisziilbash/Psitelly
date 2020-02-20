@@ -89,9 +89,9 @@
                 <h1>{{ videos.0 }}</h1>
                      <hr>
                 {% if is_home %}
-                    <div class="video-gallery">
+                    <div class="video-gallery-horizontal">
                 {% else %}
-                    <div class="side-video-gallery">
+                    <div class="video-gallery-vertical">
                 {% endif %}
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
@@ -224,7 +224,11 @@
         <!------------------------------------------------------------------------------------->
         {% if profiles %}
             <h1>{{ profilesTitle }}</h1>
-            <div class="profile-gallery">
+            {% if is_home %}
+                <div class="profile-gallery-horizontal">
+            {% else %}
+                <div class="profile-gallery-vertical">
+            {% endif %}
                 {% for profile in profiles %}
                     <div class="profile-item">
                         <a href="?customUser={{ profile.user.username }}">
@@ -243,7 +247,11 @@
         {% if categories %}
             <h1>{{ categoryTitles }}</h1>
             <hr>
-            <div class="profile-gallery">
+            {% if is_home%}
+                <div class="profile-gallery-horizontal">
+            {% else %}
+                <div class="profile-gallery-vertical">
+            {% endif %}
                 {% for category in categories %}
                     <div class="profile-item">
                         <a href="?customCategory={{ category.1 }}&type={{ category.0 }}">

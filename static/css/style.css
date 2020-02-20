@@ -277,7 +277,7 @@ h1{
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
-.profile-gallery {
+.profile-gallery-horizontal {
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
@@ -287,6 +287,16 @@ h1{
 
     overflow-x: scroll;
     scroll-snap-type: x proximity;
+}
+
+.profile-gallery-vertical {
+    background-color: var(--backgroundColor2);
+    display: grid;
+    grid-gap: 10px;
+
+    border-radius: var(--border-radius1);
+    grid-template-columns: repeat(auto-fill,160px);
+
 }
 
 .profile-item{
@@ -372,7 +382,7 @@ h1{
 /********************************************************************************/
 /********************************************************************************/
 /********************************************************************************/
-.video-gallery {
+.video-gallery-horizontal {
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
@@ -384,7 +394,7 @@ h1{
     scroll-snap-type: x proximity;
 }
 
-.side-video-gallery {
+.video-gallery-vertical {
     background-color: var(--backgroundColor2);
     display: grid;
     grid-gap: 10px;
