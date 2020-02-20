@@ -43,10 +43,10 @@ def upload_video(request):
             videoFile, thumbnailFile, duration, err = save_video(file, random_suffix, video_suffix)
 
             if not err:
-                focus = request.POST.get('focus', '')
-                topic = request.POST.get('topic', '')
-                journal = request.POST.get('journal', '')
-                author = request.POST.get('author', '')
+                focus = request.POST.get('focus', '').strip()
+                topic = request.POST.get('topic', '').strip()
+                journal = request.POST.get('journal', '').strip()
+                author = request.POST.get('author', '').strip()
 
                 if not Focus.objects.filter(title=focus).exists():
                     Focus.objects.create(title=focus)
@@ -103,10 +103,10 @@ def edit_video(request):
             videoPK = request.POST.get('videoPK', ' ')
             video = Video.objects.get(pk=videoPK)
 
-            focus = request.POST.get('focus', '')
-            topic = request.POST.get('topic', '')
-            journal = request.POST.get('journal', '')
-            author = request.POST.get('author', '')
+            focus = request.POST.get('focus', '').strip()
+            topic = request.POST.get('topic', '').strip()
+            journal = request.POST.get('journal', '').strip()
+            author = request.POST.get('author', '').strip()
 
             if not video.focus.title == focus:
                 fObj = Focus.objects.get(title=video.focus.title)
