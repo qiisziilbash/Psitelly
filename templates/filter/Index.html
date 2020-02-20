@@ -88,7 +88,11 @@
             {% for videos in videosList %}
                 <h1>{{ videos.0 }}</h1>
                      <hr>
-                <div class="video-gallery">
+                {% if is_home %}
+                    <div class="video-gallery">
+                {% else %}
+                    <div class="side-video-gallery">
+                {% endif %}
                     {% for video in videos.1 %}
                         <div class="video-item" id="{{ video.0.pk }}">
                             <div class="image-box">

@@ -269,6 +269,7 @@ def index(request):
                 return render(request, 'filter/Index.html', context)
 
         # homepage content
+        context['is_home'] = True
         # Videos
         titles = ['Recent Videos', 'Popular Videos', 'Upvoted Videos', 'Random Videos']
 
