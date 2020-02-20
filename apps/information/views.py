@@ -96,39 +96,39 @@ def get_tags(request):
             for tag in video.tags.all():
                 if tag.name.endswith('#a') or tag.name.endswith('@a'):
                     tag_name = tag.name[0:-2]
-                    if tag_name in tags_dict:
-                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    if tag_name.title() in tags_dict:
+                        tags_dict[tag_name.title()] = tags_dict[tag_name.title()] + 1
                     else:
-                        tags_dict[tag_name] = 1
+                        tags_dict[tag_name.title()] = 1
                     break
     elif type == 'journals':
         for video in videos:
             for tag in video.tags.all():
                 if tag.name.endswith('#j'):
                     tag_name = tag.name[0:-2]
-                    if tag_name in tags_dict:
-                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    if tag_name.title() in tags_dict:
+                        tags_dict[tag_name.title()] = tags_dict[tag_name.title()] + 1
                     else:
-                        tags_dict[tag_name] = 1
+                        tags_dict[tag_name.title()] = 1
 
     elif type == 'focuses':
         for video in videos:
             for tag in video.tags.all():
                 if tag.name.endswith('#f'):
                     tag_name = tag.name[0:-2]
-                    if tag_name in tags_dict:
-                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    if tag_name.title() in tags_dict:
+                        tags_dict[tag_name.title()] = tags_dict[tag_name.title()] + 1
                     else:
-                        tags_dict[tag_name] = 1
+                        tags_dict[tag_name.title()] = 1
     elif type == 'topics':
         for video in videos:
             for tag in video.tags.all():
                 if tag.name.endswith('#t') or tag.name.endswith('@t') or tag.name.endswith('$t'):
                     tag_name = tag.name[0:-2]
-                    if tag_name in tags_dict:
-                        tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    if tag_name.title() in tags_dict:
+                        tags_dict[tag_name.title()] = tags_dict[tag_name.title()] + 1
                     else:
-                        tags_dict[tag_name] = 1
+                        tags_dict[tag_name.title()] = 1
                     break
     else:
         for video in videos:
@@ -138,9 +138,9 @@ def get_tags(request):
                 else:
                     tag_name = tag.name
                 if tag_name in tags_dict:
-                    tags_dict[tag_name] = tags_dict[tag_name] + 1
+                    tags_dict[tag_name.title()] = tags_dict[tag_name.title()] + 1
                 else:
-                    tags_dict[tag_name] = 1
+                    tags_dict[tag_name.title()] = 1
 
     for tag in tags_dict:
         tags.append({"tag": tag, 'count': tags_dict[tag]})
