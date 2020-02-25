@@ -302,12 +302,13 @@ def sign_in(request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
 
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=username):
-            if User.objects.filter(username=username).exists():
-                user = User.objects.get(username=username)
+        if User.objects.filter(username_iexact=username).exists() or User.objects.filter(email_iexact=username):
+            if User.objects.filter(username_iexact=username).exists():
+                user = User.objects.get(username_iexact=username)
             else:
-                user = User.objects.get(email=username)
-                username = user.username
+                user = User.objects.get(email_iexact=username)
+
+            username = user.username
 
             if user.profile.emailVerified:
                 user = authenticate(username=username, password=password)
@@ -388,7 +389,7 @@ def pre_register(request):
                 email = request.POST.get('email', '')
 
                 if not User.objects.filter(username__iexact=username).exists():
-                    if not User.objects.filter(email=email).exists():
+                    if not User.objects.filter(email_iexact=email).exists():
                         try:
                             password = request.POST.get('password', '')
                             if len(password) > 2:
