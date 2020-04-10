@@ -17,12 +17,19 @@
             </video>
         {% else %}
             <video class="js-player" controls playsinline id="main-video-player"
-                   data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 480 } }'>
-                <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
-                <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
-                <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
-             </video>
+                   data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5 }'>
+                <source src="{{ video.videoFile480 }}" >
+            </video>
+            <!--
+                <video class="js-player" controls playsinline id="main-video-player"
+                       data-plyr-config='{"invertTime": false, "muted": false, "volume": 0.5, "enabled": true, "storage": { "enabled": false }, "quality": { "default": 480 } }'>
+                    <source src="{{ video.videoFile360 }}" type="video/mp4" size="360">
+                    <source src="{{ video.videoFile480 }}" type="video/mp4" size="480">
+                    <source src="{{ video.videoFile720 }}" type="video/mp4" size="720">
+                </video>
+            -->
         {% endif %}
+
     </div>
 
     <!------------------------------------------------------------------------------------->
