@@ -435,7 +435,7 @@ def create_different_video_qualities(video, random_suffix, video_suffix):
         in the future uncomment other qualities
         8 April 2020
     """
-        
+    
     fileName = 'Video'
     output_suffix = '.mp4'
     fs = FileSystemStorage()
